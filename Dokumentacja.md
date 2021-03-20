@@ -34,12 +34,18 @@ Celem gry jest unikanie odbijających się piłek.
 | obrażenia | 1          | 1.5        | 3          |
 
 ## Szkice interfejsu graficznego
-![](/Szkice/menu.png=662x427)
-![](/Szkice/rejestracja.png=662x427)
-![](/Szkice/w_trakcie_gry.png=662x427)
-![](/Szkice/pause.png=662x427)
-![](/Szkice/gratulacje.png=662x427)
-![](/Szkice/ranking.png=662x427)
+<img src="Szkice/menu.png" 
+	width="560" height="348" />
+<img src="/Szkice/rejestracja.png" 
+	width="560" height="348" />
+<img src="/Szkice/w_trakcie_gry.png" 
+	width="560" height="348" />
+<img src="/Szkice/pause.png" 
+	width="560" height="348" />
+<img src="/Szkice/gratulacje.png" 
+	width="560" height="348" />
+<img src="/Szkice/ranking.png" 
+	width="560" height="348" />
 
 ## Funkcjonalność aplikacji
 
