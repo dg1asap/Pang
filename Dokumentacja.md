@@ -34,6 +34,12 @@ Celem gry jest unikanie odbijających się piłek.
 | obrażenia | 1          | 1.5        | 3          |
 
 ## Szkice interfejsu graficznego
+![](https://i.imgur.com/cCwpKVe.png)
+![](https://i.imgur.com/CdjunqR.png)
+![](https://i.imgur.com/uliUmL8.png)
+![](https://i.imgur.com/7u3x8WS.png)
+![](https://i.imgur.com/4d3JW8h.png)
+![](https://i.imgur.com/Pk73tH1.png)
 
 ## Funkcjonalność aplikacji
 
@@ -48,11 +54,21 @@ Celem gry jest unikanie odbijających się piłek.
 + Za zniszczenie małej piłki gracz otrzymuje 1 pkt
 + Za zniszczenie dużej piłki gracz otrzymuje 5 pkt
 + Za zniszczenie mega piłki gracz otrzymuje 10 punktów
++ Za przejście poziomu gracz otrzymuje dodatkową liczbę punktów, która wynika ze wzoru:
 
+$W=ceil(10*[(0,028*k^6
+-0,4*k^2+2,3*k-2,55)
++0,4*(p-2,5)+0,8*(s-3)]+29)$
+
+,gdzie:
+k - poziom trudności (łatwy -> k=1, trudny -> k=3)
+p - pozostałe hp (1-10)
+s - numer poziomu(1-3)
 
 
 ## Elementy Dodatkowe
 - wyświetlenie statystyk(ilość zniszczeń danego rodzaju piłki)
 - wybór poziomu trudności danej planszy (łatwy, trudny)
     - inne prędkości i ilość piłek dla danego poziomu trudności
+
 
