@@ -34,12 +34,12 @@ Celem gry jest unikanie odbijających się piłek.
 | obrażenia | 1          | 1.5        | 3          |
 
 ## Szkice interfejsu graficznego
-![](/Szkice/menu.png)
-![](/Szkice/rejestracja.png)
-![](/Szkice/w_trakcie_gry.png)
-![](/Szkice/pause.png)
-![](/Szkice/gratulacje.png)
-![](/Szkice/ranking.png)
+![](/Szkice/menu.png=662x427)
+![](/Szkice/rejestracja.png=662x427)
+![](/Szkice/w_trakcie_gry.png=662x427)
+![](/Szkice/pause.png=662x427)
+![](/Szkice/gratulacje.png=662x427)
+![](/Szkice/ranking.png=662x427)
 
 ## Funkcjonalność aplikacji
 
@@ -56,7 +56,7 @@ Celem gry jest unikanie odbijających się piłek.
 + Za zniszczenie mega piłki gracz otrzymuje 10 punktów
 + Za przejście poziomu gracz otrzymuje dodatkową liczbę punktów, która wynika ze wzoru:
 
-\\[W=ceil(10*[(0,028*k^6-0,4*k^2+2,3*k-2,55)+0,4*(p-2,5)+0,8*(s-3)]+29)\\]
+W=ceil(10*[(0.028*k^6-0.4*k^2+2.3*k-2.55)+0.4*(p-2.5)+0.8*(s-3)]+29)
 
 ,gdzie:
 k - poziom trudności (łatwy -> k=1, trudny -> k=3)
