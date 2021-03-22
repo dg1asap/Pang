@@ -1,4 +1,4 @@
-# Dokumentacja.md
+# Plan_projektu.md
 ## PROZE21L_PROJEKT_PANG
 
 #### Zespół:
