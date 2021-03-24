@@ -1,0 +1,18 @@
+
+"mała", "duża", "mega" - a dlaczego nie "mała", "średnia", "duża" :-)
+
+
+- nic o "funkcjonalności sieciowej" - nie przewidują Panowie?
+
+- elementy dodatkowe: 
+  "wyświetlenie statystyk(ilość zniszczeń danego rodzaju piłki)" - chyba "mało" ciekawe... ;-) 
+  "wybór poziomu trudności danej planszy (łatwy, trudny) 
+     inne prędkości i ilość piłek dla danego poziomu trudności" - przypominam, że definicja poziomu
+ma wynikać z pliku konfiguracyjnego, więc te "inne" wartości też mają z pliku wynikać 
+(podane bezpośrednio, albo jakieś 'mnożniki' modyfikujące wartości)
+
+   może wymyśłić jeszcze jakieś 'standardowe' power-upy? ;-)
+
+   
+
+Etap zaliczony.
