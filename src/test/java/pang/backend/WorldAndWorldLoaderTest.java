@@ -2,18 +2,14 @@ package pang.backend;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
-import java.io.File;
-
 public class WorldAndWorldLoaderTest {
-    World world1;
-    World world2;
+    static World world1;
+    static World world2;
 
     @BeforeAll
-    void loadEnemysFromTxtFile(){
+    static void loadEnemiesFromTxtFile(){
         world1 = WorldLoader.loadLevel(1);
         world2 = WorldLoader.loadLevel(2);
     }
@@ -25,10 +21,9 @@ public class WorldAndWorldLoaderTest {
     }
 
     @Test
-    @Disabled("Not implemented yet")
     void testEnemysInQueue(){
-        SmallBall smallBall;
-        LargeBall largeBall;
+        SmallBall smallBall = new SmallBall();
+        LargeBall largeBall = new LargeBall();
 
         Assertions.assertSame( smallBall, world1.spawnFirstEnemy() );
         Assertions.assertSame( largeBall, world2.spawnFirstEnemy() );
