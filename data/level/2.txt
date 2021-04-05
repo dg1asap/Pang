@@ -1,12 +1,12 @@
 largeBall 1
-smallBall 20
+largeBall 20
 smallBall 20
 smallBall 20
 smallBall 30
 smallBall 30
 smallBall 30
 largeBall 30
-smallBall 40
+largeBall 40
 smallBall 50
 smallBall 50
 smallBall 50

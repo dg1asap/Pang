@@ -3,10 +3,12 @@ package pang.backend;
 import java.util.Queue;
 
 public class World {
-     Queue <Enemy> enemies;
+    Queue <Enemy> enemies;
+    Player player;
 
-    World( Queue <Enemy> enemies){
+    World(Player player, Queue <Enemy> enemies){
         this.enemies = enemies;
+        this.player = player;
     }
 
     public boolean isEmpty(){
@@ -14,10 +16,10 @@ public class World {
     }
 
     public Enemy spawnFirstEnemy(){
-        return new SmallBall();
+        return enemies.poll();
     }
 
     public boolean isGameOver(){
-        return false;
+        return !player.isAlive();
     }
 }

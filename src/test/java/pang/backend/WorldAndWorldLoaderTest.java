@@ -1,8 +1,9 @@
 package pang.backend;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WorldAndWorldLoaderTest {
     static World world1;
@@ -16,22 +17,22 @@ public class WorldAndWorldLoaderTest {
 
     @Test
     void testWorldIsClear(){
-        Assertions.assertFalse( world1.isEmpty() );
-        Assertions.assertFalse( world2.isEmpty() );
+        assertFalse( world1.isEmpty() );
+        assertFalse( world2.isEmpty() );
     }
 
     @Test
-    void testEnemysInQueue(){
-        SmallBall smallBall = new SmallBall();
-        LargeBall largeBall = new LargeBall();
+    void testEnemiesInQueue(){
+        Enemy enemyFromWorld1 = world1.spawnFirstEnemy();
+        Enemy enemyFromWorld2 = world2.spawnFirstEnemy();
 
-        Assertions.assertSame( smallBall, world1.spawnFirstEnemy() );
-        Assertions.assertSame( largeBall, world2.spawnFirstEnemy() );
+        assertTrue(enemyFromWorld1 instanceof SmallBall);
+        assertTrue(enemyFromWorld2 instanceof LargeBall);
     }
 
     @Test
     void testPlayerSpawn(){
-        Assertions.assertFalse( world1.isGameOver() );
-        Assertions.assertFalse( world2.isGameOver() );
+        assertFalse( world1.isGameOver() );
+        assertFalse( world2.isGameOver() );
     }
 }
