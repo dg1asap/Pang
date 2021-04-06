@@ -5,10 +5,15 @@ public class Pang {
 //    Audio audio;
 
     public static void main(String args[]) {
-        run();
+        loadMusic();
     }
 
-   private static void run(){
+   private static void loadMusic(){
+
+    String musicPath ="./data/music/spaceSample.aif";
+    Audio music = new Audio();
+    music.play(musicPath);
+
 
    }
 
