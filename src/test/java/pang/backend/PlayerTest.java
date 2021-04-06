@@ -13,6 +13,7 @@ public class PlayerTest {
 
     PositionOfPlayer playerPos = new PositionOfPlayer();
     PositionOfPlayer newPlayerPos = new PositionOfPlayer();
+    GamePlayWindow gameWindow = new GamePlayWindow();
 
     @Test
     void testPlayerCanShoot(){
@@ -31,4 +32,13 @@ public class PlayerTest {
         assertTrue(newPlayerPos.changeHorizontal() != playerPos.horizontal);
     }
 
+
+    @Test
+    void testPlayerCollisions(){
+        playerPos.changeVertical();
+        assertTrue(player.isCollision() > 0 ); //kolizja z lewą stroną ekranu
+
+        playerPos.changeVertical();
+        assertTrue(player.isCollision() <= gameWindow.maxSize()); //kolizja z prawą stroną ekranu
+    }
 }
