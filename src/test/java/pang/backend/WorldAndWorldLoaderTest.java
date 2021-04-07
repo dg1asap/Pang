@@ -11,8 +11,8 @@ public class WorldAndWorldLoaderTest {
 
     @BeforeAll
     static void loadEnemiesFromTxtFile(){
-        world1 = WorldLoader.loadLevel(1);
-        world2 = WorldLoader.loadLevel(2);
+        world1 = WorldLoader.loadLevel(999999999);
+        world2 = WorldLoader.loadLevel(999999998);
     }
 
     @Test

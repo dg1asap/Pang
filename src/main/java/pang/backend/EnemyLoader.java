@@ -2,6 +2,8 @@ package pang.backend;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Scanner;
@@ -10,7 +12,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class EnemyLoader {
     static Queue <Enemy> enemies;
     static int levelNumber;
-    static String path;
+    static Path path;
 
     public static Queue <Enemy> loadLevel(int levelNumber) {
         try{
@@ -33,7 +35,7 @@ public class EnemyLoader {
     }
 
     private static void updatePath(){
-        path = "./data/level/" + levelNumber + ".txt";
+        path = Paths.get("./data/level/" + levelNumber + ".txt");
     }
 
     private static void loadSource() throws FileNotFoundException {
@@ -42,7 +44,7 @@ public class EnemyLoader {
     }
 
     private static void loadFromFile() throws FileNotFoundException {
-        File file = new File(path);
+        File file = path.toFile();
         Scanner scanner = new Scanner(file);
         EnemyScanner.loadWithScanner(scanner);
     }
