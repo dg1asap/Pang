@@ -1,8 +1,11 @@
 package pang.hardware;
 
-import javax.sound.sampled.Clip;
-
 public interface MusicPlayer {
-    public void play(String music);
-    public void pause();
+    void endMusic();
+    void load();
+    void loop();
+    void play();
+    void pause();
+    void resume();
+    void resumeLoop();
 }
