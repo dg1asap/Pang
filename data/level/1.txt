@@ -1,0 +1,13 @@
+smallBall 1
+smallBall 10
+smallBall 10
+smallBall 10
+smallBall 20
+smallBall 20
+smallBall 20
+smallBall 40
+smallBall 40
+smallBall 50
+smallBall 50
+smallBall 50
+smallBall 50
