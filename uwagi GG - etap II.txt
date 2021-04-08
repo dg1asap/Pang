@@ -1,0 +1,4 @@
+
+- czy gradlew.bat w obecnej wersji da się wykorzystać do skompilowania/uruchomienia aplikacji? bo po jego uruchomieniu nie zauważyłem żadnego działania poza pobraniem z sieci samego gradle'a...
+- 8.04.2021 - BRAK etapu II (pliki konfiguracyjne, pliki źródłowe - odczyt konfiguracji)
+  jest tylko diagram klas, ale to za mało na zaliczenie etapu - etap niezaliczony!!! 
