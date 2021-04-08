@@ -5,22 +5,34 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Audio implements MusicPlayer {
-    public void play(String music) {
+
+    static Clip sample;
+    long time = 0;
+    static String musicPath ="./data/music/spaceSample.aif";
+
+    String getPath(){
+        return musicPath;
+    }
+    long getTime(){
+        return time;
+    }
+
+    public void endMusic(){
+        sample.stop();
+        sample.close();
+    }
+
+    public void load(){
         try {
-            File musicPath = new File(music);
-
-            AudioInputStream audio = AudioSystem.getAudioInputStream(musicPath);
-            Clip sample = AudioSystem.getClip();
+            File music = new File(musicPath);
+            AudioInputStream audio = AudioSystem.getAudioInputStream(music);
+            sample = AudioSystem.getClip();
             sample.open(audio);
-            sample.start();
-            sample.loop(sample.LOOP_CONTINUOUSLY); // muzyka się zapętla non-stop
 
-            JOptionPane.showMessageDialog(null, "Space music"); //GUI - odtworzenie audio
         } catch (FileNotFoundException notFound) {
             System.out.println("File path not found!");
             notFound.printStackTrace();
@@ -31,10 +43,31 @@ public class Audio implements MusicPlayer {
             System.out.println("Can't load audio!");
             cantPlay.printStackTrace();
         }
-
     }
 
-    public void pause() {
-
+    public void loop(){
+        sample.start();
+        sample.loop(sample.LOOP_CONTINUOUSLY);
     }
+
+    public void play(){
+        sample.start();
+    }
+
+    public void pause(){
+        time = sample.getMicrosecondPosition();
+        sample.stop();
+    }
+
+    public void resume(){
+        sample.setMicrosecondPosition(time);
+        sample.start();
+    }
+
+    public void resumeLoop(){
+        sample.setMicrosecondPosition(time);
+        sample.start();
+        sample.loop(sample.LOOP_CONTINUOUSLY);
+    }
+
 }
