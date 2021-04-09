@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AudioTest {
 
     Audio music = new Audio();
+    long timeWhenPaused;
+    long timeAfterPause;
 
     @Test
     void testMusicIsLoaded(){
@@ -18,7 +20,6 @@ public class AudioTest {
     @Test
     void testMusicInterfaceIsWorking(){
 
-        long timeWhenPaused,timeAfterPause;
         music.load();
         music.loop();
         JOptionPane.showMessageDialog(null, "Test music");
@@ -30,27 +31,17 @@ public class AudioTest {
         JOptionPane.showMessageDialog(null, "Music resumed");
 
         assertTrue(checkMusicInterface(timeWhenPaused,timeAfterPause));
-
    }
 
    private boolean checkMusicInterface(long timeWhenPaused, long timeAfterPause){
-        if(isPauseTimeEqual(timeWhenPaused,timeAfterPause) && isTimeNonZeroValue(timeWhenPaused)) {
-            return true;
-        }
-        else return false;
+       return isPauseTimeEqual(timeWhenPaused, timeAfterPause) && isTimeNonZeroValue(timeWhenPaused);
    }
 
    private boolean isPauseTimeEqual(long timeWhenPaused, long timeAfterPause){
-       if(timeWhenPaused == timeAfterPause) {
-           return true;
-       }
-       else return false;
+       return timeWhenPaused == timeAfterPause;
    }
 
    private boolean isTimeNonZeroValue(long time){
-       if(time != 0) {
-           return true;
-       }
-       else return false;
+       return time != 0;
    }
 }
