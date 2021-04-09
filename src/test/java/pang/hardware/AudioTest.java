@@ -18,19 +18,39 @@ public class AudioTest {
     @Test
     void testMusicInterfaceIsWorking(){
 
-        long a,b;
+        long timeWhenPaused,timeAfterPause;
         music.load();
         music.loop();
         JOptionPane.showMessageDialog(null, "Test music");
         music.pause();
-        a = music.getTime();
+        timeWhenPaused = music.getTime();
         JOptionPane.showMessageDialog(null, "Music paused");
         music.resumeLoop();
-        b = music.getTime();
+        timeAfterPause = music.getTime();
         JOptionPane.showMessageDialog(null, "Music resumed");
 
-        assertTrue( (a == b) && a != 0);
+        assertTrue(checkMusicInterface(timeWhenPaused,timeAfterPause));
 
    }
-   
+
+   private boolean checkMusicInterface(long timeWhenPaused, long timeAfterPause){
+        if(isPauseTimeEqual(timeWhenPaused,timeAfterPause) && isTimeNonZeroValue(timeWhenPaused)) {
+            return true;
+        }
+        else return false;
+   }
+
+   private boolean isPauseTimeEqual(long timeWhenPaused, long timeAfterPause){
+       if(timeWhenPaused == timeAfterPause) {
+           return true;
+       }
+       else return false;
+   }
+
+   private boolean isTimeNonZeroValue(long time){
+       if(time != 0) {
+           return true;
+       }
+       else return false;
+   }
 }
