@@ -1,9 +1,9 @@
 package pang.backend;
 
 public class Character {
-    long health;
-    long damage;
-    long speed;
+    double health;
+    double damage;
+    double speed;
 
     CharacterPosition position;
 
