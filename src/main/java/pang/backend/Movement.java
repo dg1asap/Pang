@@ -1,7 +1,7 @@
 package pang.backend;
 
 public interface Movement {
-    void changeVertical();
-    void changeHorizontal();
+    void changeXDirection();
+    void changeYDirection();
     boolean isCollision();
 }
