@@ -28,24 +28,21 @@ public class ConfigLoader {
     }
 
     private void selectConfig(String name) throws ConfigNotFoundException{
-        for(GameConfig config : configs){
+        for(GameConfig config : configs)
             compareConfigName(config, name);
-        }
     }
 
     private void compareConfigName(GameConfig config, String name) {
-        if(config.hasName(name)){
+        if(config.hasName(name))
             this.currentConfig = config;
-        }
     }
 
     private void checkSelectedConfig(String name) throws ConfigNotFoundException{
-        if(!checkIfConfigIsLoadedCorrectly(name)){
+        if(!isCorrectlyLoadedConfig(name))
             throw new ConfigNotFoundException(name);
-        }
     }
 
-    private boolean checkIfConfigIsLoadedCorrectly(String name){
+    private boolean isCorrectlyLoadedConfig(String name){
         return currentConfig.hasName(name);
     }
 
@@ -57,33 +54,49 @@ public class ConfigLoader {
         System.out.println(e.errorMessage());
     }
 
-
-
-
     private void loadConfigs(Path path) {
-        File file = path.toFile();
         try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (isConfigName(line)) {
-                    configs.add(new GameConfig(line));
-                } else {
-                    String attributeName = getAttributeName(line);
-                    Double attributeValue = getAttributeValue(line);
-                    GameConfig config = configs.get((configs.size() - 1));
-                    config.addAttribute(attributeName, attributeValue);
-                    configs.set((configs.size() - 1), config);
-                }
-            }
-            scanner.close();
+            loadConfigsWithPath(path);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    private void loadConfigsWithPath(Path path) throws FileNotFoundException{
+        File file = path.toFile();
+        Scanner scanner = new Scanner(file);
+        loadConfigsFromScanner(scanner);
+    }
+
+    private void loadConfigsFromScanner(Scanner scanner){
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            loadDataIntoConfigLoader(line);
+        }
+        scanner.close();
+    }
+
+    void loadDataIntoConfigLoader(String data){
+        if (isConfigName(data))
+            addConfig(data);
+        else
+            addAttributeIntoLastAddedConfig(data);
+    }
+
     private boolean isConfigName(String name) {
         return !name.contains("=");
+    }
+
+    private void addConfig(String name){
+        configs.add(new GameConfig(name));
+    }
+
+    private void addAttributeIntoLastAddedConfig(String attributes){
+        String attributeName = getAttributeName(attributes);
+        Double attributeValue = getAttributeValue(attributes);
+
+        GameConfig config = configs.get((configs.size() - 1));
+        config.addAttribute(attributeName, attributeValue);
     }
 
     private String getAttributeName(String line){
