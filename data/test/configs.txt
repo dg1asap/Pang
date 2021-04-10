@@ -1,0 +1,5 @@
+Player
+    health=10
+    speed=2
+World
+    maxSpawnCount=20
