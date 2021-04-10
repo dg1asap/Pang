@@ -11,6 +11,8 @@ public class Player extends Character implements Movement {
         this.setHealth(config.getAttribute("health"));
         this.setDamage(config.getAttribute("damage"));
         this.setSpeed(config.getAttribute("speed"));
+        this.setHeight(config.getAttribute("height"));
+        this.setWidth(config.getAttribute("width"));
 
         ammoAmount = (int) config.getAttribute("ammunition");
         gravityForce = config.getAttribute("gravityForce");
@@ -28,6 +30,9 @@ public class Player extends Character implements Movement {
         return ammoAmount;
     }
 
+    double getGravityForce(){
+        return gravityForce;
+    }
 
 
     @Override
@@ -45,5 +50,14 @@ public class Player extends Character implements Movement {
         return false; //Not implemented yet
     }
 
+    //public boolean wallCollisionHappened(){
+    //    if(this.getXPosition() == 0 || this.getXPosition() == GameWindow.getXSize()){ //window size ex. (0,1000);
+    //        return true;
+    //   }
+    //}
+
+   // public boolean enemyCollisionHappened(){
+
+   // }
 
 }
