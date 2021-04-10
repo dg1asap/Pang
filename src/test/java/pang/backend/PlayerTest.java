@@ -17,8 +17,40 @@ public class PlayerTest {
     Player player = new Player(config);
 
     @Test
+    void testPlayerHasStartHp(){
+        assertTrue(player.isAlive());
+    }
+
+    @Test
     void testPlayerHasStartingAmmo(){
         assertTrue(player.getAmmoAmount()>0);
+    }
+
+    @Test
+    void testPlayerCanGiveDamage(){
+        assertTrue(player.getDamage()>0);
+    }
+
+    @Test
+    void testPlayerHasGravitationSet(){
+        assertTrue(player.getGravityForce()>0);
+    }
+
+    @Test
+    void testPlayerIs2D(){
+        assertTrue(arePlayerDimensionsLoaded());
+    }
+
+    private boolean arePlayerDimensionsLoaded(){
+        return hasPlayerHeight() && hasPlayerWidth();
+    }
+
+    private boolean hasPlayerHeight(){
+        return player.getHeight() > 0;
+    }
+
+    private boolean hasPlayerWidth(){
+        return player.getWidth() > 0;
     }
 
     @Test
@@ -33,7 +65,7 @@ public class PlayerTest {
     }
 
     private boolean isCharacterPositionDifferent(double startX, double startY, double endX, double endY){
-        return isXPositionDifferent(startX, endX) && isYPositionDifferent(startY, endY);
+        return isXPositionDifferent(startX, endX) && isYPositionDifferent(startY, endY) && isSpeedSet();
     }
 
     private boolean isXPositionDifferent(double startX, double endX){
@@ -44,9 +76,8 @@ public class PlayerTest {
         return startY != endY;
     }
 
-    @Test
-    void testPlayerHasStartHp(){
-        assertTrue(player.isAlive());
+    private boolean isSpeedSet(){
+        return player.getSpeed()>0;
     }
 
     @Disabled
