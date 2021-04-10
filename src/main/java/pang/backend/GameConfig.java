@@ -24,4 +24,7 @@ public class GameConfig {
         return valuesOfAttributes.get(namesOfAttributes.indexOf(attribute));
     }
 
+    public boolean hasName(String name){
+        return this.name.equals(name);
+    }
 }

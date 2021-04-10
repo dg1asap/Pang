@@ -1,5 +1,7 @@
 package pang.backend;
 
+import pang.backend.exceptions.ConfigNotFoundException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -7,21 +9,55 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConfigLoader {
-    private ArrayList<GameConfig> configs = new ArrayList<>(20);
+    private final ArrayList <GameConfig> configs = new ArrayList<>(100);
+    private GameConfig currentConfig;
 
     ConfigLoader(Path path){
         loadConfigs(path);
     }
 
-    public GameConfig getConfig(String name){
-        for(GameConfig config : configs){
-            if(config.getName().equals(name)){
-                System.out.println("a");
-                return config;
-            }
+    public GameConfig getConfig(String name) throws ConfigNotFoundException{
+        try {
+            selectConfig(name);
+            checkSelectedConfig(name);
+            return getSelectedConfig();
+        } catch(ConfigNotFoundException e) {
+            errorLog(e);
+            throw e;
         }
-        return new GameConfig("XD");
     }
+
+    private void selectConfig(String name) throws ConfigNotFoundException{
+        for(GameConfig config : configs){
+            compareConfigName(config, name);
+        }
+    }
+
+    private void compareConfigName(GameConfig config, String name) {
+        if(config.hasName(name)){
+            this.currentConfig = config;
+        }
+    }
+
+    private void checkSelectedConfig(String name) throws ConfigNotFoundException{
+        if(!checkIfConfigIsLoadedCorrectly(name)){
+            throw new ConfigNotFoundException(name);
+        }
+    }
+
+    private boolean checkIfConfigIsLoadedCorrectly(String name){
+        return currentConfig.hasName(name);
+    }
+
+    private GameConfig getSelectedConfig(){
+        return currentConfig;
+    }
+
+    private void errorLog(ConfigNotFoundException e){
+        System.out.println(e.errorMessage());
+    }
+
+
 
 
     private void loadConfigs(Path path) {
