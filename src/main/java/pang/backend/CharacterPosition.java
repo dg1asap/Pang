@@ -1,8 +1,8 @@
 package pang.backend;
 
 public class CharacterPosition {
-    double vertical;
-    double horizontal;
+    private double vertical;
+    private double horizontal;
 
     double getVertical(){
         return vertical;
