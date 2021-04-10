@@ -4,11 +4,11 @@ public class CharacterPosition {
     private double vertical;
     private double horizontal;
 
-    double getVertical(){
+    public double getVertical(){
         return vertical;
     }
 
-    double getHorizontal(){
+    public double getHorizontal(){
         return horizontal;
     }
 
@@ -18,5 +18,13 @@ public class CharacterPosition {
 
     public void setHorizontal(double posX){
         horizontal = posX;
+    }
+
+    public void changeVertical(double dy) {
+        vertical += dy;
+    }
+
+    public void changeHorizontal(double dx) {
+        horizontal += dx;
     }
 }

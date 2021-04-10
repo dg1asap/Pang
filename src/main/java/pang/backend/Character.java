@@ -1,6 +1,7 @@
 package pang.backend;
 
 public class Character {
+
     protected double health;
     protected double damage;
     protected double speed;
@@ -19,12 +20,28 @@ public class Character {
         this.speed = speed;
     }
 
+    double getYPosition(){
+        return position.getVertical();
+    }
+
+    double getXPosition(){
+        return position.getHorizontal();
+    }
+
     public void setPosX(double posX){
         position.setHorizontal(posX);
     }
 
     public void setPosY(double posY){
         position.setVertical(posY);
+    }
+
+    public void changePosX(double dx){
+        position.changeHorizontal(dx);
+    }
+
+    public void changePosY(double dy){
+        position.changeVertical(dy);
     }
 
     public boolean isAlive(){
