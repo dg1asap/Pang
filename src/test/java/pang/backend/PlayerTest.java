@@ -1,7 +1,9 @@
 package pang.backend;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import pang.backend.exceptions.ConfigNotFoundException;
 
 import java.nio.file.Path;
 
@@ -9,10 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PlayerTest {
+    static ConfigLoader configLoader;
+    static GameConfig config;
 
-    Path path = Path.of("./data/test/player.txt");
-    ConfigLoader configLoader = new ConfigLoader(path);
-    GameConfig config = configLoader.getConfig("Player");
+    @BeforeAll
+    static void setConfigLoader() throws ConfigNotFoundException {
+        Path path = Path.of("./data/test/player.txt");
+        configLoader = new ConfigLoader(path);
+        config = configLoader.getConfig("Player");
+    }
 
     Player player = new Player(config);
 
