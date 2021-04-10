@@ -5,8 +5,31 @@ public class Character {
     protected double health;
     protected double damage;
     protected double speed;
+    protected double height;
+    protected double width;
+    boolean collision = false;
 
     CharacterPosition position = new CharacterPosition();
+
+    public double getHealth(){
+        return health;
+    }
+
+    public double getDamage(){
+        return damage;
+    }
+
+    public double getSpeed(){
+        return speed;
+    }
+
+    public double getHeight(){
+        return height;
+    }
+
+    public double getWidth(){
+        return width;
+    }
 
     public void setHealth(double health){
         this.health = health;
@@ -18,6 +41,14 @@ public class Character {
 
     public void setSpeed(double speed){
         this.speed = speed;
+    }
+
+    public void setHeight(double height){
+        this.height = height;
+    }
+
+    public void setWidth(double width){
+        this.width = width;
     }
 
     double getYPosition(){
