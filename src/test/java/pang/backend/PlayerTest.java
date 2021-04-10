@@ -23,11 +23,11 @@ public class PlayerTest {
 
     @Test
     void testPlayerCanMove(){
-        double firstYPosition = player.position.getVertical();
-        double firstXPosition = player.position.getHorizontal();
+        double firstYPosition = player.getYPosition();
+        double firstXPosition = player.getXPosition();
 
-        player.changeHorizontal();
-        player.changeVertical();
+        player.changeXDirection();
+        player.changeYDirection();
 
         assertTrue(isCharacterPositionDifferent(firstXPosition,firstYPosition,player.getXPosition(), player.getYPosition()));
     }
