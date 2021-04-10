@@ -5,10 +5,9 @@ public class Character {
     double damage;
     double speed;
 
-    CharacterPosition position;
+    CharacterPosition position = new CharacterPosition();
 
-    boolean isAlive(){
+    public boolean isAlive(){
         return health > 0;
     }
-
 }

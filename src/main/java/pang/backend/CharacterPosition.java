@@ -12,11 +12,11 @@ public class CharacterPosition {
         return horizontal;
     }
 
-    void setVertical(double posY){
-        this.vertical = posY;
+    public void setVertical(double posY){
+        vertical = posY;
     }
 
-    void setHorizontal(double posX){
-        this.horizontal = posX;
+    public void setHorizontal(double posX){
+        horizontal = posX;
     }
 }

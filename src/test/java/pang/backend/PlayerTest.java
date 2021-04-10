@@ -3,14 +3,18 @@ package pang.backend;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Path;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PlayerTest {
 
-    GameConfig config = new GameConfig("TestPlayer");
+    Path path = Path.of("./data/test/player.txt");
+    ConfigLoader configLoader = new ConfigLoader(path);
+    GameConfig config = configLoader.getConfig("Player");
+
     Player player = new Player(config);
-    CharacterPosition position;
 
     @Test
     void testPlayerHasStartingAmmo(){
@@ -19,8 +23,8 @@ public class PlayerTest {
 
     @Test
     void testPlayerCanMove(){
-        double firstYPosition = position.getVertical();
-        double firstXPosition = position.getHorizontal();
+        double firstYPosition = player.position.getVertical();
+        double firstXPosition = player.position.getHorizontal();
 
         player.changeHorizontal();
         player.changeVertical();

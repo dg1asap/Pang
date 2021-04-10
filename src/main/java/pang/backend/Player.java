@@ -2,7 +2,7 @@ package pang.backend;
 
 public class Player extends Character implements Movement {
 
-    int ammoAmount;
+    double ammoAmount;
     double gravityForce;
 
     public Player(GameConfig config){
@@ -10,18 +10,18 @@ public class Player extends Character implements Movement {
         this.damage = config.getAttribute("damage");
         this.speed = config.getAttribute("speed");
 
-        ammoAmount = (int) config.getAttribute("ammunition");
-        gravityForce = config.getAttribute("gravity");
+        ammoAmount = config.getAttribute("ammunition");
+        gravityForce = config.getAttribute("gravityForce");
 
-        this.position.setHorizontal(config.getAttribute("startX"));
-        this.position.setVertical(config.getAttribute("startY"));
+        this.position.setHorizontal(config.getAttribute("startPosX"));
+        this.position.setVertical(config.getAttribute("startPosY"));
     }
 
     void shoot(){
         ammoAmount += -1;
     }
 
-    int getAmmoAmount(){
+    double getAmmoAmount(){
         return ammoAmount;
     }
 
