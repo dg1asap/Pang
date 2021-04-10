@@ -7,4 +7,8 @@ public class Character {
 
     CharacterPosition position;
 
+    boolean isAlive(){
+        return health > 0;
+    }
+
 }
