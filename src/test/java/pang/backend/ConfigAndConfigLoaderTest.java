@@ -5,24 +5,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.concurrent.ArrayBlockingQueue;
+import java.nio.file.Path;
 
 public class ConfigAndConfigLoaderTest {
-    static ArrayBlockingQueue <PangConfig> pangConfigs;
-    static PangConfig playerConfig;
-    static PangConfig worldConfig;
+    static ConfigLoader configLoader;
+    static GameConfig playerConfig;
+    static GameConfig worldConfig;
 
     @BeforeAll
     static void loadConfigs(){
-        pangConfigs = PangConfigLoader.getConfigs();
-        playerConfig = pangConfigs.next();
-        worldConfig = pangConfigs.next();
+        Path path = Path.of("./data/test/configs.txt");
+        configLoader = new ConfigLoader(path);
+        playerConfig = configLoader.getConfig("Player");
+        worldConfig = configLoader.getConfig("World");
     }
 
     @Test
     void TestGetConfigName(){
         String playerConfigName = playerConfig.getName();
-        String worldConfigName = pangConfigs.getName();
+        String worldConfigName = worldConfig.getName();
 
         assertEquals("Player", playerConfigName);
         assertEquals("World", worldConfigName);
