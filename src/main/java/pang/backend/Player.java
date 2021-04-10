@@ -2,15 +2,17 @@ package pang.backend;
 
 public class Player extends Character implements Movement {
 
-    double ammoAmount;
+    int ammoAmount;
     double gravityForce;
+    double dx = 1;
+    double dy = 1;
 
     public Player(GameConfig config){
         this.setHealth(config.getAttribute("health"));
         this.setDamage(config.getAttribute("damage"));
         this.setSpeed(config.getAttribute("speed"));
 
-        ammoAmount = config.getAttribute("ammunition");
+        ammoAmount = (int) config.getAttribute("ammunition");
         gravityForce = config.getAttribute("gravityForce");
 
         this.setPosX(config.getAttribute("startPosX"));
@@ -19,28 +21,26 @@ public class Player extends Character implements Movement {
 
     void shoot(){
         ammoAmount += -1;
+        //Not implemented yet
     }
 
-    double getAmmoAmount(){
+    int getAmmoAmount(){
         return ammoAmount;
     }
 
-    double getYPosition(){
-        return position.getVertical();
+
+
+    @Override
+    public void changeYDirection(){
+        this.changePosY(dy);
     }
 
-    double getXPosition(){
-        return position.getHorizontal();
+    @Override
+    public void changeXDirection(){
+        this.changePosX(dx);
     }
 
-    public void changeVertical(){
-        //Not implemented yet
-    }
-
-    public void changeHorizontal(){
-        //Not implemented yet
-    }
-
+    @Override
     public boolean isCollision() {
         return false; //Not implemented yet
     }
