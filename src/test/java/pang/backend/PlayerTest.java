@@ -1,5 +1,6 @@
 package pang.backend;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,28 +41,17 @@ public class PlayerTest {
         return startY != endY;
     }
 
+    @Test
+    void testPlayerHasStartHp(){
+        assertTrue(player.isAlive());
+    }
 
+    @Disabled
+    void testPlayerCollisionsAreWorking(){
+       // double startX = player.getXPosition();
+       // player.changeHorizontal();
+       // player.changeHorizontal();
 
+    }
 
- //   SmallBall smallBall = new SmallBall();
-//
- //   CharacterPosition playerPos = new CharacterPosition();
- //   CharacterPosition newPlayerPos = new CharacterPosition();
- //   GamePlayWindow gameWindow = new GamePlayWindow();
-
- //   @Disabled
-//    void testPlayerCanShoot(){
- //       player.shoot();
-//        assertTrue(smallBall.takeDamage()>0);
- //   }
-
-
- //   @Disabled
- //   void testPlayerCollisions(){
-  //      playerPos.changeVertical();
- //       assertTrue(player.isCollision() > 0 ); //kolizja z lewą stroną ekranu
-//
-  //      playerPos.changeVertical();
-  //      assertTrue(player.isCollision() <= gameWindow.maxSize()); //kolizja z prawą stroną ekranu
-  //  }
 }
