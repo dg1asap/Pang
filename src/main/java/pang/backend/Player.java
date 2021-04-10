@@ -5,7 +5,6 @@ public class Player extends Character implements Movement {
     int ammoAmount;
     double gravityForce;
 
-
     public Player(GameConfig config){
         this.health = config.getAttribute("health");
         this.damage = config.getAttribute("damage");
@@ -42,10 +41,9 @@ public class Player extends Character implements Movement {
         //Not implemented yet
     }
 
-
     public boolean isCollision() {
-        return false;
+        return false; //Not implemented yet
     }
-    
+
 
 }

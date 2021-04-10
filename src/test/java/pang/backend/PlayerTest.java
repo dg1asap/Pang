@@ -26,7 +26,6 @@ public class PlayerTest {
         player.changeVertical();
 
         assertTrue(isCharacterPositionDifferent(firstXPosition,firstYPosition,player.getXPosition(), player.getYPosition()));
-
     }
 
     private boolean isCharacterPositionDifferent(double startX, double startY, double endX, double endY){
@@ -48,10 +47,10 @@ public class PlayerTest {
 
     @Disabled
     void testPlayerCollisionsAreWorking(){
+
        // double startX = player.getXPosition();
        // player.changeHorizontal();
        // player.changeHorizontal();
 
     }
-
 }
