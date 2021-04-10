@@ -6,15 +6,15 @@ public class Player extends Character implements Movement {
     double gravityForce;
 
     public Player(GameConfig config){
-        this.health = config.getAttribute("health");
-        this.damage = config.getAttribute("damage");
-        this.speed = config.getAttribute("speed");
+        this.setHealth(config.getAttribute("health"));
+        this.setDamage(config.getAttribute("damage"));
+        this.setSpeed(config.getAttribute("speed"));
 
         ammoAmount = config.getAttribute("ammunition");
         gravityForce = config.getAttribute("gravityForce");
 
-        this.position.setHorizontal(config.getAttribute("startPosX"));
-        this.position.setVertical(config.getAttribute("startPosY"));
+        this.setPosX(config.getAttribute("startPosX"));
+        this.setPosY(config.getAttribute("startPosY"));
     }
 
     void shoot(){
