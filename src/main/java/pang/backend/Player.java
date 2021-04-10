@@ -10,11 +10,11 @@ public class Player extends Character implements Movement {
         this.damage = config.getAttribute("damage");
         this.speed = config.getAttribute("speed");
 
-        ammoAmount = config.getAttribute("ammunition");
+        ammoAmount = (int) config.getAttribute("ammunition");
         gravityForce = config.getAttribute("gravity");
 
         this.position.setHorizontal(config.getAttribute("startX"));
-        this,position.setVertical(config.getAttribute("startY"));
+        this.position.setVertical(config.getAttribute("startY"));
     }
 
     void shoot(){

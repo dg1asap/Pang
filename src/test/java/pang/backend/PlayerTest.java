@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
-    GameConfig config = new GameConfig();
+    GameConfig config = new GameConfig("TestPlayer");
     Player player = new Player(config);
     CharacterPosition position;
 
