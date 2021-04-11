@@ -1,7 +1,7 @@
 package pang.backend;
 
 public class LargeBall extends Enemy {
-    LargeBall(int spawnTime){
+    LargeBall(GameConfig config, int spawnTime){
         super(spawnTime);
     }
 }

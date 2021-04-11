@@ -2,17 +2,26 @@ package pang.backend;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import pang.backend.exceptions.ConfigNotFoundException;
+
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WorldAndWorldLoaderTest {
+    static WorldLoader worldLoader1;
+    static WorldLoader worldLoader2;
     static World world1;
     static World world2;
 
     @BeforeAll
-    static void loadEnemiesFromTxtFile(){
-        world1 = WorldLoader.loadLevel(999999999);
-        world2 = WorldLoader.loadLevel(999999998);
+    static void loadEnemiesFromTxtFile() throws ConfigNotFoundException {
+        Path path1 = Path.of("./data/test/level/999999999.tx");
+        Path path2 = Path.of("./data/test/level/999999998.tx");
+        worldLoader1 = new WorldLoader(path1);
+        worldLoader2 = new WorldLoader(path2);
+        world1 = worldLoader1.getWorld();
+        world2 = worldLoader2.getWorld();
     }
 
     @Test
