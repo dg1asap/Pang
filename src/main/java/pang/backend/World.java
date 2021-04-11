@@ -7,13 +7,13 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class World {
     private int worldCapacity;
-
-    private final ArrayBlockingQueue <Enemy> enemies = new ArrayBlockingQueue<>(worldCapacity);
+    private final ArrayBlockingQueue <Enemy> enemies;
     private Player player;
 
     World(GameConfig worldConfig) throws ConfigNotFoundException{
         loadWorld(worldConfig);
         loadPlayer();
+        enemies = new ArrayBlockingQueue<>(worldCapacity);
     }
 
     public void addEnemy(Enemy enemy){
