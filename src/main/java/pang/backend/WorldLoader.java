@@ -10,12 +10,17 @@ import java.util.Scanner;
 public class WorldLoader {
     private Path path;
     private World world;
-    private final EnemyFactory enemyFactory;
+    private EnemyFactory enemyFactory;
 
     WorldLoader (Path path) throws ConfigNotFoundException{
         createWorld();
+        createEnemyFactory();
         loadWorld(path);
-        enemyFactory = new EnemyFactory();
+    }
+
+    private void createEnemyFactory() throws ConfigNotFoundException{
+        Path configPath = Path.of("./data/main/configs.txt");
+        enemyFactory = new EnemyFactory(configPath);
     }
 
     public World getWorld(){

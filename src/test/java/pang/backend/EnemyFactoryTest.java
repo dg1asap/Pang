@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pang.backend.exceptions.ConfigNotFoundException;
 
+import java.nio.file.Path;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EnemyFactoryTest {
@@ -11,7 +13,8 @@ public class EnemyFactoryTest {
 
     @BeforeAll
     static void createEnemyFactory() throws ConfigNotFoundException {
-        enemyFactory = new EnemyFactory();
+        Path configPath = Path.of("./data/test/enemyConfigTest.txt");
+        enemyFactory = new EnemyFactory(configPath);
     }
 
     @Test

@@ -3,3 +3,5 @@ Player
     speed=2
 World
     maxSpawnCount=20
+smallBall
+largeBall

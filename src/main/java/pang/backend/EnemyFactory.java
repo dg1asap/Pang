@@ -8,13 +8,12 @@ public class EnemyFactory {
     GameConfig smallBallConfig;
     GameConfig largeBallConfig;
 
-    EnemyFactory() throws ConfigNotFoundException {
-        Path configPath = Path.of("./data/main/configs.txt");
+    EnemyFactory(Path configPath) throws ConfigNotFoundException {
         ConfigLoader smallBallConfigLoader = new ConfigLoader(configPath);
         ConfigLoader largeBallConfigLoader = new ConfigLoader(configPath);
 
-        smallBallConfig = smallBallConfigLoader.getConfig("smallBall");
-        largeBallConfig = largeBallConfigLoader.getConfig("largeBall");
+        smallBallConfig = smallBallConfigLoader.getConfig("SmallBall");
+        largeBallConfig = largeBallConfigLoader.getConfig("LargeBall");
     }
 
     public Enemy create(String name, Integer spawnTime) throws IllegalArgumentException{
