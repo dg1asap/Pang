@@ -33,8 +33,8 @@ public class WorldAndWorldLoaderTest {
 
     @Test
     void testEnemiesInQueue(){
-        Enemy enemyFromWorld1 = world1.spawnFirstEnemy();
-        Enemy enemyFromWorld2 = world2.spawnFirstEnemy();
+        Enemy enemyFromWorld1 = world1.spawnEnemy();
+        Enemy enemyFromWorld2 = world2.spawnEnemy();
 
         assertTrue(enemyFromWorld1 instanceof SmallBall);
         assertTrue(enemyFromWorld2 instanceof LargeBall);

@@ -27,33 +27,6 @@ public class ConfigLoader {
         }
     }
 
-    private void selectConfig(String name) throws ConfigNotFoundException{
-        for(GameConfig config : configs)
-            compareConfigName(config, name);
-    }
-
-    private void compareConfigName(GameConfig config, String name) {
-        if(config.hasName(name))
-            this.currentConfig = config;
-    }
-
-    private void checkSelectedConfig(String name) throws ConfigNotFoundException{
-        if(!isCorrectlyLoadedConfig(name))
-            throw new ConfigNotFoundException(name);
-    }
-
-    private boolean isCorrectlyLoadedConfig(String name){
-        return currentConfig.hasName(name);
-    }
-
-    private GameConfig getSelectedConfig(){
-        return currentConfig;
-    }
-
-    private void errorLog(ConfigNotFoundException e){
-        System.out.println(e.errorMessage());
-    }
-
     private void loadConfigs(Path path) {
         try {
             loadConfigsWithPath(path);
@@ -108,6 +81,33 @@ public class ConfigLoader {
     private Double getAttributeValue(String line){
         String[] separatedLine = line.split("=");
         return Double.valueOf(separatedLine[1]);
+    }
+
+    private void selectConfig(String name) throws ConfigNotFoundException{
+        for(GameConfig config : configs)
+            compareConfigName(config, name);
+    }
+
+    private void compareConfigName(GameConfig config, String name) {
+        if(config.hasName(name))
+            this.currentConfig = config;
+    }
+
+    private void checkSelectedConfig(String name) throws ConfigNotFoundException{
+        if(!isCorrectlyLoadedConfig(name))
+            throw new ConfigNotFoundException(name);
+    }
+
+    private boolean isCorrectlyLoadedConfig(String name){
+        return currentConfig.hasName(name);
+    }
+
+    private GameConfig getSelectedConfig(){
+        return currentConfig;
+    }
+
+    private void errorLog(ConfigNotFoundException e){
+        System.out.println(e.errorMessage());
     }
 
 }

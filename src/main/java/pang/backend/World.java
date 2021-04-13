@@ -16,12 +16,12 @@ public class World {
         enemies.add(enemy);
     }
 
-    public boolean isEmpty(){
-        return enemies.isEmpty();
+    public Enemy spawnEnemy(){
+        return enemies.poll();
     }
 
-    public Enemy spawnFirstEnemy(){
-        return enemies.poll();
+    public boolean isEmpty(){
+        return enemies.isEmpty();
     }
 
     public boolean isGameOver(){

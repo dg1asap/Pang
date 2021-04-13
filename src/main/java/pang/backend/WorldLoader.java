@@ -18,21 +18,8 @@ public class WorldLoader {
         loadWorld(levelPath);
     }
 
-    private void createEnemyFactory(Path configPath) throws ConfigNotFoundException{
-        enemyFactory = new EnemyFactory(configPath);
-    }
-
     public World getWorld(){
         return world;
-    }
-
-    private void loadWorld(Path path){
-        try{
-            selectWorld(path);
-            loadWorld();
-        } catch (FileNotFoundException e) {
-            logError(e);
-        }
     }
 
     private void createWorld(Path configPath) throws ConfigNotFoundException{
@@ -54,6 +41,18 @@ public class WorldLoader {
     private GameConfig getPlayerConfig(Path configPath) throws  ConfigNotFoundException{
         ConfigLoader playerConfigLoader = new ConfigLoader(configPath);
         return playerConfigLoader.getConfig("Player");
+    }
+    private void createEnemyFactory(Path configPath) throws ConfigNotFoundException{
+        enemyFactory = new EnemyFactory(configPath);
+    }
+
+    private void loadWorld(Path path){
+        try{
+            selectWorld(path);
+            loadWorld();
+        } catch (FileNotFoundException e) {
+            logError(e);
+        }
     }
 
     private void selectWorld(Path path){
