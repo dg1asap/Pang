@@ -34,10 +34,10 @@ public class ConfigAndConfigLoaderTest {
     void TestGetAttribute(){
         double speedValue = playerConfig.getAttribute("speed");
         double healthValue = playerConfig.getAttribute("health");
-        double maxSpawnValue = worldConfig.getAttribute("maxSpawnCount");
+        double worldCapacity = worldConfig.getAttribute("worldCapacity");
 
         assertEquals(2, speedValue);
         assertEquals(10, healthValue);
-        assertEquals(20, maxSpawnValue);
+        assertEquals(100, worldCapacity);
     }
 }

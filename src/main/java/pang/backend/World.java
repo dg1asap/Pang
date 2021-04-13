@@ -1,19 +1,15 @@
 package pang.backend;
 
-import pang.backend.exceptions.ConfigNotFoundException;
-
-import java.nio.file.Path;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class World {
-    private int worldCapacity;
     private final ArrayBlockingQueue <Enemy> enemies;
-    private Player player;
+    private final Player player;
 
-    World(GameConfig worldConfig) throws ConfigNotFoundException{
-        loadWorld(worldConfig);
-        loadPlayer();
-        enemies = new ArrayBlockingQueue<>(worldCapacity);
+    World(GameConfig worldConfig, Player player){
+        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
+        this.enemies = new ArrayBlockingQueue<>(worldCapacity);
+        this.player = player;
     }
 
     public void addEnemy(Enemy enemy){
@@ -30,17 +26,6 @@ public class World {
 
     public boolean isGameOver(){
         return !player.isAlive();
-    }
-
-    private void loadWorld(GameConfig config){
-        worldCapacity = (int) config.getAttribute("worldCapacity");
-    }
-
-    private void loadPlayer() throws ConfigNotFoundException {
-        Path configPath = Path.of("./data/main/configs.txt");
-        ConfigLoader configLoader = new ConfigLoader(configPath);
-        GameConfig playerConfig = configLoader.getConfig("Player");
-        this.player = new Player(playerConfig);
     }
 
 }

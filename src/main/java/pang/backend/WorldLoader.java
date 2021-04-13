@@ -12,14 +12,13 @@ public class WorldLoader {
     private World world;
     private EnemyFactory enemyFactory;
 
-    WorldLoader (Path path) throws ConfigNotFoundException{
-        createWorld();
-        createEnemyFactory();
-        loadWorld(path);
+    WorldLoader (Path configPath, Path levelPath) throws ConfigNotFoundException{
+        createWorld(configPath);
+        createEnemyFactory(configPath);
+        loadWorld(levelPath);
     }
 
-    private void createEnemyFactory() throws ConfigNotFoundException{
-        Path configPath = Path.of("./data/main/configs.txt");
+    private void createEnemyFactory(Path configPath) throws ConfigNotFoundException{
         enemyFactory = new EnemyFactory(configPath);
     }
 
@@ -36,11 +35,25 @@ public class WorldLoader {
         }
     }
 
-    private void createWorld() throws ConfigNotFoundException{
-        Path configPath = Path.of("./data/main/configs.txt");
+    private void createWorld(Path configPath) throws ConfigNotFoundException{
+        GameConfig worldConfig = getWorldConfig(configPath);
+        Player player = createPlayer(configPath);
+        world = new World(worldConfig, player);
+    }
+
+    private GameConfig getWorldConfig(Path configPath) throws ConfigNotFoundException{
         ConfigLoader worldConfigLoader = new ConfigLoader(configPath);
-        GameConfig worldConfig = worldConfigLoader.getConfig("World");
-        world = new World(worldConfig);
+        return worldConfigLoader.getConfig("World");
+    }
+
+    private Player createPlayer(Path configPath) throws ConfigNotFoundException{
+        GameConfig playerConfig = getPlayerConfig(configPath);
+        return new Player(playerConfig);
+    }
+
+    private GameConfig getPlayerConfig(Path configPath) throws  ConfigNotFoundException{
+        ConfigLoader playerConfigLoader = new ConfigLoader(configPath);
+        return playerConfigLoader.getConfig("Player");
     }
 
     private void selectWorld(Path path){

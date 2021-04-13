@@ -14,13 +14,13 @@ public class WorldAndWorldLoaderTest {
     static World world1;
     static World world2;
 
-    // WARNING !!! WorldLoader loads minor GameConfigs from main/config.txt
     @BeforeAll
     static void loadEnemiesFromTxtFile() throws ConfigNotFoundException {
-        Path path1 = Path.of("./data/test/level/999999999.txt");
-        Path path2 = Path.of("./data/test/level/999999998.txt");
-        worldLoader1 = new WorldLoader(path1);
-        worldLoader2 = new WorldLoader(path2);
+        Path configPath = Path.of("./data/test/configs.txt");
+        Path pathToLevel1 = Path.of("./data/test/level/999999999.txt");
+        Path pathToLevel2 = Path.of("./data/test/level/999999998.txt");
+        worldLoader1 = new WorldLoader(configPath, pathToLevel1);
+        worldLoader2 = new WorldLoader(configPath, pathToLevel2);
         world1 = worldLoader1.getWorld();
         world2 = worldLoader2.getWorld();
     }
