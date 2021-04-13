@@ -28,4 +28,10 @@ public class EnemyFactoryTest {
         Enemy largeBall = enemyFactory.create("largeBall", 1000);
         assertTrue(largeBall instanceof LargeBall);
     }
+
+    @Test
+    void testMegaLargeBall(){
+        Enemy megaBall = enemyFactory.create("megaBall", 1000);
+        assertTrue(megaBall instanceof MegaBall);
+    }
 }
