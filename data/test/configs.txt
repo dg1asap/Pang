@@ -10,6 +10,7 @@ Player
     startPosY=100
 World
     worldCapacity=100
+    maxSpawnCount 50
 SmallBall
     health=1
     damage=1

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class GameConfig {
     private final String name;
-    private ArrayList <String> namesOfAttributes = new ArrayList<>(20);
-    private ArrayList <Double> valuesOfAttributes = new ArrayList<>(20);
+    private ArrayList <String> namesOfAttributes = new ArrayList<>(100);
+    private ArrayList <Double> valuesOfAttributes = new ArrayList<>(100);
 
     GameConfig(String name){
         this.name = name;
