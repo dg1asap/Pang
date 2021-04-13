@@ -8,8 +8,16 @@ public class Character {
     protected double height;
     protected double width;
     boolean collision = false;
-
     CharacterPosition position = new CharacterPosition();
+
+    public Character(GameConfig config){
+        this.setHealth(config.getAttribute("health"));
+        this.setDamage(config.getAttribute("damage"));
+        this.setSpeed(config.getAttribute("speed"));
+        this.setHeight(config.getAttribute("height"));
+        this.setWidth(config.getAttribute("width"));
+    }
+
 
     public double getHealth(){
         return health;

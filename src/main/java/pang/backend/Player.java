@@ -8,12 +8,8 @@ public class Player extends Character implements Movement {
     double dy = 1;
 
     public Player(GameConfig config){
-        this.setHealth(config.getAttribute("health"));
-        this.setDamage(config.getAttribute("damage"));
-        this.setSpeed(config.getAttribute("speed"));
-        this.setHeight(config.getAttribute("height"));
-        this.setWidth(config.getAttribute("width"));
 
+        super(config);
         ammoAmount = (int) config.getAttribute("ammunition");
         gravityForce = config.getAttribute("gravityForce");
 

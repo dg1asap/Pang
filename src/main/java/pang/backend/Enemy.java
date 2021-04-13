@@ -6,14 +6,7 @@ public abstract class Enemy extends Character {
     protected int spawnTime;
 
     public Enemy(GameConfig config, int spawnTime){
-        this.setHealth(config.getAttribute("health"));
-        this.setDamage(config.getAttribute("damage"));
-        this.setSpeed(config.getAttribute("speed"));
-
-        this.spawnTime = spawnTime;
-    }
-
-    Enemy(int spawnTime){
+        super(config);
         this.spawnTime = spawnTime;
     }
 
