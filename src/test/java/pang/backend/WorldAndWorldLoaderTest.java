@@ -16,7 +16,7 @@ public class WorldAndWorldLoaderTest {
 
     @BeforeAll
     static void loadEnemiesFromTxtFile() throws ConfigNotFoundException {
-        Path configPath = Path.of("./data/test/configs.txt");
+        Path configPath = Path.of("./data/test/configs/WorldAndWorldLoaderTest.txt");
         Path pathToLevel1 = Path.of("./data/test/level/999999999.txt");
         Path pathToLevel2 = Path.of("./data/test/level/999999998.txt");
         worldLoader1 = new WorldLoader(configPath, pathToLevel1);

@@ -15,7 +15,7 @@ public class ConfigAndConfigLoaderTest {
 
     @BeforeAll
     static void loadConfigs() throws ConfigNotFoundException{
-        Path path = Path.of("./data/test/configs.txt");
+        Path path = Path.of("./data/test/configs/ConfigAndConfigLoaderTest.txt");
         configLoader = new ConfigLoader(path);
         playerConfig = configLoader.getConfig("Player");
         worldConfig = configLoader.getConfig("World");

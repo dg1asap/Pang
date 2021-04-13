@@ -1,0 +1,5 @@
+Player
+    speed=2
+    health=10
+World
+    worldCapacity=100

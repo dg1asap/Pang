@@ -13,7 +13,7 @@ public class EnemyFactoryTest {
 
     @BeforeAll
     static void createEnemyFactory() throws ConfigNotFoundException {
-        Path configPath = Path.of("./data/test/enemyConfigTest.txt");
+        Path configPath = Path.of("./data/test/configs/EnemyFactoryTest.txt");
         enemyFactory = new EnemyFactory(configPath);
     }
 

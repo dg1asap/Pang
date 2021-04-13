@@ -7,4 +7,4 @@ Player
     ammunition=21
     gravityForce=1.12
     startPosX=50
-    startPosY=100
+    startPosY=100 

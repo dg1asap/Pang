@@ -1,0 +1,30 @@
+World
+    worldCapacity=100
+Player
+    health=10
+    damage=1.5
+    speed=1.25
+    height=5.5
+    width=3.167
+    ammunition=21
+    gravityForce=1.12
+    startPosX=50
+    startPosY=100
+SmallBall
+    health=1
+    damage=2
+    speed=3
+    height=4
+    width=5
+LargeBall
+    health=1
+    damage=2
+    speed=3
+    height=4
+    width=5
+MegaBall
+    health=1
+    damage=2
+    speed=3
+    height=4
+    width=5
