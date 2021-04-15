@@ -1,4 +1,12 @@
 
-- czy gradlew.bat w obecnej wersji da się wykorzystać do skompilowania/uruchomienia aplikacji? bo po jego uruchomieniu nie zauważyłem żadnego działania poza pobraniem z sieci samego gradle'a...
-- 8.04.2021 - BRAK etapu II (pliki konfiguracyjne, pliki źródłowe - odczyt konfiguracji)
-  jest tylko diagram klas, ale to za mało na zaliczenie etapu - etap niezaliczony!!! 
+Proszę o pliki do kompilacji i uruchomienia programu poza IDE - i tak są wymagane na koniec, a mi ułatwią sprawdzanie etapów :-)
+Jeśli do tego ma służyć gradlew.bat - to bardzo proszę o instrukcję użycia :-)
+
+W projekcie jest "bardzo dużo" kodu, więc mogłem nie znaleźć...
+
+Sa klasy, do czytania konfiguracji, ale gdzie jest:
+"Opracuj program odczytujący pliki konfiguracyjne (w szczególności przykładowy poziom gry) ..."???
+Znalazłem tylko jedną funkcję main(), która jest 'pusta' - więc skąd wiadomo, że wczytywanie w ogóle działa?
+Prosiłbym o jakiś komentarz-wyjaśnienie, ale nie w repozytorium, bo te sprawdzam tylko przy okazji etapów i nie zauważę ;-)
+
+Etap zaliczony (ale tak trochę warunkowo, bo jednak brakuje mi tego "programu odzcytującego").
