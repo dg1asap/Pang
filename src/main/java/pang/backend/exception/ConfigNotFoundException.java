@@ -1,4 +1,4 @@
-package pang.backend.exceptions;
+package pang.backend.exception;
 
 public class ConfigNotFoundException extends Exception{
     private final String configName;

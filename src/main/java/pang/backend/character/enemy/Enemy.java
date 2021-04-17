@@ -1,4 +1,7 @@
-package pang.backend;
+package pang.backend.character.enemy;
+
+import pang.backend.character.Character;
+import pang.backend.config.GameConfig;
 
 public abstract class Enemy extends Character {
     // Movement implementation need to be added //

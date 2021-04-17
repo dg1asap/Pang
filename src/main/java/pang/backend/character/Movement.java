@@ -1,4 +1,4 @@
-package pang.backend;
+package pang.backend.character;
 
 public interface Movement {
     void changeXDirection();

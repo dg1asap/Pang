@@ -1,4 +1,4 @@
-package pang.backend;
+package pang.backend.config;
 
 import java.util.ArrayList;
 

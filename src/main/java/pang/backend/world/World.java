@@ -1,4 +1,8 @@
-package pang.backend;
+package pang.backend.world;
+
+import pang.backend.character.enemy.Enemy;
+import pang.backend.character.player.Player;
+import pang.backend.config.GameConfig;
 
 import java.util.concurrent.ArrayBlockingQueue;
 

@@ -1,4 +1,6 @@
-package pang.backend;
+package pang.backend.character;
+
+import pang.backend.config.GameConfig;
 
 public class Character {
 
@@ -59,11 +61,11 @@ public class Character {
         this.width = width;
     }
 
-    double getYPosition(){
+    public double getYPosition(){
         return position.getVertical();
     }
 
-    double getXPosition(){
+    public double getXPosition(){
         return position.getHorizontal();
     }
 

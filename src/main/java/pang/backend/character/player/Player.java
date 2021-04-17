@@ -1,4 +1,8 @@
-package pang.backend;
+package pang.backend.character.player;
+
+import pang.backend.character.Character;
+import pang.backend.character.Movement;
+import pang.backend.config.GameConfig;
 
 public class Player extends Character implements Movement {
 

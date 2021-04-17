@@ -1,6 +1,6 @@
-package pang.backend;
+package pang.backend.config;
 
-import pang.backend.exceptions.ConfigNotFoundException;
+import pang.backend.exception.ConfigNotFoundException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,8 +12,8 @@ public class ConfigLoader {
     private final ArrayList <GameConfig> configs = new ArrayList<>(100);
     private GameConfig currentConfig;
 
-    ConfigLoader(Path path){
-        loadConfigs(path);
+    public static ConfigLoader fromConfigPath(Path configPath){
+        return new ConfigLoader(configPath);
     }
 
     public GameConfig getConfig(String name) throws ConfigNotFoundException{
@@ -27,16 +27,20 @@ public class ConfigLoader {
         }
     }
 
-    private void loadConfigs(Path path) {
+    protected ConfigLoader(Path configPath){
+        loadConfigs(configPath);
+    }
+
+    private void loadConfigs(Path configPath) {
         try {
-            loadConfigsWithPath(path);
+            loadConfigsWithPath(configPath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void loadConfigsWithPath(Path path) throws FileNotFoundException{
-        File file = path.toFile();
+    private void loadConfigsWithPath(Path configPath) throws FileNotFoundException{
+        File file = configPath.toFile();
         Scanner scanner = new Scanner(file);
         loadConfigsFromScanner(scanner);
     }

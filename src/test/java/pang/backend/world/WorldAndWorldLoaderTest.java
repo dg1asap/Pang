@@ -1,8 +1,12 @@
-package pang.backend;
+package pang.backend.world;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import pang.backend.exceptions.ConfigNotFoundException;
+
+import pang.backend.character.enemy.Enemy;
+import pang.backend.character.enemy.LargeBall;
+import pang.backend.character.enemy.SmallBall;
+import pang.backend.exception.ConfigNotFoundException;
 
 import java.nio.file.Path;
 
@@ -19,8 +23,8 @@ public class WorldAndWorldLoaderTest {
         Path configPath = Path.of("./data/test/configs/WorldAndWorldLoaderTest.txt");
         Path pathToLevel1 = Path.of("./data/test/level/999999999.txt");
         Path pathToLevel2 = Path.of("./data/test/level/999999998.txt");
-        worldLoader1 = new WorldLoader(configPath, pathToLevel1);
-        worldLoader2 = new WorldLoader(configPath, pathToLevel2);
+        worldLoader1 = WorldLoader.fromConfigPathAndLevelPath(configPath, pathToLevel1);
+        worldLoader2 = WorldLoader.fromConfigPathAndLevelPath(configPath, pathToLevel2);
         world1 = worldLoader1.getWorld();
         world2 = worldLoader2.getWorld();
     }
