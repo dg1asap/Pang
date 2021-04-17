@@ -10,10 +10,8 @@ public class World {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
 
-    World(GameConfig worldConfig, Player player){
-        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
-        this.enemies = new ArrayBlockingQueue<>(worldCapacity);
-        this.player = player;
+    public static World fromWorldConfigAndPlayer(GameConfig worldConfig, Player player){
+        return new World(worldConfig, player);
     }
 
     public void addEnemy(Enemy enemy){
@@ -30,6 +28,12 @@ public class World {
 
     public boolean isGameOver(){
         return !player.isAlive();
+    }
+
+    protected World(GameConfig worldConfig, Player player){
+        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
+        this.enemies = new ArrayBlockingQueue<>(worldCapacity);
+        this.player = player;
     }
 
 }

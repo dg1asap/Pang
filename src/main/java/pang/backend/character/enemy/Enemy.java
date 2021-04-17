@@ -8,7 +8,7 @@ public abstract class Enemy extends Character {
 
     protected int spawnTime;
 
-    public Enemy(GameConfig config, int spawnTime){
+    protected Enemy(GameConfig config, int spawnTime){
         super(config);
         this.spawnTime = spawnTime;
     }

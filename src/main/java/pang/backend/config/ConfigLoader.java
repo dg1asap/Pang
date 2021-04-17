@@ -65,7 +65,8 @@ public class ConfigLoader {
     }
 
     private void addConfig(String name){
-        configs.add(new GameConfig(name));
+        GameConfig config = GameConfig.withName(name);
+        configs.add(config);
     }
 
     private void addAttributeIntoLastAddedConfig(String attributes){

@@ -17,9 +17,9 @@ public class EnemyFactory {
 
     public Enemy create(String name, Integer spawnTime) throws IllegalArgumentException{
         return switch (name) {
-            case "smallBall" -> new SmallBall(smallBallConfig, spawnTime);
-            case "largeBall" -> new LargeBall(largeBallConfig, spawnTime);
-            case "megaBall" -> new MegaBall(largeBallConfig, spawnTime);
+            case "smallBall" -> SmallBall.fromConfigAndSpawnTime(smallBallConfig, spawnTime);
+            case "largeBall" -> LargeBall.fromConfigAndSpawnTime(largeBallConfig, spawnTime);
+            case "megaBall" -> MegaBall.fromConfigAndSpawnTime(largeBallConfig, spawnTime);
             default -> throw new IllegalArgumentException("Enemy name not found");
         };
     }

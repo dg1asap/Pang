@@ -34,7 +34,7 @@ public class WorldLoader {
     private void createWorld(Path configPath) throws ConfigNotFoundException{
         GameConfig worldConfig = getWorldConfig(configPath);
         Player player = createPlayer(configPath);
-        world = new World(worldConfig, player);
+        world = World.fromWorldConfigAndPlayer(worldConfig, player);
     }
 
     private GameConfig getWorldConfig(Path configPath) throws ConfigNotFoundException{
