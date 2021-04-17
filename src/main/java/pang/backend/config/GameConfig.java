@@ -7,7 +7,7 @@ public class GameConfig {
     private final ArrayList <String> namesOfAttributes = new ArrayList<>(100);
     private final ArrayList <Double> valuesOfAttributes = new ArrayList<>(100);
 
-    public static GameConfig withName(String name){
+    public static GameConfig byName(String name){
         return new GameConfig(name);
     }
 

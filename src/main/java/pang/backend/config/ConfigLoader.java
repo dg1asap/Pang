@@ -65,7 +65,7 @@ public class ConfigLoader {
     }
 
     private void addConfig(String name){
-        GameConfig config = GameConfig.withName(name);
+        GameConfig config = GameConfig.byName(name);
         configs.add(config);
     }
 
@@ -104,7 +104,7 @@ public class ConfigLoader {
     }
 
     private boolean isCorrectlyLoadedConfig(String name){
-        return currentConfig.hasName(name);
+        return currentConfig != null && currentConfig.hasName(name);
     }
 
     private GameConfig getSelectedConfig(){
