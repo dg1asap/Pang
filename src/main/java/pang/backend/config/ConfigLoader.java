@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class ConfigLoader {
     private final ArrayList <GameConfig> configs = new ArrayList<>(100);
     private GameConfig currentConfig;
+    private Path configPath;
 
     public static ConfigLoader fromConfigPath(Path configPath){
         return new ConfigLoader(configPath);
@@ -40,6 +41,7 @@ public class ConfigLoader {
     }
 
     private void loadConfigsWithPath(Path configPath) throws FileNotFoundException{
+        this.configPath = configPath;
         File file = configPath.toFile();
         Scanner scanner = new Scanner(file);
         loadConfigsFromScanner(scanner);
@@ -100,7 +102,7 @@ public class ConfigLoader {
 
     private void checkSelectedConfig(String name) throws ConfigNotFoundException{
         if(!isCorrectlyLoadedConfig(name))
-            throw new ConfigNotFoundException(name);
+            throw ConfigNotFoundException.missingConfigInPath(currentConfig.getName(), configPath);
     }
 
     private boolean isCorrectlyLoadedConfig(String name){

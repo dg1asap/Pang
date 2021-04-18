@@ -1,18 +1,23 @@
 package pang.backend.exception;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigNotFoundExceptionTest {
+
     @ParameterizedTest
-    @ValueSource(strings = {"Player", "LargeBall", "World"})
-    void testOfExceptionOfNotFoundConfigName(String name){
-        ConfigNotFoundException exceptionOfNotFoundConfigName = ConfigNotFoundException.configNamed(name);
-        String errorMessage = String.format("[ConfigNotFound] ConfigLoader : A config named %s was not found", name);
-        assertEquals(errorMessage, exceptionOfNotFoundConfigName.errorMessage());
+    @MethodSource("path")
+    void testOfExceptionOfNotFoundConfigFile(Path path){
+        ConfigNotFoundException exceptionOfNotFoundConfigFile = ConfigNotFoundException.configPath(path);
+        String errorMessage = String.format("[ConfigNotFound] ConfigLoader : A config file with path %s was not found", path);
+        assertEquals(errorMessage, exceptionOfNotFoundConfigFile.errorMessage());
     }
 
     @ParameterizedTest
@@ -24,10 +29,25 @@ public class ConfigNotFoundExceptionTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"Player,./src/test/config.txt", "smallBall,./src/test/data/config.txt"})
-    void testOfExceptionOfNotFoundConfigFile(String configName, String path){
-        ConfigNotFoundException exceptionOfNotFoundConfigFile = ConfigNotFoundException.missingConfigInPath(configName, path);
+    @MethodSource("stringAndPath")
+    void testOfExceptionOfNotFoundConfigName(String configName, Path path){
+        ConfigNotFoundException exceptionOfNotFoundConfigName = ConfigNotFoundException.missingConfigInPath(configName, path);
         String errorMessage = String.format("[ConfigNotFound] %sConfig : A config named %s was not found in %s", configName, configName, path);
-        assertEquals(errorMessage, exceptionOfNotFoundConfigFile.errorMessage());
+        assertEquals(errorMessage, exceptionOfNotFoundConfigName.errorMessage());
     }
+
+    static Stream <Arguments> path(){
+        return Stream.of(
+                Arguments.arguments(Path.of("./src/test/config.txt")),
+                Arguments.arguments(Path.of("./src/test/config.txt"))
+        );
+    }
+
+    static Stream <Arguments> stringAndPath(){
+        return Stream.of(
+                Arguments.arguments("MegaBall", Path.of("./src/test/config.txt")),
+                Arguments.arguments("World", Path.of("./src/test/data/config.txt"))
+        );
+    }
+
 }
