@@ -7,16 +7,18 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 
 public class Audio implements MusicPlayer {
 
     static Clip sample;
-    long time = 0;
-    static String musicPath ="./data/music/spaceSample.aif";
+    private long time = 0;
+    static private Path path = Path.of("data","music", "spaceSample.aif");
 
-    String getPath(){
-        return musicPath;
+    Path getPath(){
+        return path;
     }
+
     long getTime(){
         return time;
     }
@@ -28,7 +30,7 @@ public class Audio implements MusicPlayer {
 
     public void load(){
         try {
-            File music = new File(musicPath);
+            File music = path.toFile();
             AudioInputStream audio = AudioSystem.getAudioInputStream(music);
             sample = AudioSystem.getClip();
             sample.open(audio);
