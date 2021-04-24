@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConfigLoader {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final ArrayList <GameConfig> configs = new ArrayList<>(100);
     private final Path configPath;
     private GameConfig currentConfig;
-    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     public static ConfigLoader fromConfigPath(Path configPath){
         return new ConfigLoader(configPath);
@@ -27,7 +27,7 @@ public class ConfigLoader {
             checkSelectedConfig(name);
             return getSelectedConfig();
         } catch(ConfigException e) {
-            log.error(e.errorMessage());
+            logger.error(e.errorMessage());
             throw e;
         }
     }
@@ -102,7 +102,7 @@ public class ConfigLoader {
 
     private void checkSelectedConfig(String name) throws ConfigException {
         if(!isCorrectlyLoadedConfig(name))
-            throw ConfigException.missingConfigInPath(currentConfig.getName(), configPath);
+            throw ConfigException.missingConfigInPath(name, configPath);
     }
 
     private boolean isCorrectlyLoadedConfig(String name){
