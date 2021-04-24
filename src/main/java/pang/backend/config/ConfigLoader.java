@@ -1,5 +1,8 @@
 package pang.backend.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pang.backend.exception.ConfigException;
 
 import java.io.File;
@@ -10,8 +13,9 @@ import java.util.Scanner;
 
 public class ConfigLoader {
     private final ArrayList <GameConfig> configs = new ArrayList<>(100);
+    private final Path configPath;
     private GameConfig currentConfig;
-    private Path configPath;
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     public static ConfigLoader fromConfigPath(Path configPath){
         return new ConfigLoader(configPath);
@@ -23,25 +27,22 @@ public class ConfigLoader {
             checkSelectedConfig(name);
             return getSelectedConfig();
         } catch(ConfigException e) {
-            errorLog(e);
+            log.error(e.errorMessage());
             throw e;
         }
     }
 
     protected ConfigLoader(Path configPath){
-        loadConfigs(configPath);
-    }
+        this.configPath = configPath;
 
-    private void loadConfigs(Path configPath) {
         try {
-            loadConfigsWithPath(configPath);
+            loadConfigs();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void loadConfigsWithPath(Path configPath) throws FileNotFoundException{
-        this.configPath = configPath;
+    private void loadConfigs() throws FileNotFoundException{
         File file = configPath.toFile();
         Scanner scanner = new Scanner(file);
         loadConfigsFromScanner(scanner);
@@ -82,7 +83,6 @@ public class ConfigLoader {
     private String getAttributeName(String line){
         String[] separatedLine = line.split("=");
         return separatedLine[0].trim();
-
     }
 
     private Double getAttributeValue(String line){
@@ -111,10 +111,6 @@ public class ConfigLoader {
 
     private GameConfig getSelectedConfig(){
         return currentConfig;
-    }
-
-    private void errorLog(ConfigException e){
-        System.out.println(e.errorMessage());
     }
 
 }
