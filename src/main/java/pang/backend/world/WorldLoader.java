@@ -5,7 +5,7 @@ import pang.backend.character.enemy.EnemyFactory;
 import pang.backend.character.player.Player;
 import pang.backend.config.ConfigLoader;
 import pang.backend.config.GameConfig;
-import pang.backend.exception.ConfigNotFoundException;
+import pang.backend.exception.ConfigException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ public class WorldLoader {
     private World world;
     private EnemyFactory enemyFactory;
 
-    public static WorldLoader fromConfigPathAndLevelPath(Path configPath, Path levelPath) throws ConfigNotFoundException{
+    public static WorldLoader fromConfigPathAndLevelPath(Path configPath, Path levelPath) throws ConfigException {
         return new WorldLoader(configPath, levelPath);
     }
 
@@ -25,33 +25,33 @@ public class WorldLoader {
         return world;
     }
 
-    protected WorldLoader (Path configPath, Path levelPath) throws ConfigNotFoundException{
+    protected WorldLoader (Path configPath, Path levelPath) throws ConfigException {
         createWorld(configPath);
         createEnemyFactory(configPath);
         loadWorld(levelPath);
     }
 
-    private void createWorld(Path configPath) throws ConfigNotFoundException{
+    private void createWorld(Path configPath) throws ConfigException {
         GameConfig worldConfig = getWorldConfig(configPath);
         Player player = createPlayer(configPath);
         world = World.fromWorldConfigAndPlayer(worldConfig, player);
     }
 
-    private GameConfig getWorldConfig(Path configPath) throws ConfigNotFoundException{
+    private GameConfig getWorldConfig(Path configPath) throws ConfigException {
         ConfigLoader worldConfigLoader = ConfigLoader.fromConfigPath(configPath);
         return worldConfigLoader.getConfig("World");
     }
 
-    private Player createPlayer(Path configPath) throws ConfigNotFoundException{
+    private Player createPlayer(Path configPath) throws ConfigException {
         GameConfig playerConfig = getPlayerConfig(configPath);
         return new Player(playerConfig);
     }
 
-    private GameConfig getPlayerConfig(Path configPath) throws  ConfigNotFoundException{
+    private GameConfig getPlayerConfig(Path configPath) throws ConfigException {
         ConfigLoader playerConfigLoader = ConfigLoader.fromConfigPath(configPath);
         return playerConfigLoader.getConfig("Player");
     }
-    private void createEnemyFactory(Path configPath) throws ConfigNotFoundException{
+    private void createEnemyFactory(Path configPath) throws ConfigException {
         enemyFactory = EnemyFactory.fromConfigPath(configPath);
     }
 

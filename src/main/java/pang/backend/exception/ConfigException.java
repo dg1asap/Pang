@@ -2,22 +2,22 @@ package pang.backend.exception;
 
 import java.nio.file.Path;
 
-public class ConfigNotFoundException extends Exception{
+public class ConfigException extends Exception{
     private final ErrorCode errorCode;
     private String configName;
     private String attributeName;
     private Path path;
 
-    public static ConfigNotFoundException configPath(Path path){
-        return new ConfigNotFoundException(path);
+    public static ConfigException configPath(Path path){
+        return new ConfigException(path);
     }
 
-    public static ConfigNotFoundException noAttributeInConfig(String attributeName, String configName){
-        return new ConfigNotFoundException(configName, attributeName);
+    public static ConfigException noAttributeInConfig(String attributeName, String configName){
+        return new ConfigException(configName, attributeName);
     }
 
-    public static ConfigNotFoundException missingConfigInPath(String configName, Path path){
-        return new ConfigNotFoundException(configName, path);
+    public static ConfigException missingConfigInPath(String configName, Path path){
+        return new ConfigException(configName, path);
     }
 
     public String errorMessage(){
@@ -33,18 +33,18 @@ public class ConfigNotFoundException extends Exception{
         OK, FILE_NOT_FOUND, MISSING_ATTRIBUTE, MISSING_CONFIG
     }
 
-    protected ConfigNotFoundException(Path path){
+    protected ConfigException(Path path){
         this.path = path;
         this.errorCode = ErrorCode.FILE_NOT_FOUND;
     }
 
-    protected ConfigNotFoundException(String configName, String attributeName){
+    protected ConfigException(String configName, String attributeName){
         this.configName = configName;
         this.attributeName = attributeName;
         this.errorCode = ErrorCode.MISSING_ATTRIBUTE;
     }
 
-    protected ConfigNotFoundException(String configName, Path path){
+    protected ConfigException(String configName, Path path){
         this.configName = configName;
         this.path = path;
         this.errorCode = ErrorCode.MISSING_CONFIG;

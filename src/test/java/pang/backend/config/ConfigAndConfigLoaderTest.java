@@ -3,7 +3,7 @@ package pang.backend.config;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import pang.backend.exception.ConfigNotFoundException;
+import pang.backend.exception.ConfigException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ public class ConfigAndConfigLoaderTest {
     static GameConfig worldConfig;
 
     @BeforeAll
-    static void loadConfigs() throws ConfigNotFoundException{
+    static void loadConfigs() throws ConfigException {
         Path path = Path.of("./data/test/configs/ConfigAndConfigLoaderTest.txt");
         configLoader = ConfigLoader.fromConfigPath(path);
         playerConfig = configLoader.getConfig("Player");

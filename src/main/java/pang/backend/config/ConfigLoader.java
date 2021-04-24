@@ -1,6 +1,6 @@
 package pang.backend.config;
 
-import pang.backend.exception.ConfigNotFoundException;
+import pang.backend.exception.ConfigException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,12 +17,12 @@ public class ConfigLoader {
         return new ConfigLoader(configPath);
     }
 
-    public GameConfig getConfig(String name) throws ConfigNotFoundException{
+    public GameConfig getConfig(String name) throws ConfigException {
         try {
             selectConfig(name);
             checkSelectedConfig(name);
             return getSelectedConfig();
-        } catch(ConfigNotFoundException e) {
+        } catch(ConfigException e) {
             errorLog(e);
             throw e;
         }
@@ -90,7 +90,7 @@ public class ConfigLoader {
         return Double.valueOf(separatedLine[1]);
     }
 
-    private void selectConfig(String name) throws ConfigNotFoundException{
+    private void selectConfig(String name) throws ConfigException {
         for(GameConfig config : configs)
             compareConfigName(config, name);
     }
@@ -100,9 +100,9 @@ public class ConfigLoader {
             this.currentConfig = config;
     }
 
-    private void checkSelectedConfig(String name) throws ConfigNotFoundException{
+    private void checkSelectedConfig(String name) throws ConfigException {
         if(!isCorrectlyLoadedConfig(name))
-            throw ConfigNotFoundException.missingConfigInPath(currentConfig.getName(), configPath);
+            throw ConfigException.missingConfigInPath(currentConfig.getName(), configPath);
     }
 
     private boolean isCorrectlyLoadedConfig(String name){
@@ -113,7 +113,7 @@ public class ConfigLoader {
         return currentConfig;
     }
 
-    private void errorLog(ConfigNotFoundException e){
+    private void errorLog(ConfigException e){
         System.out.println(e.errorMessage());
     }
 

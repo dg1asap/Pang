@@ -2,7 +2,7 @@ package pang.backend.character.enemy;
 
 import pang.backend.config.GameConfig;
 import pang.backend.config.ConfigLoader;
-import pang.backend.exception.ConfigNotFoundException;
+import pang.backend.exception.ConfigException;
 
 import java.nio.file.Path;
 
@@ -11,7 +11,7 @@ public class EnemyFactory {
     GameConfig largeBallConfig;
     GameConfig megaBallConfig;
 
-    public static EnemyFactory fromConfigPath(Path configPath) throws ConfigNotFoundException{
+    public static EnemyFactory fromConfigPath(Path configPath) throws ConfigException {
         return new EnemyFactory(configPath);
     }
 
@@ -24,7 +24,7 @@ public class EnemyFactory {
         };
     }
 
-    protected EnemyFactory(Path configPath) throws ConfigNotFoundException {
+    protected EnemyFactory(Path configPath) throws ConfigException {
         ConfigLoader smallBallConfigLoader = ConfigLoader.fromConfigPath(configPath);
         ConfigLoader largeBallConfigLoader = ConfigLoader.fromConfigPath(configPath);
         ConfigLoader megaBallConfigLoader = ConfigLoader.fromConfigPath(configPath);

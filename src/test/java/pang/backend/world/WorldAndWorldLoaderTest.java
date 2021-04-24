@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.enemy.LargeBall;
 import pang.backend.character.enemy.SmallBall;
-import pang.backend.exception.ConfigNotFoundException;
+import pang.backend.exception.ConfigException;
 
 import java.nio.file.Path;
 
@@ -19,7 +19,7 @@ public class WorldAndWorldLoaderTest {
     static World world2;
 
     @BeforeAll
-    static void loadEnemiesFromTxtFile() throws ConfigNotFoundException {
+    static void loadEnemiesFromTxtFile() throws ConfigException {
         Path configPath = Path.of("./data/test/configs/WorldAndWorldLoaderTest.txt");
         Path pathToLevel1 = Path.of("./data/test/level/999999999.txt");
         Path pathToLevel2 = Path.of("./data/test/level/999999998.txt");

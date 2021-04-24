@@ -3,7 +3,7 @@ package pang.backend.character.enemy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import pang.backend.exception.ConfigNotFoundException;
+import pang.backend.exception.ConfigException;
 
 import java.nio.file.Path;
 
@@ -13,7 +13,7 @@ public class EnemyFactoryTest {
     static EnemyFactory enemyFactory;
 
     @BeforeAll
-    static void createEnemyFactory() throws ConfigNotFoundException {
+    static void createEnemyFactory() throws ConfigException {
         Path configPath = Path.of("./data/test/configs/EnemyFactoryTest.txt");
         enemyFactory = EnemyFactory.fromConfigPath(configPath);
     }
