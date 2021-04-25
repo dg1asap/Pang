@@ -17,38 +17,43 @@ public class ConfigLoader {
     private final Path configPath;
     private GameConfig currentConfig;
 
-    public static ConfigLoader fromConfigPath(Path configPath){
+    public static ConfigLoader fromConfigPath(Path configPath) {
         return new ConfigLoader(configPath);
     }
 
-    public GameConfig getConfig(String name) throws ConfigException {
+    public GameConfig getConfig(String name) {
         try {
             selectConfig(name);
             checkSelectedConfig(name);
-            return getSelectedConfig();
         } catch(ConfigException e) {
             logger.error(e.errorMessage());
-            throw e;
         }
+        return getSelectedConfig();
     }
 
-    protected ConfigLoader(Path configPath){
+    protected ConfigLoader(Path configPath) {
         this.configPath = configPath;
 
         try {
             loadConfigs();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch(ConfigException e) {
+            logger.error(e.errorMessage());
+        } catch(FileNotFoundException e) {
+            logger.error("[FileNotFound] The scanner in ConfigLoader cannot open the file because it does not exist");
         }
     }
 
-    private void loadConfigs() throws FileNotFoundException{
+    private void loadConfigs() throws FileNotFoundException, ConfigException {
         File file = configPath.toFile();
-        Scanner scanner = new Scanner(file);
-        loadConfigsFromScanner(scanner);
+        if (file.exists()) {
+            Scanner scanner = new Scanner(file);
+            loadConfigsFromScanner(scanner);
+        } else {
+            throw ConfigException.configPath(configPath);
+        }
     }
 
-    private void loadConfigsFromScanner(Scanner scanner){
+    private void loadConfigsFromScanner(Scanner scanner) {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             loadDataIntoConfigLoader(line);
@@ -56,7 +61,7 @@ public class ConfigLoader {
         scanner.close();
     }
 
-    void loadDataIntoConfigLoader(String data){
+    void loadDataIntoConfigLoader(String data) {
         if (isConfigName(data))
             addConfig(data);
         else
@@ -72,7 +77,7 @@ public class ConfigLoader {
         configs.add(config);
     }
 
-    private void addAttributeIntoLastAddedConfig(String attributes){
+    private void addAttributeIntoLastAddedConfig(String attributes) {
         String attributeName = getAttributeName(attributes);
         Double attributeValue = getAttributeValue(attributes);
 
@@ -80,12 +85,12 @@ public class ConfigLoader {
         config.addAttribute(attributeName, attributeValue);
     }
 
-    private String getAttributeName(String line){
+    private String getAttributeName(String line) {
         String[] separatedLine = line.split("=");
         return separatedLine[0].trim();
     }
 
-    private Double getAttributeValue(String line){
+    private Double getAttributeValue(String line) {
         String[] separatedLine = line.split("=");
         return Double.valueOf(separatedLine[1]);
     }
@@ -105,11 +110,11 @@ public class ConfigLoader {
             throw ConfigException.missingConfigInPath(name, configPath);
     }
 
-    private boolean isCorrectlyLoadedConfig(String name){
+    private boolean isCorrectlyLoadedConfig(String name) {
         return currentConfig != null && currentConfig.hasName(name);
     }
 
-    private GameConfig getSelectedConfig(){
+    private GameConfig getSelectedConfig() {
         return currentConfig;
     }
 

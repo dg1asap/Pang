@@ -33,7 +33,7 @@ public class GameConfig {
 
     public double getAttribute(String attributeName) {
         setAttribute(attributeName);
-        return this.attribute;
+        return attribute;
     }
 
     protected GameConfig(String name) {
