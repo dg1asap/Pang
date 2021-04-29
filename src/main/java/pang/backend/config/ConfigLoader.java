@@ -39,7 +39,7 @@ public class ConfigLoader {
         } catch(ConfigException e) {
             logger.error(e.errorMessage());
         } catch(FileNotFoundException e) {
-            logger.error("[FileNotFound] The scanner in ConfigLoader cannot open the file because it does not exist");
+            logger.error("[FileNotFound] The scanner in ConfigLoader cannot open the file with path " + configPath + " because it does not exist");
         }
     }
 

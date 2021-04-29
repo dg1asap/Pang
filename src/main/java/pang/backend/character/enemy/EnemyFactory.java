@@ -1,5 +1,8 @@
 package pang.backend.character.enemy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pang.backend.config.GameConfig;
 import pang.backend.config.ConfigLoader;
 
@@ -7,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class EnemyFactory {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final ConfigLoader configLoader;
     private final ArrayList <GameConfig> enemiesConfigs = new ArrayList<>();
     private GameConfig enemyConfig;
@@ -20,7 +24,7 @@ public class EnemyFactory {
     public Enemy createEnemyWithNameAndRespawnTime(String name, Integer spawnTime) throws IllegalArgumentException {
         setEnemyNameAndSpawnTime(name, spawnTime);
         setEnemyConfig(name);
-        return getEnemy();
+        return tryGetEnemy();
     }
 
     protected EnemyFactory(Path configPath) {
@@ -60,12 +64,21 @@ public class EnemyFactory {
         enemiesConfigs.add(enemyConfig);
     }
 
-    private Enemy getEnemy() {
+    private Enemy tryGetEnemy() {
+        try {
+            return getEnemy();
+        } catch (IllegalArgumentException e) {
+            logger.error("[EnemyLoader] Enemy named " + enemyName + "not found");
+        }
+        return null;
+    }
+
+    private Enemy getEnemy() throws IllegalArgumentException {
         return switch (enemyName) {
             case "SmallBall" -> SmallBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
             case "LargeBall" -> LargeBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
             case "MegaBall" -> MegaBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
-            default -> throw new IllegalArgumentException("[EnemyLoader] Enemy named " + enemyName + "not found");
+            default -> throw new IllegalArgumentException();
         };
     }
 
