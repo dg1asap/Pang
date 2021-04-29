@@ -1,4 +1,4 @@
-package pang.backend;
+package pang.backend.character;
 
 public class CharacterPosition {
     private double vertical;
