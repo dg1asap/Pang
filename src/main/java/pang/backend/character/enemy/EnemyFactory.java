@@ -2,36 +2,71 @@ package pang.backend.character.enemy;
 
 import pang.backend.config.GameConfig;
 import pang.backend.config.ConfigLoader;
-import pang.backend.exception.ConfigException;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class EnemyFactory {
-    GameConfig smallBallConfig;
-    GameConfig largeBallConfig;
-    GameConfig megaBallConfig;
+    private final ConfigLoader configLoader;
+    private final ArrayList <GameConfig> enemiesConfigs = new ArrayList<>();
+    private GameConfig enemyConfig;
+    private String enemyName;
+    private int spawnTime;
 
-    public static EnemyFactory fromConfigPath(Path configPath) throws ConfigException {
+    public static EnemyFactory fromConfigPath(Path configPath) {
         return new EnemyFactory(configPath);
     }
 
-    public Enemy create(String name, Integer spawnTime) throws IllegalArgumentException{
-        return switch (name) {
-            case "smallBall" -> SmallBall.fromConfigAndSpawnTime(smallBallConfig, spawnTime);
-            case "largeBall" -> LargeBall.fromConfigAndSpawnTime(largeBallConfig, spawnTime);
-            case "megaBall" -> MegaBall.fromConfigAndSpawnTime(largeBallConfig, spawnTime);
-            default -> throw new IllegalArgumentException("Enemy name not found");
-        };
+    public Enemy createEnemyWithNameAndRespawnTime(String name, Integer spawnTime) throws IllegalArgumentException {
+        setEnemyNameAndSpawnTime(name, spawnTime);
+        setEnemyConfig(name);
+        return getEnemy();
     }
 
-    protected EnemyFactory(Path configPath) throws ConfigException {
-        ConfigLoader smallBallConfigLoader = ConfigLoader.fromConfigPath(configPath);
-        ConfigLoader largeBallConfigLoader = ConfigLoader.fromConfigPath(configPath);
-        ConfigLoader megaBallConfigLoader = ConfigLoader.fromConfigPath(configPath);
+    protected EnemyFactory(Path configPath) {
+        configLoader = ConfigLoader.fromConfigPath(configPath);
+    }
 
-        smallBallConfig = smallBallConfigLoader.getConfig("SmallBall");
-        largeBallConfig = largeBallConfigLoader.getConfig("LargeBall");
-        megaBallConfig = megaBallConfigLoader.getConfig("MegaBall");
+    private void setEnemyNameAndSpawnTime(String name, int spawnTime) {
+        this.enemyName = name;
+        this.spawnTime = spawnTime;
+    }
+
+    private void setEnemyConfig(String name) {
+        setEnemyConfigFromData(name);
+        ifNoEnemyConfigInDataSetNew(name);
+    }
+
+    private void setEnemyConfigFromData(String name) {
+        enemiesConfigs.forEach((config) -> ifEnemyConfigHasNameSet(config, name));
+    }
+
+    private void ifEnemyConfigHasNameSet(GameConfig config, String name) {
+        if(config.hasName(name))
+            enemyConfig = config;
+    }
+
+    private void ifNoEnemyConfigInDataSetNew(String name) {
+        if (hasEnemyConfig(name))
+            setNewEnemyConfig(name);
+    }
+
+    private boolean hasEnemyConfig(String name) {
+        return enemyConfig == null || !enemyConfig.hasName(name);
+    }
+
+    private void setNewEnemyConfig(String name) {
+        enemyConfig = configLoader.getConfig(name);
+        enemiesConfigs.add(enemyConfig);
+    }
+
+    private Enemy getEnemy() {
+        return switch (enemyName) {
+            case "SmallBall" -> SmallBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
+            case "LargeBall" -> LargeBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
+            case "MegaBall" -> MegaBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
+            default -> throw new IllegalArgumentException("[EnemyLoader] Enemy named " + enemyName + "not found");
+        };
     }
 
 }

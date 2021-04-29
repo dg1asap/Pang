@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class GameConfig {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final String name;
-    private final ArrayList <String> namesOfAttributes = new ArrayList<>(100);
-    private final ArrayList <Double> valuesOfAttributes = new ArrayList<>(100);
+    private final ArrayList <String> namesOfAttributes = new ArrayList<>();
+    private final ArrayList <Double> valuesOfAttributes = new ArrayList<>();
     private double attribute;
 
     public static GameConfig byName(String name) {

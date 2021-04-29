@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class ConfigLoader {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    private final ArrayList <GameConfig> configs = new ArrayList<>(100);
+    private final ArrayList <GameConfig> configs = new ArrayList<>();
     private final Path configPath;
     private GameConfig currentConfig;
 

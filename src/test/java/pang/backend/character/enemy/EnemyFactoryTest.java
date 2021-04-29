@@ -13,26 +13,26 @@ public class EnemyFactoryTest {
     static EnemyFactory enemyFactory;
 
     @BeforeAll
-    static void createEnemyFactory() throws ConfigException {
+    static void createEnemyFactory() {
         Path configPath = Path.of("./data/test/configs/EnemyFactoryTest.txt");
         enemyFactory = EnemyFactory.fromConfigPath(configPath);
     }
 
     @Test
-    void testSpawnSmallBall(){
-        Enemy smallBall = enemyFactory.create("smallBall", 9999999);
+    void testSpawnSmallBall() {
+        Enemy smallBall = enemyFactory.createEnemyWithNameAndRespawnTime("SmallBall", 9999999);
         assertTrue(smallBall instanceof SmallBall);
     }
 
     @Test
-    void testSpawnLargeBall(){
-        Enemy largeBall = enemyFactory.create("largeBall", 1000);
+    void testSpawnLargeBall() {
+        Enemy largeBall = enemyFactory.createEnemyWithNameAndRespawnTime("LargeBall", 1000);
         assertTrue(largeBall instanceof LargeBall);
     }
 
     @Test
-    void testMegaLargeBall(){
-        Enemy megaBall = enemyFactory.create("megaBall", 1000);
+    void testMegaLargeBall() {
+        Enemy megaBall = enemyFactory.createEnemyWithNameAndRespawnTime("MegaBall", 1000);
         assertTrue(megaBall instanceof MegaBall);
     }
 }
