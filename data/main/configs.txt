@@ -1,11 +1,11 @@
 Player
     health=10
     damage=1.5
-    speed=1.25
-    height=5.5
-    width=3.167
+    speed=10
+    height=50
+    width=50
     ammunition=21
-    gravityForce=1.12
+    gravityForce=2
     startPosX=50
     startPosY=100
 World
