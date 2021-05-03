@@ -2,7 +2,9 @@ package pang.backend.character;
 
 import pang.backend.config.GameConfig;
 
-public class Character {
+import java.awt.*;
+
+public class Character extends Rectangle {
 
     protected double health;
     protected double damage;
