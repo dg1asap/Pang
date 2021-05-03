@@ -13,7 +13,7 @@ public class Screen extends JFrame {
         this.setTitle("PANG");
         ImageIcon logo = new ImageIcon("logo1.png");
         this.setIconImage(logo.getImage());
-        this.setResizable(false); //trzeba bedzie zmienic
+        this.setResizable(true); //TODO 1. trzeba bedzie zmienic na okno skalowalne
         this.setBackground(Color.orange);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
