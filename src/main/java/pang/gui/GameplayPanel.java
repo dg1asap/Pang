@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class GameplayPanel extends PangPanel{
     GameplayPanel(Screen screen) {
-        JButton backButton = createButtonToChangeWindowTo("BackG","Menu", screen);
+        JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         add(backButton);
     }
 }
