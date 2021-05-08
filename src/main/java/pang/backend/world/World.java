@@ -30,6 +30,10 @@ public class World {
         return !player.isAlive();
     }
 
+    public void steer(String keyName, double value){
+
+    }
+
     protected World(GameConfig worldConfig, Player player){
         int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);

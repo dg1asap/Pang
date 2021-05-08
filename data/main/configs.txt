@@ -29,4 +29,7 @@ MegaBall
     speed=1.12
     height=6.81
     width=6.81
+Keyboard
+    VK_D=20
+    VK_A=-20
 

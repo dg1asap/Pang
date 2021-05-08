@@ -12,13 +12,20 @@ public class Screen implements ActionListener {
     JFrame mainWindow = new JFrame();
     PanelCreator panelCreator;
     //Audio audio;
-    private int prefferedGameWidth;
-    private int prefferedGameHeight;
+    private int preferredGameWidth;
+    private int preferredGameHeight;
 
     private JLabel actualLevel;
 
     public JLabel getActualLevel(){
         return actualLevel;
+    }
+
+    public int getPreferredGameWidth(){
+        return preferredGameWidth;
+    }
+    public int getPreferredGameHeight(){
+        return preferredGameHeight;
     }
 
     private void makeLabels(){
@@ -40,8 +47,8 @@ public class Screen implements ActionListener {
         mainWindow.setTitle("Pang");
         setScreenResolution();
         mainWindow.setResizable(true);
-        mainWindow.setPreferredSize(new Dimension(prefferedGameWidth, prefferedGameHeight));
-        mainWindow.setMinimumSize(new Dimension(prefferedGameWidth, prefferedGameHeight));
+        mainWindow.setPreferredSize(new Dimension(preferredGameWidth, preferredGameHeight));
+        mainWindow.setMinimumSize(new Dimension(preferredGameWidth, preferredGameHeight));
         mainWindow.setMaximumSize(getMaxScreenSize());
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.pack();
@@ -64,8 +71,8 @@ public class Screen implements ActionListener {
 
     private void setScreenResolution(){
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        prefferedGameWidth = (int)size.getWidth()/2;
-        prefferedGameHeight = (int)size.getHeight()/2;
+        preferredGameWidth = (int)size.getWidth()/2;
+        preferredGameHeight = (int)size.getHeight()/2;
     }
 
     private Dimension getMaxScreenSize(){

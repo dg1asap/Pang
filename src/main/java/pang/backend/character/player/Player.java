@@ -3,6 +3,9 @@ package pang.backend.character.player;
 import pang.backend.character.Character;
 import pang.backend.character.Movement;
 import pang.backend.config.GameConfig;
+import pang.hardware.Screen;
+
+import java.awt.*;
 
 public class Player extends Character implements Movement {
 
@@ -10,6 +13,7 @@ public class Player extends Character implements Movement {
     double gravityForce;
     double dx = 1;
     double dy = 1;
+
 
     public Player(GameConfig config){
 
