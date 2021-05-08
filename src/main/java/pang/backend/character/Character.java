@@ -41,25 +41,7 @@ public class Character {
         return width;
     }
 
-    public void setHealth(double health){
-        this.health = health;
-    }
 
-    public void setDamage(double damage){
-        this.damage = damage;
-    }
-
-    public void setSpeed(double speed){
-        this.speed = speed;
-    }
-
-    public void setHeight(double height){
-        this.height = height;
-    }
-
-    public void setWidth(double width){
-        this.width = width;
-    }
 
     public double getYPosition(){
         return position.getVertical();
@@ -87,5 +69,30 @@ public class Character {
 
     public boolean isAlive(){
         return health > 0;
+    }
+
+
+
+
+
+
+    private void setHealth(double health){
+        this.health = health;
+    }
+
+    private void setDamage(double damage){
+        this.damage = damage;
+    }
+
+    private void setSpeed(double speed){
+        this.speed = speed;
+    }
+
+    private void setHeight(double height){
+        this.height = height;
+    }
+
+    private void setWidth(double width){
+        this.width = width;
     }
 }
