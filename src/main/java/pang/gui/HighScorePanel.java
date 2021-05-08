@@ -11,4 +11,10 @@ public class HighScorePanel extends PangPanel {
         add(highScore);
         add(backButton);
     }
+
+    @Override
+    public boolean hasKeyListener() {
+        return false;
+    }
+
 }

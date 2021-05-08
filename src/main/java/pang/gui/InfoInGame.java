@@ -19,7 +19,6 @@ public class InfoInGame {
         xPosOfInfo = screen.getPreferredGameWidth();
     }
 
-
     public void paint (Graphics g){
         g.setColor(Color.black);
         g.setFont(new Font("Consolas", Font.PLAIN,15));
@@ -27,4 +26,5 @@ public class InfoInGame {
         g.drawString("Health: " + health, xPosOfInfo - 90, 40);
         g.drawString("Ammo: " + ammo, 5, 20);
     }
+
 }

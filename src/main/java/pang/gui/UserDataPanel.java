@@ -22,6 +22,12 @@ public class UserDataPanel extends PangPanel {
         add(cancelButton);
 
     }
+
+    @Override
+    public boolean hasKeyListener() {
+        return false;
+    }
+
 }
 
 

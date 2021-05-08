@@ -17,7 +17,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     GameConfig keyboardConfig;
     World world;
 
-    GameplayPanel(Screen screen) {
+    public GameplayPanel(Screen screen) {
         Path configPath = Path.of("./data/main/configs.txt");
         ConfigLoader configLoader = ConfigLoader.fromConfigPath(configPath);
         keyboardConfig = configLoader.getConfig("Keyboard");
@@ -32,9 +32,8 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     public void paint (Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.RED);
-        g.fillRect(100, 100, 20, 20);
         infoInGame.paint(g);
+        world.draw(g);
     }
 
 
@@ -43,25 +42,37 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         Path defaultLevelPath = Path.of("./data/main/level/1.txt");
         WorldLoader worldLoader = WorldLoader.fromConfigPathAndLevelPath(defaultConfigPath, defaultLevelPath);
         world = worldLoader.getWorld();
-        System.out.println("Config loaded");
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        System.out.println("ty");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        String keyName = e.toString();
-        double value = keyboardConfig.getAttribute(keyName);
-        world.steer(keyName,value);
+        char keyChar = e.getKeyChar();
+        double value = keyboardConfig.getAttribute(String.valueOf(keyChar));
+        world.steer(keyChar, value);
+        repaint(); //TODO jest ok ale w sumie nie nie ten poziom abstrakcji, do zmiany żeby lepeij wyglądało
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        System.out.println("re");
     }
+
+    @Override
+    public boolean hasKeyListener(){
+        return true;
+    }
+
+
+    @Override
+    public KeyListener getKeyListener(){
+        return this;
+    }
+
 }
 
 

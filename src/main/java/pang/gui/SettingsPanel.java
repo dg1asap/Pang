@@ -24,4 +24,9 @@ public class SettingsPanel extends PangPanel {
         add(backButton);
 
     }
+
+    @Override
+    public boolean hasKeyListener() {
+        return false;
+    }
 }

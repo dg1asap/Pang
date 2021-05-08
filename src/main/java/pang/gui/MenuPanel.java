@@ -28,4 +28,10 @@ public class MenuPanel extends PangPanel {
         add(quitButton);
 
     }
+
+    @Override
+    public boolean hasKeyListener() {
+        return false;
+    }
+
 }
