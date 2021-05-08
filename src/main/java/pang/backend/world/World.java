@@ -4,6 +4,7 @@ import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.config.GameConfig;
 
+import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class World {
@@ -30,8 +31,12 @@ public class World {
         return !player.isAlive();
     }
 
-    public void steer(String keyName, double value){
+    public void steer(char keyChar, double value){
+        player.steer(keyChar, value);
+    }
 
+    public void draw(Graphics playerGraphic) {
+        player.draw(playerGraphic);
     }
 
     protected World(GameConfig worldConfig, Player player){

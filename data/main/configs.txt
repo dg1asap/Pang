@@ -2,15 +2,15 @@ Player
     health=10
     damage=1.5
     speed=1.25
-    height=5.5
-    width=3.167
+    height=20
+    width=20
     ammunition=21
     gravityForce=1.12
-    startPosX=50
-    startPosY=100
+    posX=50.1
+    posY=100.2
 World
     worldCapacity=100
-    maxSpawnCount 50
+    maxSpawnCount=50
 SmallBall
     health=1
     damage=1
@@ -30,6 +30,5 @@ MegaBall
     height=6.81
     width=6.81
 Keyboard
-    VK_D=20
-    VK_A=-20
-
+    a=-20
+    d=20

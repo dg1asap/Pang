@@ -1,5 +1,6 @@
 package pang.hardware;
 
+import pang.gui.GameplayPanel;
 import pang.gui.PanelCreator;
 import pang.gui.PangPanel;
 
@@ -58,12 +59,18 @@ public class Screen implements ActionListener {
 
         setColour();
         mainWindow.setLocationRelativeTo(null);
+        mainWindow.setFocusable(true);
         mainWindow.setVisible(true);
     }
 
     public void render(String panelName){
         PangPanel newPanel = panelCreator.create(panelName);
         mainWindow.setContentPane(newPanel);
+
+        if (newPanel.hasKeyListener()) {
+            mainWindow.addKeyListener(newPanel.getKeyListener());
+        }
+
         setColour();
         mainWindow.getContentPane().repaint();
         mainWindow.validate();
