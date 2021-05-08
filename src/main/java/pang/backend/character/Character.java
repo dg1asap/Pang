@@ -2,47 +2,31 @@ package pang.backend.character;
 
 import pang.backend.config.GameConfig;
 
-public class Character {
+import java.util.HashMap;
+import java.util.Map;
 
-    protected double health;
-    protected double damage;
-    protected double speed;
-    protected double height;
-    protected double width;
-    boolean collision = false;
-    CharacterPosition position = new CharacterPosition();
+public class Character {
+    protected Map<String, Double> stats = new HashMap<>();
+
+    //boolean collision = false;
+    //CharacterPosition position = new CharacterPosition();
 
     public Character(GameConfig config){
-        this.setHealth(config.getAttribute("health"));
-        this.setDamage(config.getAttribute("damage"));
-        this.setSpeed(config.getAttribute("speed"));
-        this.setHeight(config.getAttribute("height"));
-        this.setWidth(config.getAttribute("width"));
+        addStat(config,"health", "damage", "speed", "height", "width");
+    }
+
+    protected void addStat(GameConfig config, String... newStats) {
+        for(String stat : newStats) {
+            stats.put(stat, config.getAttribute(stat));
+        }
+    }
+
+    public double getStat(String statName) {
+        return stats.get(statName);
     }
 
 
-    public double getHealth(){
-        return health;
-    }
-
-    public double getDamage(){
-        return damage;
-    }
-
-    public double getSpeed(){
-        return speed;
-    }
-
-    public double getHeight(){
-        return height;
-    }
-
-    public double getWidth(){
-        return width;
-    }
-
-
-
+/*
     public double getYPosition(){
         return position.getVertical();
     }
@@ -66,33 +50,11 @@ public class Character {
     public void changePosY(double dy){
         position.changeVertical(dy);
     }
+ */
+
 
     public boolean isAlive(){
-        return health > 0;
+        return stats.get("health") > 0;
     }
 
-
-
-
-
-
-    private void setHealth(double health){
-        this.health = health;
-    }
-
-    private void setDamage(double damage){
-        this.damage = damage;
-    }
-
-    private void setSpeed(double speed){
-        this.speed = speed;
-    }
-
-    private void setHeight(double height){
-        this.height = height;
-    }
-
-    private void setWidth(double width){
-        this.width = width;
-    }
 }

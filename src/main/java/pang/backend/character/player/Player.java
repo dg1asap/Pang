@@ -3,50 +3,50 @@ package pang.backend.character.player;
 import pang.backend.character.Character;
 import pang.backend.character.Movement;
 import pang.backend.config.GameConfig;
-import pang.hardware.Screen;
 
 import java.awt.*;
 
 public class Player extends Character implements Movement {
-
-    int ammoAmount;
-    double gravityForce;
-    double dx = 1;
-    double dy = 1;
-
-
     public Player(GameConfig config){
-
         super(config);
-        ammoAmount = (int) config.getAttribute("ammunition");
-        gravityForce = config.getAttribute("gravityForce");
+        addStat(config, "ammunition", "gravityForce", "posX", "posY");
+    }
 
-        this.setPosX(config.getAttribute("startPosX"));
-        this.setPosY(config.getAttribute("startPosY"));
+    public void steer(char keyChar, double value) {
+        PlayerReaction playerReaction = new PlayerReaction();
+        String playerParameter = playerReaction.fromKeyName(keyChar);
+//        if(!(playerReaction == "PosY") && getStat("posY") <= 0 )
+        stats.computeIfPresent(playerParameter, (k, v) -> v + value);
+    }
+
+    public void draw(Graphics playerGraphic) {
+        playerGraphic.setColor(Color.RED);
+        Double width = stats.get("width");
+        Double height = stats.get("height");
+        Double posX = stats.get("posX");
+        Double posY = stats.get("posY");
+        System.out.println(posX);
+
+        int integerWidth = width.intValue();
+        int integerHeight = height.intValue();
+        int integerPosX = posX.intValue();
+        int integerPosY = posY.intValue();
+        playerGraphic.fillRect(integerPosX, integerPosY, integerWidth, integerHeight);
     }
 
     void shoot(){
-        ammoAmount += -1;
+        //ammoAmount += -1;
         //Not implemented yet
     }
 
-    int getAmmoAmount(){
-        return ammoAmount;
-    }
-
-    double getGravityForce(){
-        return gravityForce;
-    }
-
-
     @Override
     public void changeYDirection(){
-        this.changePosY(dy);
+        //this.changePosY(dy);
     }
 
     @Override
     public void changeXDirection(){
-        this.changePosX(dx);
+        //this.changePosX(dx);
     }
 
     @Override
@@ -54,14 +54,5 @@ public class Player extends Character implements Movement {
         return false; //Not implemented yet
     }
 
-    //public boolean wallCollisionHappened(){
-    //    if(this.getXPosition() == 0 || this.getXPosition() == GameWindow.getXSize()){ //window size ex. (0,1000);
-    //        return true;
-    //   }
-    //}
-
-   // public boolean enemyCollisionHappened(){
-
-   // }
 
 }
