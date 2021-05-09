@@ -25,8 +25,8 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         infoInGame = new InfoInGame(screen);
 
         loadConfig();
-        JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
-        add(backButton);
+        //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
+        //add(backButton);
 
     }
 
