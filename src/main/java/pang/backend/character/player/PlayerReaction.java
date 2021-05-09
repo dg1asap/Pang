@@ -5,6 +5,7 @@ public class PlayerReaction {
         return switch (keyName) {
             case 'a', 'd' -> "posX";
             case 'w' -> "posY";
+            case 's' -> "posY"; //chwilowe
             default -> "none";
         };
     }
