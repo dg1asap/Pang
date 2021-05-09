@@ -13,8 +13,8 @@ public class Screen implements ActionListener {
     JFrame mainWindow = new JFrame();
     PanelCreator panelCreator;
     //Audio audio;
-    private int preferredGameWidth;
-    private int preferredGameHeight;
+    private static int preferredGameWidth;
+    private static int preferredGameHeight;
 
     private JLabel actualLevel;
 
@@ -22,10 +22,10 @@ public class Screen implements ActionListener {
         return actualLevel;
     }
 
-    public int getPreferredGameWidth(){
+    public static int getPreferredGameWidth(){
         return preferredGameWidth;
     }
-    public int getPreferredGameHeight(){
+    public static int getPreferredGameHeight(){
         return preferredGameHeight;
     }
 
