@@ -19,7 +19,9 @@ public class InfoInGame {
         xPosOfInfo = screen.getPreferredGameWidth();
     }
 
-    public void paint (Graphics g){
+
+
+    public void draw (Graphics g){
         g.setColor(Color.black);
         g.setFont(new Font("Consolas", Font.PLAIN,15));
         g.drawString("Score: " + score, xPosOfInfo - 90, 20);

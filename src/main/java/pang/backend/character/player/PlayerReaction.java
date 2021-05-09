@@ -4,8 +4,8 @@ public class PlayerReaction {
     public String fromKeyName(char keyName) {
         return switch (keyName) {
             case 'a', 'd' -> "posX";
-            case 'w' -> "posY";
-            case 's' -> "posY"; //chwilowe
+            case 'w', 's'-> "posY";
+            case 'k' -> "ammunition";
             default -> "none";
         };
     }

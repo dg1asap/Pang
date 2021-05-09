@@ -49,6 +49,8 @@ public class Screen implements ActionListener {
         setScreenResolution();
         mainWindow.setResizable(true);
         mainWindow.setPreferredSize(new Dimension(preferredGameWidth, preferredGameHeight));
+        mainWindow.setResizable(false);
+
         mainWindow.setMinimumSize(new Dimension(preferredGameWidth, preferredGameHeight));
         mainWindow.setMaximumSize(getMaxScreenSize());
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

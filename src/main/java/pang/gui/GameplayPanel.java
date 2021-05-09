@@ -32,9 +32,10 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     public void paint (Graphics g) {
         super.paintComponent(g);
-        infoInGame.paint(g);
+        infoInGame.draw(g);
         world.draw(g);
     }
+
 
 
     private void loadConfig() {
