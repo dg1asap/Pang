@@ -16,6 +16,7 @@ public class PangFrame extends JFrame {
     }
 
     public PangFrame() {
+        setColour();
         setTitle("Pang");
         setScreenResolution();
         setResizable(true);
