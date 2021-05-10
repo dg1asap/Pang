@@ -3,7 +3,6 @@ package pang.gui;
 import pang.hardware.Screen;
 
 import javax.swing.*;
-import java.awt.event.KeyListener;
 
 public class LevelPanel extends PangPanel {
     public LevelPanel(Screen screen) {

@@ -28,27 +28,17 @@ public class Audio implements MusicPlayer {
         return this.getPlayingStatus();
     }
 
-    Path getPath(){
+    public Path getPath(){
         return path;
     }
 
-    long getTime(){
+    public long getTime(){
         return time;
     }
 
     public void endMusic(){
         sample.stop();
         sample.close();
-    }
-
-    public boolean getPlayingStatus(){
-        return isPlaying;
-    }
-    public void setIsPlaying(){
-        isPlaying = true;
-    }
-    public void setNotPlaying(){
-        isPlaying = false;
     }
 
     public void load(){
@@ -102,6 +92,18 @@ public class Audio implements MusicPlayer {
             sample.loop(sample.LOOP_CONTINUOUSLY);
             setIsPlaying();
         }
+    }
+
+    private boolean getPlayingStatus(){
+        return isPlaying;
+    }
+
+    private void setIsPlaying(){
+        isPlaying = true;
+    }
+
+    private void setNotPlaying(){
+        isPlaying = false;
     }
 
 }

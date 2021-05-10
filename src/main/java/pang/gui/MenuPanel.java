@@ -4,7 +4,6 @@ import pang.hardware.Screen;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class MenuPanel extends PangPanel {
     MenuPanel(Screen screen) {
@@ -19,7 +18,6 @@ public class MenuPanel extends PangPanel {
         JButton quitButton = new JButton("QUIT");
         quitButton.addActionListener(e -> System.exit(0));
         quitButton.setForeground(new Color(0xFF0000));
-
 
         add(playButton);
         add(levelButton);

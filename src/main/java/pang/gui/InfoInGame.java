@@ -1,7 +1,5 @@
 package pang.gui;
 
-import pang.hardware.Screen;
-
 import java.awt.*;
 
 public class InfoInGame {
@@ -9,17 +7,17 @@ public class InfoInGame {
     private int score;
     private int health;
     private int ammo;
-    private int xPosOfInfo;
+    private int xPosOfInfo = 550;
 
-    public InfoInGame(Screen screen){
-        setXPosOfInfo(screen);
+    public InfoInGame(int score, int health, int ammo){
+        setNewPlayerInfo(score, health, ammo);
     }
 
-    public void setXPosOfInfo(Screen screen) {
-        xPosOfInfo = screen.getPreferredGameWidth();
+    public void setNewPlayerInfo(int score, int health, int ammo){
+        this.score = score;
+        this.health = health;
+        this.ammo = ammo;
     }
-
-
 
     public void draw (Graphics g){
         g.setColor(Color.black);

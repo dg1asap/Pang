@@ -1,6 +1,5 @@
 package pang.hardware;
 
-import pang.gui.GameplayPanel;
 import pang.gui.PanelCreator;
 import pang.gui.PangPanel;
 
@@ -10,27 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Screen implements ActionListener {
-    JFrame mainWindow = new JFrame();
-    PanelCreator panelCreator;
-    //Audio audio;
+
     private static int preferredGameWidth;
     private static int preferredGameHeight;
 
+    private JFrame mainWindow = new JFrame();
+    private PanelCreator panelCreator;
     private JLabel actualLevel;
-
-    public JLabel getActualLevel(){
-        return actualLevel;
-    }
 
     public static int getPreferredGameWidth(){
         return preferredGameWidth;
     }
+
     public static int getPreferredGameHeight(){
         return preferredGameHeight;
     }
 
-    private void makeLabels(){
-        actualLevel = new JLabel("Default difficulty level: NORMAL");
+    public JLabel getActualLevel(){
+        return actualLevel;
     }
 
     public void setPanelCreator(PanelCreator panelCreator){
@@ -49,7 +45,7 @@ public class Screen implements ActionListener {
         setScreenResolution();
         mainWindow.setResizable(true);
         mainWindow.setPreferredSize(new Dimension(preferredGameWidth, preferredGameHeight));
-        mainWindow.setResizable(false);
+        //mainWindow.setResizable(false);
 
         mainWindow.setMinimumSize(new Dimension(preferredGameWidth, preferredGameHeight));
         mainWindow.setMaximumSize(getMaxScreenSize());
@@ -86,6 +82,10 @@ public class Screen implements ActionListener {
 
     private Dimension getMaxScreenSize(){
         return new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
+    }
+
+    private void makeLabels(){
+        actualLevel = new JLabel("Default difficulty level: NORMAL");
     }
 
     private void setColour(){

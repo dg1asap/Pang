@@ -12,7 +12,6 @@ public class UserDataPanel extends PangPanel {
 
         JLabel inputDataText= new JLabel("Please input your nick");
 
-
         JButton okButton = createButtonToChangeWindowTo("Submit","Gameplay", screen);
         JButton cancelButton = createButtonToChangeWindowTo("Cancel","Menu", screen);
 

@@ -6,10 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Character {
-    protected Map<String, Double> stats = new HashMap<>();
-
-    //boolean collision = false;
-    //CharacterPosition position = new CharacterPosition();
+    private Map<String, Double> stats = new HashMap<>();
 
     public Character(GameConfig config){
         addStat(config,"health", "damage", "speed", "height", "width");
@@ -21,37 +18,13 @@ public class Character {
         }
     }
 
-    public double getStat(String statName) {
+    protected Double getStat(String statName) {
         return stats.get(statName);
     }
 
-
-/*
-    public double getYPosition(){
-        return position.getVertical();
+    protected void increaseStatByValue(String stat, double value){
+        stats.computeIfPresent(stat, (k, v) -> v + value);
     }
-
-    public double getXPosition(){
-        return position.getHorizontal();
-    }
-
-    public void setPosX(double posX){
-        position.setHorizontal(posX);
-    }
-
-    public void setPosY(double posY){
-        position.setVertical(posY);
-    }
-
-    public void changePosX(double dx){
-        position.changeHorizontal(dx);
-    }
-
-    public void changePosY(double dy){
-        position.changeVertical(dy);
-    }
- */
-
 
     public boolean isAlive(){
         return stats.get("health") > 0;

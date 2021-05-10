@@ -6,37 +6,29 @@ import pang.backend.world.World;
 import pang.backend.world.WorldLoader;
 import pang.hardware.Screen;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
-    InfoInGame infoInGame;
-    GameConfig keyboardConfig;
-    World world;
+    private GameConfig keyboardConfig;
+    private World world;
 
     public GameplayPanel(Screen screen) {
         Path configPath = Path.of("./data/main/configs.txt");
         ConfigLoader configLoader = ConfigLoader.fromConfigPath(configPath);
         keyboardConfig = configLoader.getConfig("Keyboard");
 
-        infoInGame = new InfoInGame(screen);
-
         loadConfig();
         //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
         //add(backButton);
-
     }
 
     public void paint (Graphics g) {
         super.paintComponent(g);
-        infoInGame.draw(g);
         world.draw(g);
     }
-
-
 
     private void loadConfig() {
         Path defaultConfigPath = Path.of("./data/main/configs.txt");
@@ -47,7 +39,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("ty");
     }
 
     @Override
@@ -60,7 +51,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("re");
     }
 
     @Override
