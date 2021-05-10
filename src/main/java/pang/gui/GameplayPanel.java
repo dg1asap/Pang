@@ -65,7 +65,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void ifKeyCharHasConfigSteer(char keyChar) {
-        PlayerReaction playerReaction = new PlayerReaction();
         if (isConfigForKeyChar(keyChar)) {
             double value = keyboardConfig.getAttribute(String.valueOf(keyChar));
             world.steer(keyChar, value);
@@ -74,7 +73,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     private boolean isConfigForKeyChar(char keyChar) {
         PlayerReaction playerReaction = new PlayerReaction();
-        return "none".equals(playerReaction.fromKeyName(keyChar));
+        return !"none".equals(playerReaction.fromKeyName(keyChar));
     }
 
 }

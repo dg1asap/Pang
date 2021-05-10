@@ -1,13 +1,11 @@
 package pang.backend.character.player;
 
-import pang.Pang;
 import pang.backend.Bullet;
 import pang.backend.BulletController;
 import pang.backend.character.Character;
 import pang.backend.config.GameConfig;
 import pang.gui.InfoInGame;
 import pang.gui.PangFrame;
-import pang.hardware.Screen;
 
 import java.awt.*;
 
