@@ -1,5 +1,6 @@
 package pang.gui;
 
+import pang.backend.character.player.PlayerReaction;
 import pang.backend.config.ConfigLoader;
 import pang.backend.config.GameConfig;
 import pang.backend.world.World;
@@ -30,13 +31,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         world.draw(g);
     }
 
-    private void loadConfig() {
-        Path defaultConfigPath = Path.of("./data/main/configs.txt");
-        Path defaultLevelPath = Path.of("./data/main/level/1.txt");
-        WorldLoader worldLoader = WorldLoader.fromConfigPathAndLevelPath(defaultConfigPath, defaultLevelPath);
-        world = worldLoader.getWorld();
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -44,8 +38,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         char keyChar = e.getKeyChar();
-        double value = keyboardConfig.getAttribute(String.valueOf(keyChar));
-        world.steer(keyChar, value);
+        ifKeyCharHasConfigSteer(keyChar);
         repaint(); //TODO jest ok ale w sumie nie nie ten poziom abstrakcji, do zmiany żeby lepeij wyglądało
     }
 
@@ -62,6 +55,26 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     @Override
     public KeyListener getKeyListener(){
         return this;
+    }
+
+    private void loadConfig() {
+        Path defaultConfigPath = Path.of("./data/main/configs.txt");
+        Path defaultLevelPath = Path.of("./data/main/level/1.txt");
+        WorldLoader worldLoader = WorldLoader.fromConfigPathAndLevelPath(defaultConfigPath, defaultLevelPath);
+        world = worldLoader.getWorld();
+    }
+
+    private void ifKeyCharHasConfigSteer(char keyChar) {
+        PlayerReaction playerReaction = new PlayerReaction();
+        if (isConfigForKeyChar(keyChar)) {
+            double value = keyboardConfig.getAttribute(String.valueOf(keyChar));
+            world.steer(keyChar, value);
+        }
+    }
+
+    private boolean isConfigForKeyChar(char keyChar) {
+        PlayerReaction playerReaction = new PlayerReaction();
+        return "none".equals(playerReaction.fromKeyName(keyChar));
     }
 
 }
