@@ -17,9 +17,9 @@ public class Player extends Character{
     private boolean isShooting = true;
     private InfoInGame infoInGame;
 
-    public Player(GameConfig config){
+    public Player(GameConfig config) {
         super(config);
-        addStat(config, "ammunition", "gravityForce", "posX", "posY");
+        addStat(config, "ammunition", "gravityForce");
         setPlayerStartPosition();
         loadBullets();
         turnOffShooting();
@@ -48,8 +48,10 @@ public class Player extends Character{
     }
 
     private void setPlayerStartPosition(){
-        startPosX = PangFrame.getPreferredGameWidth()/2 - getPlayerWidth()/2;
-        startPosY = PangFrame.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        //startPosX = PangFrame.getPreferredGameWidth()/2 - getPlayerWidth()/2;
+        //startPosY = PangFrame.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        startPosX = 0;
+        startPosY = 0;
     }
 
     private void loadBullets(){

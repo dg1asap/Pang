@@ -1,10 +1,12 @@
 package pang.backend.world;
 
+import pang.backend.character.PangPosition;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.enemy.EnemyFactory;
 import pang.backend.character.player.Player;
 import pang.backend.config.ConfigLoader;
 import pang.backend.config.GameConfig;
+import pang.gui.PangFrame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,8 +34,9 @@ public class WorldLoader {
 
     private void createWorld(Path configPath) {
         GameConfig worldConfig = getWorldConfig(configPath);
+        PangPosition extremePointOfMap = new PangPosition(PangFrame.getPreferredGameWidth(), PangFrame.getPreferredGameHeight());
         Player player = createPlayer(configPath);
-        world = World.fromWorldConfigAndPlayer(worldConfig, player);
+        world = new World(worldConfig, extremePointOfMap, player);
     }
 
     private GameConfig getWorldConfig(Path configPath) {

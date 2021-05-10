@@ -1,7 +1,9 @@
 package pang.backend.world;
 
+import pang.backend.character.PangPosition;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
+import pang.backend.character.player.PlayerReaction;
 import pang.backend.config.GameConfig;
 
 import java.awt.*;
@@ -10,9 +12,13 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class World {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
+    private WorldBorder worldBorder;
 
-    public static World fromWorldConfigAndPlayer(GameConfig worldConfig, Player player){
-        return new World(worldConfig, player);
+    public World(GameConfig worldConfig, PangPosition extremePointOfMap, Player player){
+        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
+        this.enemies = new ArrayBlockingQueue<>(worldCapacity);
+        this.player = player;
+        this.worldBorder = new WorldBorder(extremePointOfMap);
     }
 
     public void addEnemy(Enemy enemy){
@@ -31,19 +37,19 @@ public class World {
         return !player.isAlive();
     }
 
-    public void steer(char keyChar, double value){
-        player.steer(keyChar, value);
-    }
-
     public void draw(Graphics g) {
         player.draw(g);
     }
 
-    protected World(GameConfig worldConfig, Player player){
-        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
-        this.enemies = new ArrayBlockingQueue<>(worldCapacity);
-        this.player = player;
+    public void steer(char keyChar, double value){
+        if (canPlayerSteer(keyChar, value))
+            player.steer(keyChar, value);
+    }
 
+    public boolean canPlayerSteer(char keyChar, double value) {
+        PlayerReaction playerReaction = new PlayerReaction();
+        String direction = playerReaction.fromKeyName(keyChar);
+        return worldBorder.isInBorderOfWorld(player,direction,(int)value);
     }
 
 }
