@@ -1,10 +1,12 @@
 package pang.backend.character.player;
 
+import pang.Pang;
 import pang.backend.Bullet;
 import pang.backend.BulletController;
 import pang.backend.character.Character;
 import pang.backend.config.GameConfig;
 import pang.gui.InfoInGame;
+import pang.gui.PangFrame;
 import pang.hardware.Screen;
 
 import java.awt.*;
@@ -48,8 +50,8 @@ public class Player extends Character{
     }
 
     private void setPlayerStartPosition(){
-        startPosX = Screen.getPreferredGameWidth()/2 - getPlayerWidth()/2;
-        startPosY = Screen.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        startPosX = PangFrame.getPreferredGameWidth()/2 - getPlayerWidth()/2;
+        startPosY = PangFrame.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
     }
 
     private void loadBullets(){

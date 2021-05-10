@@ -1,100 +1,48 @@
 package pang.hardware;
 
 import pang.gui.PanelCreator;
+import pang.gui.PangFrame;
 import pang.gui.PangPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Screen implements ActionListener {
-
-    private static int preferredGameWidth;
-    private static int preferredGameHeight;
-
-    private JFrame mainWindow = new JFrame();
+    private PangFrame mainWindow = new PangFrame();
     private PanelCreator panelCreator;
     private JLabel actualLevel;
 
-    public static int getPreferredGameWidth(){
-        return preferredGameWidth;
+    public Screen() {
+        this.panelCreator = new PanelCreator(this);
+        render("Menu");
+        makeLabels();
     }
 
-    public static int getPreferredGameHeight(){
-        return preferredGameHeight;
-    }
-
-    public JLabel getActualLevel(){
-        return actualLevel;
-    }
-
-    public void setPanelCreator(PanelCreator panelCreator){
+    public void setPanelCreator(PanelCreator panelCreator) {
         this.panelCreator = panelCreator;
     }
 
-    public Screen() {
-        makeScreen();
-    }
-
-    public void makeScreen(){
-        this.panelCreator = new PanelCreator(this);
-
-        PangPanel startPanel = panelCreator.create("Menu");
-        mainWindow.setTitle("Pang");
-        setScreenResolution();
-        mainWindow.setResizable(true);
-        mainWindow.setPreferredSize(new Dimension(preferredGameWidth, preferredGameHeight));
-        //mainWindow.setResizable(false);
-
-        mainWindow.setMinimumSize(new Dimension(preferredGameWidth, preferredGameHeight));
-        mainWindow.setMaximumSize(getMaxScreenSize());
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.pack();
-        mainWindow.setContentPane(startPanel);
-
-        makeLabels();
-
-        setColour();
-        mainWindow.setLocationRelativeTo(null);
-        mainWindow.setFocusable(true);
-        mainWindow.setVisible(true);
-    }
-
-    public void render(String panelName){
+    public void render(String panelName) {
         PangPanel newPanel = panelCreator.create(panelName);
-        mainWindow.setContentPane(newPanel);
+        mainWindow.setPanel(newPanel);
 
         if (newPanel.hasKeyListener()) {
             mainWindow.addKeyListener(newPanel.getKeyListener());
         }
-
-        setColour();
-        mainWindow.getContentPane().repaint();
-        mainWindow.validate();
     }
 
-    private void setScreenResolution(){
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        preferredGameWidth = (int)size.getWidth()/2;
-        preferredGameHeight = (int)size.getHeight()/2;
-    }
-
-    private Dimension getMaxScreenSize(){
-        return new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
-    }
-
-    private void makeLabels(){
+    private void makeLabels() {
         actualLevel = new JLabel("Default difficulty level: NORMAL");
     }
 
-    private void setColour(){
-        mainWindow.getContentPane().setBackground(new Color(238, 225, 127));
-        mainWindow.setBackground(Color.red);
+    public JLabel getActualLevel() {
+        return actualLevel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         render(e.getActionCommand());
     }
+
 }
