@@ -13,7 +13,6 @@ public class Player extends Character{
 
     private int startPosX;
     private int startPosY;
-    private BulletController bulletController;
     private boolean isShooting = true;
     private InfoInGame infoInGame;
 
@@ -21,7 +20,6 @@ public class Player extends Character{
         super(config);
         addStat(config, "ammunition", "gravityForce", "posX", "posY");
         setPlayerStartPosition();
-        loadBullets();
         turnOffShooting();
         infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
     }
@@ -32,10 +30,6 @@ public class Player extends Character{
         int dy = getStat("posY").intValue();
 
         playerGraphic.fillRect(startPosX + dx, startPosY + dy, getPlayerWidth(), getPlayerHeight());
-        if(getStat("ammunition").intValue()>0 && isShooting){
-            bulletController.addBullet(new Bullet(getBulletXPos(),startPosY + dy - 20));
-        }
-        bulletController.draw(playerGraphic);
         infoInGame.draw(playerGraphic);
     }
 
@@ -47,13 +41,13 @@ public class Player extends Character{
         infoInGame.setNewPlayerInfo(1,getStat("health").intValue(),getAmmoAmount());
     }
 
+    public int getActualYPlayerPosition(){
+        return startPosY + getStat("posY").intValue();
+    }
+
     private void setPlayerStartPosition(){
         startPosX = PangFrame.getPreferredGameWidth()/2 - getPlayerWidth()/2;
         startPosY = PangFrame.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
-    }
-
-    private void loadBullets(){
-        this.bulletController = new BulletController();
     }
 
     private int getAmmoAmount(){
@@ -71,7 +65,7 @@ public class Player extends Character{
         return getStat("width").intValue();
     }
 
-    private int getBulletXPos(){
+    public int getBulletXPos(){
         return startPosX + getPlayerWidth()/2 + getStat("posX").intValue() - 5;
     }
 
@@ -88,6 +82,15 @@ public class Player extends Character{
         if(keyChar =='k'){
             isShooting = true;
         }
-        bulletController.fire();
+    }
+
+    private boolean getShootingStatus(){
+        return isShooting;
+    }
+
+    public boolean canShoot() {
+        if (getAmmoAmount() > 0 && getShootingStatus())
+            return true;
+        else return false;
     }
 }

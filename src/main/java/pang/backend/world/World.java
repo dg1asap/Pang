@@ -1,5 +1,7 @@
 package pang.backend.world;
 
+import pang.backend.Bullet;
+import pang.backend.BulletController;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.config.GameConfig;
@@ -8,42 +10,52 @@ import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class World {
-    private final ArrayBlockingQueue <Enemy> enemies;
+    private final ArrayBlockingQueue<Enemy> enemies;
     private final Player player;
+    private BulletController bulletController;
 
-    public static World fromWorldConfigAndPlayer(GameConfig worldConfig, Player player){
+    public static World fromWorldConfigAndPlayer(GameConfig worldConfig, Player player) {
         return new World(worldConfig, player);
     }
 
-    public void addEnemy(Enemy enemy){
+    public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
     }
 
-    public Enemy spawnEnemy(){
+    public Enemy spawnEnemy() {
         return enemies.poll();
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return enemies.isEmpty();
     }
 
-    public boolean isGameOver(){
+    public boolean isGameOver() {
         return !player.isAlive();
     }
 
-    public void steer(char keyChar, double value){
+    public void steer(char keyChar, double value) {
         player.steer(keyChar, value);
+        addBulletToPlayer();
+        bulletController.steer();
     }
 
     public void draw(Graphics g) {
         player.draw(g);
+        bulletController.draw(g);
     }
 
-    protected World(GameConfig worldConfig, Player player){
+    protected World(GameConfig worldConfig, Player player) {
         int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
+        bulletController = new BulletController();
+    }
 
+    private void addBulletToPlayer() {
+        if(player.canShoot()) {
+            bulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition()));
+        }
     }
 
 }
