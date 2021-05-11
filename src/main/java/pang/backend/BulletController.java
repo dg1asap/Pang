@@ -18,7 +18,7 @@ public class BulletController {
         }
     }
 
-    public void fire(){
+    public void steer(){
         for(int i = 0; i<bullets.size(); i++){
             tempBullet = bullets.get(i);
 
