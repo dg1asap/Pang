@@ -1,63 +1,98 @@
 package pang.backend.character.player;
 
+import pang.backend.Bullet;
+import pang.backend.BulletController;
 import pang.backend.character.Character;
-import pang.backend.character.Movement;
 import pang.backend.config.GameConfig;
+import pang.gui.InfoInGame;
+import pang.gui.PangFrame;
 
-public class Player extends Character implements Movement {
+import java.awt.*;
 
-    int ammoAmount;
-    double gravityForce;
-    double dx = 1;
-    double dy = 1;
+public class Player extends Character{
 
-    public Player(GameConfig config){
+    private int startPosX;
+    private int startPosY;
+    private boolean isShooting = true;
+    private InfoInGame infoInGame;
 
+    public Player(GameConfig config) {
         super(config);
-        ammoAmount = (int) config.getAttribute("ammunition");
-        gravityForce = config.getAttribute("gravityForce");
-
-        this.setPosX(config.getAttribute("startPosX"));
-        this.setPosY(config.getAttribute("startPosY"));
+        addStat(config, "ammunition", "gravityForce");
+        setPlayerStartPosition();
+        turnOffShooting();
+        infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
     }
 
-    void shoot(){
-        ammoAmount += -1;
-        //Not implemented yet
+    public void draw(Graphics playerGraphic) {
+        playerGraphic.setColor(Color.RED);
+        int dx = getStat("posX").intValue();
+        int dy = getStat("posY").intValue();
+
+        playerGraphic.fillRect(startPosX + dx, startPosY + dy, getPlayerWidth(), getPlayerHeight());
+        infoInGame.draw(playerGraphic);
     }
 
-    int getAmmoAmount(){
-        return ammoAmount;
+    public void steerKey(char keyChar, double value) {
+        PlayerReaction playerReaction = new PlayerReaction();
+        String playerParameter = playerReaction.fromKeyName(keyChar);
+        increaseStatByValue(playerParameter, value);
+        shoot(keyChar);
+        infoInGame.setNewPlayerInfo(1,getStat("health").intValue(),getAmmoAmount());
     }
 
-    double getGravityForce(){
-        return gravityForce;
+    public int getActualYPlayerPosition(){
+        return startPosY + getStat("posY").intValue();
     }
 
-
-    @Override
-    public void changeYDirection(){
-        this.changePosY(dy);
+    private void setPlayerStartPosition(){
+        //startPosX = PangFrame.getPreferredGameWidth()/2 - getPlayerWidth()/2;
+        //startPosY = PangFrame.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        startPosX = 0;
+        startPosY = 0;
     }
 
-    @Override
-    public void changeXDirection(){
-        this.changePosX(dx);
+    private int getAmmoAmount(){
+        if(getStat("ammunition")>0){
+            return getStat("ammunition").intValue();
+        }
+        else return 0;
     }
 
-    @Override
-    public boolean isCollision() {
-        return false; //Not implemented yet
+    private int getPlayerHeight(){
+        return getStat("height").intValue();
     }
 
-    //public boolean wallCollisionHappened(){
-    //    if(this.getXPosition() == 0 || this.getXPosition() == GameWindow.getXSize()){ //window size ex. (0,1000);
-    //        return true;
-    //   }
-    //}
+    private int getPlayerWidth(){
+        return getStat("width").intValue();
+    }
 
-   // public boolean enemyCollisionHappened(){
+    public int getBulletXPos(){
+        return startPosX + getPlayerWidth()/2 + getStat("posX").intValue() - 5;
+    }
 
-   // }
+    private void shoot(char keyChar){
+        turnOffShooting();
+        turnOnShootingIfKeyPressed(keyChar);
+    }
 
+    private void turnOffShooting(){
+        isShooting = false;
+    }
+
+    private void turnOnShootingIfKeyPressed(char keyChar){
+        if(keyChar =='k'){
+            isShooting = true;
+        }
+    }
+
+    private boolean getShootingStatus(){
+        return isShooting;
+    }
+
+    public boolean canShoot() {
+        if (getAmmoAmount() > 0 && getShootingStatus())
+            return true;
+        else return false;
+    }
 }

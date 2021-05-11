@@ -2,90 +2,38 @@ package pang.backend.character;
 
 import pang.backend.config.GameConfig;
 
-public class Character {
+import java.util.HashMap;
+import java.util.Map;
 
-    protected double health;
-    protected double damage;
-    protected double speed;
-    protected double height;
-    protected double width;
-    boolean collision = false;
-    CharacterPosition position = new CharacterPosition();
+public class Character {
+    private Map<String, Double> stats = new HashMap<>();
 
     public Character(GameConfig config){
-        this.setHealth(config.getAttribute("health"));
-        this.setDamage(config.getAttribute("damage"));
-        this.setSpeed(config.getAttribute("speed"));
-        this.setHeight(config.getAttribute("height"));
-        this.setWidth(config.getAttribute("width"));
+        addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY");
     }
 
-
-    public double getHealth(){
-        return health;
+    protected void addStat(GameConfig config, String... newStats) {
+        for(String stat : newStats) {
+            stats.put(stat, config.getAttribute(stat));
+        }
     }
 
-    public double getDamage(){
-        return damage;
+    protected Double getStat(String statName) {
+        return stats.get(statName);
     }
 
-    public double getSpeed(){
-        return speed;
+    protected void increaseStatByValue(String stat, double value){
+        stats.computeIfPresent(stat, (k, v) -> v + value);
     }
 
-    public double getHeight(){
-        return height;
-    }
-
-    public double getWidth(){
-        return width;
-    }
-
-    public void setHealth(double health){
-        this.health = health;
-    }
-
-    public void setDamage(double damage){
-        this.damage = damage;
-    }
-
-    public void setSpeed(double speed){
-        this.speed = speed;
-    }
-
-    public void setHeight(double height){
-        this.height = height;
-    }
-
-    public void setWidth(double width){
-        this.width = width;
-    }
-
-    public double getYPosition(){
-        return position.getVertical();
-    }
-
-    public double getXPosition(){
-        return position.getHorizontal();
-    }
-
-    public void setPosX(double posX){
-        position.setHorizontal(posX);
-    }
-
-    public void setPosY(double posY){
-        position.setVertical(posY);
-    }
-
-    public void changePosX(double dx){
-        position.changeHorizontal(dx);
-    }
-
-    public void changePosY(double dy){
-        position.changeVertical(dy);
+    public PangPosition getPosition() {
+        int intPosX = getStat("posX").intValue();
+        int intPosY = getStat("posY").intValue();
+        return new PangPosition(intPosX, intPosY);
     }
 
     public boolean isAlive(){
-        return health > 0;
+        return stats.get("health") > 0;
     }
+
 }

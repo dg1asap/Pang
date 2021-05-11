@@ -13,13 +13,26 @@ public class Audio implements MusicPlayer {
 
     static Clip sample;
     private long time = 0;
-    static private Path path = Path.of("data","music", "spaceSample.aif");
+    static private final Path path = Path.of("data","music", "spaceSample.aif");
+    private boolean isPlaying = false;
 
-    Path getPath(){
+    public Audio(){
+        this.load();
+        this.loop();
+    }
+    public Audio getAudio(){
+        return this;
+    }
+
+    public boolean getAudioStatus(){
+        return this.getPlayingStatus();
+    }
+
+    public Path getPath(){
         return path;
     }
 
-    long getTime(){
+    public long getTime(){
         return time;
     }
 
@@ -50,26 +63,47 @@ public class Audio implements MusicPlayer {
     public void loop(){
         sample.start();
         sample.loop(sample.LOOP_CONTINUOUSLY);
+        setIsPlaying();
     }
 
     public void play(){
         sample.start();
+        setIsPlaying();
     }
 
     public void pause(){
         time = sample.getMicrosecondPosition();
         sample.stop();
+        setNotPlaying();
     }
 
     public void resume(){
-        sample.setMicrosecondPosition(time);
-        sample.start();
+        if(!getPlayingStatus()) {
+            sample.setMicrosecondPosition(time);
+            sample.start();
+            setIsPlaying();
+        }
     }
 
     public void resumeLoop(){
-        sample.setMicrosecondPosition(time);
-        sample.start();
-        sample.loop(sample.LOOP_CONTINUOUSLY);
+        if(!getPlayingStatus()) {
+            sample.setMicrosecondPosition(time);
+            sample.start();
+            sample.loop(sample.LOOP_CONTINUOUSLY);
+            setIsPlaying();
+        }
+    }
+
+    private boolean getPlayingStatus(){
+        return isPlaying;
+    }
+
+    private void setIsPlaying(){
+        isPlaying = true;
+    }
+
+    private void setNotPlaying(){
+        isPlaying = false;
     }
 
 }

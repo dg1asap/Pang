@@ -1,32 +1,43 @@
 Player
     health=10
     damage=1.5
-    speed=1.25
-    height=5.5
-    width=3.167
-    ammunition=21
-    gravityForce=1.12
-    startPosX=50
-    startPosY=100
+    speed=2
+    height=40
+    width=40
+    ammunition=28
+    gravityForce=6
+    posX=0
+    posY=0
 World
     worldCapacity=100
-    maxSpawnCount 50
+    maxSpawnCount=50
 SmallBall
     health=1
     damage=1
     speed=1.12
     height=3.11
     width=3.11
+    posX=30
+    posY=30
 LargeBall
     health=3
     damage=1.5
     speed=1.12
     height=4.34
     width=4.34
+    posX=30
+    posY=30
 MegaBall
     health=7
     damage=3
     speed=1.12
     height=6.81
     width=6.81
-
+    posX=30
+    posY=30
+Keyboard
+    a=-30
+    d=30
+    w=-30
+    s=30
+    k=-1

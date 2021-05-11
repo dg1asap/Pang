@@ -25,7 +25,7 @@ public class PlayerTest {
     }
 
     Player player = new Player(config);
-
+/*
     @Test
     void testPlayerHasStartHp(){
         assertTrue(player.isAlive());
@@ -93,9 +93,11 @@ public class PlayerTest {
     @Disabled
     void testPlayerCollisionsAreWorking(){
 
-       // double startX = player.getXPosition();
-       // player.changeHorizontal();
-       // player.changeHorizontal();
+    // double startX = player.getXPosition();
+    // player.changeHorizontal();
+    // player.changeHorizontal();
 
-    }
+}
+*/
+
 }
