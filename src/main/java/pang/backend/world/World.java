@@ -46,14 +46,17 @@ public class World {
         bulletController.draw(g);
     }
 
-    public void steer(char keyChar, double value){
+    public void steerKey(char keyChar, double value){
         if (canPlayerSteer(keyChar, value))
-            player.steer(keyChar, value);
+            player.steerKey(keyChar, value);
         addBulletToPlayer();
+    }
+
+    public void steerTime(){
         bulletController.steer();
     }
 
-    public boolean canPlayerSteer(char keyChar, double value) {
+    private boolean canPlayerSteer(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String direction = playerReaction.fromKeyName(keyChar);
         return worldBorder.isInBorderOfWorld(player,direction,(int)value);
@@ -64,4 +67,5 @@ public class World {
             bulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition()));
         }
     }
+
 }

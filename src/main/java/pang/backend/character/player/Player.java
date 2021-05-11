@@ -33,7 +33,7 @@ public class Player extends Character{
         infoInGame.draw(playerGraphic);
     }
 
-    public void steer(char keyChar, double value) {
+    public void steerKey(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String playerParameter = playerReaction.fromKeyName(keyChar);
         increaseStatByValue(playerParameter, value);

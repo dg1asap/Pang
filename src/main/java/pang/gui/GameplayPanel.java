@@ -7,6 +7,7 @@ import pang.backend.world.World;
 import pang.backend.world.WorldLoader;
 import pang.hardware.Screen;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,6 +16,7 @@ import java.nio.file.Path;
 public class GameplayPanel extends PangPanel implements KeyListener {
     private GameConfig keyboardConfig;
     private World world;
+    private Timer gameTime;
 
     public GameplayPanel(Screen screen) {
         Path configPath = Path.of("./data/main/configs.txt");
@@ -22,6 +24,9 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         keyboardConfig = configLoader.getConfig("Keyboard");
 
         loadConfig();
+
+        gameTime = new Timer(100, taskPerformer -> refresh() );
+        gameTime.start();
         //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
         //add(backButton);
     }
@@ -67,7 +72,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private void ifKeyCharHasConfigSteer(char keyChar) {
         if (isConfigForKeyChar(keyChar)) {
             double value = keyboardConfig.getAttribute(String.valueOf(keyChar));
-            world.steer(keyChar, value);
+            world.steerKey(keyChar, value);
         }
     }
 
@@ -76,6 +81,10 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         return !"none".equals(playerReaction.fromKeyName(keyChar));
     }
 
+    private void refresh(){
+        world.steerTime();
+        repaint();
+    }
 }
 
 
