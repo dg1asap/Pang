@@ -10,7 +10,7 @@ public class PangFrame extends JFrame {
     private static int preferredGameHeight;
 
     public static PangPosition getExtremePointOfFrame() {
-        return new PangPosition(preferredGameHeight, preferredGameWidth);
+        return new PangPosition(preferredGameWidth,preferredGameHeight);
     }
 
     public PangFrame() {
