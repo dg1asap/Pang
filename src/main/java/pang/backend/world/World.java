@@ -1,5 +1,7 @@
 package pang.backend.world;
 
+import pang.backend.Bullet;
+import pang.backend.BulletController;
 import pang.backend.character.PangPosition;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
@@ -13,12 +15,14 @@ public class World {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private WorldBorder worldBorder;
+    private BulletController bulletController;
 
     public World(GameConfig worldConfig, PangPosition extremePointOfMap, Player player){
         int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
         this.worldBorder = new WorldBorder(extremePointOfMap);
+        bulletController = new BulletController();
     }
 
     public void addEnemy(Enemy enemy){
@@ -39,11 +43,14 @@ public class World {
 
     public void draw(Graphics g) {
         player.draw(g);
+        bulletController.draw(g);
     }
 
     public void steer(char keyChar, double value){
         if (canPlayerSteer(keyChar, value))
             player.steer(keyChar, value);
+        addBulletToPlayer();
+        bulletController.steer();
     }
 
     public boolean canPlayerSteer(char keyChar, double value) {
@@ -52,4 +59,9 @@ public class World {
         return worldBorder.isInBorderOfWorld(player,direction,(int)value);
     }
 
+    private void addBulletToPlayer() {
+        if (player.canShoot()) {
+            bulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition()));
+        }
+    }
 }
