@@ -34,9 +34,8 @@ public class WorldLoader {
 
     private void createWorld(Path configPath) {
         GameConfig worldConfig = getWorldConfig(configPath);
-        PangPosition extremePointOfMap = new PangPosition(PangFrame.getPreferredGameWidth(), PangFrame.getPreferredGameHeight());
         Player player = createPlayer(configPath);
-        world = new World(worldConfig, extremePointOfMap, player);
+        world = new World(worldConfig, player);
     }
 
     private GameConfig getWorldConfig(Path configPath) {

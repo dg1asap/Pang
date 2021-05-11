@@ -1,5 +1,7 @@
 package pang.gui;
 
+import pang.backend.character.PangPosition;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,12 +9,8 @@ public class PangFrame extends JFrame {
     private static int preferredGameWidth;
     private static int preferredGameHeight;
 
-    public static int getPreferredGameWidth(){
-        return preferredGameWidth;
-    }
-
-    public static int getPreferredGameHeight(){
-        return preferredGameHeight;
+    public static PangPosition getExtremePointOfFrame() {
+        return new PangPosition(preferredGameHeight, preferredGameWidth);
     }
 
     public PangFrame() {
