@@ -81,7 +81,7 @@ public class World {
     private void manageEnemies(long time) {
         for (Enemy enemy : enemies) {
             spawnEnemy(enemy, time);
-            if(time % 5000 == 0) {
+            if(time % 3000 == 0) {
                 moveEnemy(enemy);
             }
 
