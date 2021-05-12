@@ -3,9 +3,10 @@ package pang.backend.character.enemy;
 import pang.backend.character.Character;
 import pang.backend.config.GameConfig;
 
-public abstract class Enemy extends Character {
-    // Movement implementation need to be added //
+import java.awt.*;
 
+public abstract class Enemy extends Character {
+    private boolean spawned = false;
     protected int spawnTime;
 
     protected Enemy(GameConfig config, int spawnTime){
@@ -13,10 +14,21 @@ public abstract class Enemy extends Character {
         this.spawnTime = spawnTime;
     }
 
-    void takeDamage(double damage){
-        //Not implemented yet
+    public void spawn(long time) {
+        if (time > 1000)
+            spawned = true;
     }
-    void attack(){
-        //Not implemented yet
+
+    public boolean isSpawned() {
+        return spawned;
     }
+
+    public abstract void draw(Graphics g);
+
+    public abstract void move();
+
+    public abstract void takeDamage(double damage);
+
+    public abstract double attack();
+
 }

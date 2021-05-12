@@ -4,6 +4,8 @@ SmallBall
     speed=3
     height=4
     width=5
+    posX=5
+    posY=5
 LargeBall
     health=1
     damage=2

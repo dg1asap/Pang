@@ -14,9 +14,10 @@ import java.awt.event.KeyListener;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
-    private GameConfig keyboardConfig;
+    private final GameConfig keyboardConfig;
     private World world;
-    private Timer gameTime;
+    private final Timer gameTimer;
+    private long gameTime = 0;
 
     public GameplayPanel(Screen screen) {
         Path configPath = Path.of("./data/main/configs.txt");
@@ -25,8 +26,8 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
         loadConfig();
 
-        gameTime = new Timer(100, taskPerformer -> refresh() );
-        gameTime.start();
+        gameTimer = new Timer(1, taskPerformer -> refresh() );
+        gameTimer.start();
         //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
         //add(backButton);
     }
@@ -82,9 +83,20 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void refresh(){
-        world.steerTime();
+        gameTime += 100;
+        resizePanel();
+        world.steerTime(gameTime);
         repaint();
     }
+
+    private void resizePanel(){
+        /*
+        setActualScreenHeight(this.getHeight());
+        setActualScreenWidth(this.getWidth());
+        getExtremePointOfFrame();
+         */
+    }
+
 }
 
 

@@ -17,7 +17,7 @@ public class Bullet {
     }
 
     public void fire(){
-        yPosition = yPosition - 20;
+        yPosition = yPosition - 1;
     }
 
     public int getY(){

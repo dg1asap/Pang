@@ -13,6 +13,14 @@ public class PangFrame extends JFrame {
         return new PangPosition(preferredGameWidth,preferredGameHeight);
     }
 
+    public static int getActualScreenWidth(){
+        return preferredGameWidth;
+    }
+
+    public static int getActualScreenHeight(){
+        return preferredGameHeight;
+    }
+
     public PangFrame() {
         setColour();
         setTitle("Pang");

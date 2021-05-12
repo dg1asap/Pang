@@ -1,7 +1,5 @@
 package pang.backend.character.player;
 
-import pang.backend.Bullet;
-import pang.backend.BulletController;
 import pang.backend.character.Character;
 import pang.backend.config.GameConfig;
 import pang.gui.InfoInGame;
@@ -11,10 +9,8 @@ import java.awt.*;
 
 public class Player extends Character{
 
-    private int startPosX;
-    private int startPosY;
     private boolean isShooting = true;
-    private InfoInGame infoInGame;
+    private final InfoInGame infoInGame;
 
     public Player(GameConfig config) {
         super(config);
@@ -29,7 +25,7 @@ public class Player extends Character{
         int dx = getStat("posX").intValue();
         int dy = getStat("posY").intValue();
 
-        playerGraphic.fillRect(startPosX + dx, startPosY + dy, getPlayerWidth(), getPlayerHeight());
+        playerGraphic.fillRect(dx, dy, getPlayerWidth(), getPlayerHeight());
         infoInGame.draw(playerGraphic);
     }
 
@@ -42,14 +38,14 @@ public class Player extends Character{
     }
 
     public int getActualYPlayerPosition(){
-        return startPosY + getStat("posY").intValue();
+        return getStat("posY").intValue();
     }
 
     private void setPlayerStartPosition(){
-        //startPosX = PangFrame.getPreferredGameWidth()/2 - getPlayerWidth()/2;
-        //startPosY = PangFrame.getPreferredGameHeight() - getPlayerHeight() - 42; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
-        startPosX = 0;
-        startPosY = 0;
+        int startPosX = PangFrame.getActualScreenWidth() / 2 - getPlayerWidth() / 2;
+        int startPosY = PangFrame.getActualScreenHeight() - getPlayerHeight() - 50; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        increaseStatByValue("posX", startPosX);
+        increaseStatByValue("posY", startPosY);
     }
 
     private int getAmmoAmount(){
@@ -68,7 +64,7 @@ public class Player extends Character{
     }
 
     public int getBulletXPos(){
-        return startPosX + getPlayerWidth()/2 + getStat("posX").intValue() - 5;
+        return getPlayerWidth()/2 + getStat("posX").intValue() - 5;
     }
 
     private void shoot(char keyChar){
@@ -91,8 +87,6 @@ public class Player extends Character{
     }
 
     public boolean canShoot() {
-        if (getAmmoAmount() > 0 && getShootingStatus())
-            return true;
-        else return false;
+        return getAmmoAmount() > 0 && getShootingStatus();
     }
 }

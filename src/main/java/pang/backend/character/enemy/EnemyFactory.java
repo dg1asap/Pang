@@ -51,12 +51,12 @@ public class EnemyFactory {
     }
 
     private void ifNoEnemyConfigInDataSetNew(String name) {
-        if (hasEnemyConfig(name))
+        if (!hasEnemyConfig(name))
             setNewEnemyConfig(name);
     }
 
     private boolean hasEnemyConfig(String name) {
-        return enemyConfig == null || !enemyConfig.hasName(name);
+        return enemyConfig != null && enemyConfig.hasName(name);
     }
 
     private void setNewEnemyConfig(String name) {

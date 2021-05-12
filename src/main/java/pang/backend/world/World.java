@@ -1,6 +1,5 @@
 package pang.backend.world;
 
-import pang.Pang;
 import pang.backend.Bullet;
 import pang.backend.BulletController;
 import pang.backend.character.PangPosition;
@@ -29,10 +28,6 @@ public class World {
         enemies.add(enemy);
     }
 
-    public Enemy spawnEnemy(){
-        return enemies.poll();
-    }
-
     public boolean isEmpty(){
         return enemies.isEmpty();
     }
@@ -44,6 +39,8 @@ public class World {
     public void draw(Graphics g) {
         player.draw(g);
         bulletController.draw(g);
+        drawEnemies(g);
+
     }
 
     public void steerKey(char keyChar, double value){
@@ -52,8 +49,19 @@ public class World {
         addBulletToPlayer();
     }
 
-    public void steerTime(){
+    public void steerTime(long time){
         bulletController.steer();
+        manageEnemies(time);
+    }
+
+    private void drawEnemies(Graphics g) {
+        for (Enemy enemy : enemies)
+            drawEnemy(enemy, g);
+    }
+
+    private void drawEnemy(Enemy enemy, Graphics g) {
+        if (enemy.isSpawned())
+            enemy.draw(g);
     }
 
     private boolean canPlayerSteer(char keyChar, double value) {
@@ -66,8 +74,33 @@ public class World {
 
     private void addBulletToPlayer() {
         if (player.canShoot()) {
-            bulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition()));
+            bulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition() - 20));
         }
+    }
+
+    private void manageEnemies(long time) {
+        for (Enemy enemy : enemies) {
+            spawnEnemy(enemy, time);
+            if(time % 5000 == 0) {
+                moveEnemy(enemy);
+            }
+
+            killEnemy(enemy);
+        }
+    }
+
+    private void spawnEnemy(Enemy enemy, long time) {
+        enemy.spawn(time);
+    }
+
+    private void moveEnemy(Enemy enemy) {
+        if (enemy.isSpawned())
+            enemy.move();
+    }
+
+    private void killEnemy(Enemy enemy) {
+        if (!enemy.isAlive())
+            enemies.remove(enemy);
     }
 
 }
