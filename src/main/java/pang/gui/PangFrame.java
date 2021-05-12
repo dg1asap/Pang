@@ -13,10 +13,16 @@ public class PangFrame extends JFrame {
         return new PangPosition(preferredGameWidth,preferredGameHeight);
     }
 
+    public static void setActualScreenWidth(int width){
+        preferredGameWidth = width;
+    }
+    public static void setActualScreenHeight(int height){
+        preferredGameHeight = height;
+    }
+
     public static int getActualScreenWidth(){
         return preferredGameWidth;
     }
-
     public static int getActualScreenHeight(){
         return preferredGameHeight;
     }

@@ -90,11 +90,9 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void resizePanel(){
-        /*
-        setActualScreenHeight(this.getHeight());
-        setActualScreenWidth(this.getWidth());
-        getExtremePointOfFrame();
-         */
+        PangFrame.setActualScreenHeight(this.getHeight());
+        PangFrame.setActualScreenWidth(this.getWidth());
+        PangFrame.getExtremePointOfFrame();
     }
 
 }
