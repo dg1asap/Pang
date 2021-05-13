@@ -1,6 +1,6 @@
 package pang.backend.character.enemy;
 
-import pang.backend.character.PangPosition;
+import pang.backend.character.PangVector;
 import pang.backend.config.GameConfig;
 import pang.backend.world.WorldBorder;
 import pang.gui.PangFrame;
@@ -8,7 +8,7 @@ import pang.gui.PangFrame;
 import java.awt.*;
 
 public class SmallBall extends Enemy {
-    private final PangPosition vectorMovement;
+    private final PangVector vectorMovement;
 
     public static SmallBall fromConfigAndSpawnTime(GameConfig config, int spawnTime){
         return new SmallBall(config, spawnTime);
@@ -16,7 +16,8 @@ public class SmallBall extends Enemy {
 
     protected SmallBall(GameConfig config, int spawnTime){
         super(config, spawnTime);
-        vectorMovement = PangPosition.randPangVector(-10, 10);
+        vectorMovement = PangVector.randPangVector(-10, 10);
+        spawnEnemyAtTopOfMap();
     }
 
     @Override
@@ -41,6 +42,16 @@ public class SmallBall extends Enemy {
     @Override
     public double attack() {
         return 0;
+    }
+
+    private void spawnEnemyAtTopOfMap() {
+        int posX = PangVector.randComponentOfVector(50,PangFrame.getActualScreenWidth() - 50);
+        int posY = 50;
+        Double actualPosX = getStat("posX");
+        Double actualPosY = getStat("posY");
+
+        increaseStatByValue("posX", posX - actualPosX);
+        increaseStatByValue("posY", posY - actualPosY);
     }
 
     private void bounceOffVerticalWall(WorldBorder wall) {

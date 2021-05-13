@@ -1,6 +1,6 @@
 package pang.gui;
 
-import pang.backend.character.PangPosition;
+import pang.backend.character.PangVector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +9,8 @@ public class PangFrame extends JFrame {
     private static int preferredGameWidth;
     private static int preferredGameHeight;
 
-    public static PangPosition getExtremePointOfFrame() {
-        return new PangPosition(preferredGameWidth,preferredGameHeight);
+    public static PangVector getExtremePointOfFrame() {
+        return new PangVector(preferredGameWidth,preferredGameHeight);
     }
 
     public static void setActualScreenWidth(int width){

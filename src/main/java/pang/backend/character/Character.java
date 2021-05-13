@@ -26,10 +26,10 @@ public class Character {
         stats.computeIfPresent(stat, (k, v) -> v + value);
     }
 
-    public PangPosition getPosition() {
+    public PangVector getPosition() {
         int intPosX = getStat("posX").intValue();
         int intPosY = getStat("posY").intValue();
-        return new PangPosition(intPosX, intPosY);
+        return new PangVector(intPosX, intPosY);
     }
 
     public boolean isAlive(){

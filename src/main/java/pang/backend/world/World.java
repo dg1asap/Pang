@@ -2,7 +2,7 @@ package pang.backend.world;
 
 import pang.backend.Bullet;
 import pang.backend.BulletController;
-import pang.backend.character.PangPosition;
+import pang.backend.character.PangVector;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
@@ -67,7 +67,7 @@ public class World {
     private boolean canPlayerSteer(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String direction = playerReaction.fromKeyName(keyChar);
-        PangPosition extremePointOfMap = PangFrame.getExtremePointOfFrame();
+        PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
         WorldBorder worldBorder = new WorldBorder(extremePointOfMap);
         return worldBorder.isInBorderOfWorld(player, direction, (int)value);
     }
