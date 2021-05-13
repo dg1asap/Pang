@@ -9,7 +9,8 @@ import java.awt.*;
 
 public class Player extends Character{
 
-    private boolean isShooting = true;
+    private boolean isShooting = false;
+    private boolean isJumping = false;
     private final InfoInGame infoInGame;
 
     public Player(GameConfig config) {
@@ -32,8 +33,10 @@ public class Player extends Character{
     public void steerKey(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String playerParameter = playerReaction.fromKeyName(keyChar);
-        increaseStatByValue(playerParameter, value);
+        jump(keyChar);
         shoot(keyChar);
+        increaseStatByValue(playerParameter, value);
+
         infoInGame.setNewPlayerInfo(1,getStat("health").intValue(),getAmmoAmount());
     }
 
@@ -86,7 +89,28 @@ public class Player extends Character{
         return isShooting;
     }
 
+    public boolean canPlayerJump(){
+        return !isJumping;
+    }
+
     public boolean canShoot() {
         return getAmmoAmount() > 0 && getShootingStatus();
     }
+
+    private void jump(char keyChar){
+        if(keyChar =='w'){
+            isJumping = true;
+        }
+    }
+
+    public void gravity(){
+        if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
+            increaseStatByValue("posY", getStat("gravityForce").intValue());
+        }
+        else if(getActualYPlayerPosition()==PangFrame.getActualScreenHeight()-getPlayerHeight()){
+            isJumping = false;
+        }
+
+    }
+
 }
