@@ -15,7 +15,7 @@ public abstract class Enemy extends Character {
     }
 
     public void spawn(long time) {
-        if (time > 1000)
+        if (time > spawnTime * 1000)
             spawned = true;
     }
 
