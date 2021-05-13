@@ -5,7 +5,7 @@ import pang.backend.config.GameConfig;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Character {
+public abstract class Character implements HitBox {
     private Map<String, Double> stats = new HashMap<>();
 
     public Character(GameConfig config){

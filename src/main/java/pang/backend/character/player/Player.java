@@ -6,6 +6,8 @@ import pang.gui.InfoInGame;
 import pang.gui.PangFrame;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 
 public class Player extends Character{
 
@@ -18,6 +20,15 @@ public class Player extends Character{
         setPlayerStartPosition();
         turnOffShooting();
         infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
+    }
+
+    @Override
+    public RectangularShape getHitBox() {
+        double posX = getStat("posX");
+        double posY = getStat("posX");
+        double width = getStat("width");
+        double height = getStat("height");
+        return new Rectangle2D.Double(posX, posY, width, height);
     }
 
     public void draw(Graphics playerGraphic) {

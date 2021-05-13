@@ -6,9 +6,12 @@ import pang.backend.world.WorldBorder;
 import pang.gui.PangFrame;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RectangularShape;
 
 public class SmallBall extends Enemy {
     private final PangVector vectorMovement;
+    private Ellipse2D.Double shape;
 
     public static SmallBall fromConfigAndSpawnTime(GameConfig config, int spawnTime){
         return new SmallBall(config, spawnTime);
@@ -44,11 +47,20 @@ public class SmallBall extends Enemy {
         return 0;
     }
 
+    @Override
+    public RectangularShape getHitBox() {
+        double posX = getStat("posX");
+        double posY = getStat("posX");
+        double width = getStat("width");
+        double height = getStat("height");
+        return new Ellipse2D.Double(posX, posY, width, height);
+    }
+
     private void spawnEnemyAtTopOfMap() {
         int posX = PangVector.randComponentOfVector(50,PangFrame.getActualScreenWidth() - 50);
         int posY = 50;
-        Double actualPosX = getStat("posX");
-        Double actualPosY = getStat("posY");
+        double actualPosX = getStat("posX");
+        double actualPosY = getStat("posY");
 
         increaseStatByValue("posX", posX - actualPosX);
         increaseStatByValue("posY", posY - actualPosY);
@@ -70,5 +82,6 @@ public class SmallBall extends Enemy {
         increaseStatByValue("posX", intVectorX);
         increaseStatByValue("posY", intVectorY);
     }
+
 
 }
