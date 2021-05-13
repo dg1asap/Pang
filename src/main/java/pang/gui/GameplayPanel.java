@@ -83,7 +83,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void refresh(){
-        gameTime += 100;
+        gameTime += 1;
         resizePanel();
         world.steerTime(gameTime);
         repaint();

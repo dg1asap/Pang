@@ -7,9 +7,12 @@ public class PangVector {
     private int y;
 
     public static PangVector randPangVector(int min, int max) {
-        Random rand = new Random();
-        int x = rand.nextInt((max - min) + 1) + min;
-        int y = rand.nextInt((max - min) + 1) + min;
+        int x, y;
+        do {
+            Random rand = new Random();
+            x = rand.nextInt((max - min) + 1) + min;
+            y = rand.nextInt((max - min) + 1) + min;
+        } while (x == 0 || y == 0);
         return new PangVector(x, y);
     }
 
