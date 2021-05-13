@@ -38,8 +38,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -49,8 +48,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
     @Override
     public boolean hasKeyListener(){
@@ -92,7 +90,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private void resizePanel(){
         PangFrame.setActualScreenHeight(this.getHeight());
         PangFrame.setActualScreenWidth(this.getWidth());
-        PangFrame.getExtremePointOfFrame();
     }
 
 }

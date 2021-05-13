@@ -37,7 +37,7 @@ public class WorldBorder {
     }
 
     private boolean isBehindBottomBorder(PangVector position, int stepLength) {
-        return position.getY() + stepLength + 70 > bottomBorder;
+        return position.getY() + stepLength  > bottomBorder;
 
     }
 

@@ -23,18 +23,18 @@ LargeBall
     health=3
     damage=1.5
     speed=1.12
-    height=20
-    width=20
+    height=70
+    width=70
     posX=30
     posY=30
 MegaBall
     health=7
     damage=3
     speed=1.12
-    height=15
-    width=15
-    posX=30
-    posY=30
+    height=50
+    width=50
+    posX=1
+    posY=1
 Keyboard
     a=-30
     d=30

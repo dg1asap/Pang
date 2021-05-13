@@ -4,15 +4,15 @@ import java.awt.geom.RectangularShape;
 
 public interface HitBox {
     default boolean intersects(HitBox hitbox) {
-        RectangularShape myHitbox = this.getHitBox();
-        RectangularShape overlappingHitbox = hitbox.getHitBox();
+        RectangularShape myHitBox = this.getHitBox();
+        RectangularShape overlappingHitBox = hitbox.getHitBox();
 
-        double posX = myHitbox.getX();
-        double posY = myHitbox.getY();
-        double width = myHitbox.getWidth();
-        double height = myHitbox.getHeight();
+        double posX = myHitBox.getX();
+        double posY = myHitBox.getY();
+        double width = myHitBox.getWidth();
+        double height = myHitBox.getHeight();
 
-        return overlappingHitbox.intersects(posX, posY, width, height);
+        return overlappingHitBox.intersects(posX, posY, width, height);
     }
 
     RectangularShape getHitBox();

@@ -26,12 +26,13 @@ public class Player extends Character{
     @Override
     public RectangularShape getHitBox() {
         double posX = getStat("posX");
-        double posY = getStat("posX");
+        double posY = getStat("posY");
         double width = getStat("width");
         double height = getStat("height");
         return new Rectangle2D.Double(posX, posY, width, height);
     }
 
+    @Override
     public void draw(Graphics playerGraphic) {
         playerGraphic.setColor(Color.RED);
         int dx = getStat("posX").intValue();
@@ -101,7 +102,8 @@ public class Player extends Character{
     }
 
     public boolean canPlayerJump(){
-        return !isJumping;
+        return true;
+//        return !isJumping;
     }
 
     public boolean canShoot() {

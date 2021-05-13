@@ -10,7 +10,6 @@ import pang.backend.config.GameConfig;
 import pang.gui.PangFrame;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class World {
@@ -53,7 +52,7 @@ public class World {
         }
         else{
             if (canPlayerSteer(keyChar, value) && player.canPlayerJump()){
-                player.steerKey('w', value);;
+                player.steerKey('w', value);
             }
         }
 
@@ -98,6 +97,7 @@ public class World {
     private void manageEnemies(long time) {
         for (Enemy enemy : enemies) {
             spawnEnemy(enemy, time);
+            attackEnemy(enemy);
             if (time % 30 == 0) {
                 moveEnemy(enemy);
             }
@@ -107,6 +107,12 @@ public class World {
 
     private void spawnEnemy(Enemy enemy, long time) {
         enemy.spawn(time);
+    }
+
+    private void attackEnemy(Enemy enemy) {
+        if (player.intersects(enemy)) {
+            enemy.attack(player);
+        }
     }
 
     private void moveEnemy(Enemy enemy) {

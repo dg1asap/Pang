@@ -2,11 +2,12 @@ package pang.backend.character;
 
 import pang.backend.config.GameConfig;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Character implements HitBox {
-    private Map<String, Double> stats = new HashMap<>();
+    private final Map<String, Double> stats = new HashMap<>();
 
     public Character(GameConfig config){
         addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY");
@@ -35,5 +36,12 @@ public abstract class Character implements HitBox {
     public boolean isAlive(){
         return stats.get("health") > 0;
     }
+
+    public void attack(Character character) {
+        double damage = this.getStat("damage");
+        character.increaseStatByValue("health", -damage);
+    }
+
+    public abstract void draw(Graphics g);
 
 }

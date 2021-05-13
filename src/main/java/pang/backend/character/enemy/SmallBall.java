@@ -26,7 +26,7 @@ public class SmallBall extends Enemy {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLUE);
-        g.fillRect(getStat("posX").intValue(), getStat("posY").intValue(), getStat("width").intValue(), getStat("height").intValue());
+        g.fillOval(getStat("posX").intValue(), getStat("posY").intValue(), getStat("width").intValue(), getStat("height").intValue());
     }
 
     @Override
@@ -38,19 +38,9 @@ public class SmallBall extends Enemy {
     }
 
     @Override
-    public void takeDamage(double damage) {
-        increaseStatByValue("health", -1);
-    }
-
-    @Override
-    public double attack() {
-        return 0;
-    }
-
-    @Override
     public RectangularShape getHitBox() {
         double posX = getStat("posX");
-        double posY = getStat("posX");
+        double posY = getStat("posY");
         double width = getStat("width");
         double height = getStat("height");
         return new Ellipse2D.Double(posX, posY, width, height);
