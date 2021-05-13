@@ -10,6 +10,7 @@ import pang.backend.config.GameConfig;
 import pang.gui.PangFrame;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class World {
@@ -44,14 +45,30 @@ public class World {
     }
 
     public void steerKey(char keyChar, double value){
-        if (canPlayerSteer(keyChar, value))
-            player.steerKey(keyChar, value);
-        addBulletToPlayer();
+        if(keyChar != 'w') {
+            if (canPlayerSteer(keyChar, value)){
+                player.steerKey(keyChar, value);
+                addBulletToPlayer();
+            }
+        }
+        else{
+            if (canPlayerSteer(keyChar, value) && player.canPlayerJump()){
+                player.steerKey('w', value);;
+            }
+        }
+
     }
 
     public void steerTime(long time){
         bulletController.steer();
         manageEnemies(time);
+        playerGravity(time);
+    }
+
+    private void playerGravity(long time) {
+        if (time % 10 == 0) {
+            player.gravity();
+        }
     }
 
     private void drawEnemies(Graphics g) {

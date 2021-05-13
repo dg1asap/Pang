@@ -17,7 +17,11 @@ public class InfoInGame {
     public void setNewPlayerInfo(int score, int health, int ammo){
         this.score = score;
         this.health = health;
+        if(ammo > 0){
+            ammo = ammo - 1;
+        }
         this.ammo = ammo;
+
     }
 
 
@@ -27,6 +31,7 @@ public class InfoInGame {
         g.setFont(new Font("Consolas", Font.PLAIN,15));
         g.drawString("Score: " + score, PangFrame.getActualScreenWidth() - g.getFontMetrics().stringWidth("Score: " + score) - 10, 20);
         g.drawString("Health: " + health, PangFrame.getActualScreenWidth() - g.getFontMetrics().stringWidth("Score: " + health) - 10, 40);
+
         g.drawString("Ammo: " + ammo, 5, 20);
     }
 

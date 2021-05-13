@@ -5,7 +5,7 @@ Player
     height=40
     width=40
     ammunition=28
-    gravityForce=6
+    gravityForce=1
     posX=0
     posY=0
 World
@@ -38,6 +38,5 @@ MegaBall
 Keyboard
     a=-30
     d=30
-    w=-30
-    s=30
+    w=-80
     k=-1
