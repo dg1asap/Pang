@@ -108,7 +108,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         }
         else{
             gameTimer.stop();
-            JOptionPane.showMessageDialog(null,"Press OK to return to menu", "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Press OK to return to menu", "GAME OVER", JOptionPane.PLAIN_MESSAGE);
             screen.render("Menu");
         }
     }
