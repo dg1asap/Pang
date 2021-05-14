@@ -100,15 +100,20 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void refresh(Screen screen){
-        if(!world.isGameOver()) {
+        if(!world.isGameOver() && !world.isEmpty()) {
             gameTime += 1;
             resizePanel();
             world.steerTime(gameTime);
             repaint();
         }
+        else if(world.isEmpty()){
+            gameTimer.stop();
+            JOptionPane.showMessageDialog(null,"Press Ok to return to menu", "Congratulations! YOU WON", JOptionPane.PLAIN_MESSAGE);
+            screen.render("Menu");
+        }
         else{
             gameTimer.stop();
-            JOptionPane.showMessageDialog(null,"Press OK to return to menu", "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Press Ok to return to menu","GAME OVER", JOptionPane.PLAIN_MESSAGE);
             screen.render("Menu");
         }
     }
