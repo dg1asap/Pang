@@ -49,6 +49,9 @@ public class Player extends Character{
         shoot(keyChar);
         increaseStatByValue(playerParameter, value);
 
+    }
+
+    public void setNewPlayerInfo(){
         infoInGame.setNewPlayerInfo(1,getStat("health").intValue(),getAmmoAmount());
     }
 
@@ -123,7 +126,6 @@ public class Player extends Character{
         else if(getActualYPlayerPosition()==PangFrame.getActualScreenHeight()-getPlayerHeight()){
             isJumping = false;
         }
-
     }
 
 }

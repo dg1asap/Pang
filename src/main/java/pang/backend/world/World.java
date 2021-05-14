@@ -60,6 +60,7 @@ public class World {
 
     public void steerTime(long time){
         bulletController.steer();
+        player.setNewPlayerInfo();
         manageEnemies(time);
         playerGravity(time);
     }
