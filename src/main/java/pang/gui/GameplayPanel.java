@@ -26,7 +26,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
         loadConfig();
 
-        gameTimer = new Timer(1, taskPerformer -> refresh() );
+        gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
         gameTimer.start();
         //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
         //add(backButton);
@@ -99,11 +99,18 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         return !"none".equals(playerReaction.fromKeyName(keyChar));
     }
 
-    private void refresh(){
-        gameTime += 1;
-        resizePanel();
-        world.steerTime(gameTime);
-        repaint();
+    private void refresh(Screen screen){
+        if(!world.isGameOver()) {
+            gameTime += 1;
+            resizePanel();
+            world.steerTime(gameTime);
+            repaint();
+        }
+        else{
+            gameTimer.stop();
+            JOptionPane.showMessageDialog(null,"Press OK to return to menu", "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+            screen.render("Menu");
+        }
     }
 
     private void resizePanel(){
