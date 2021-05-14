@@ -37,6 +37,10 @@ MegaBall
     posY=1
 Keyboard
     a=-30
+    A=-30
     d=30
+    D=30
     w=-80
+    W=-80
     k=-1
+    K=-1

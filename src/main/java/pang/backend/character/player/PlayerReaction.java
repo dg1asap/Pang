@@ -3,9 +3,9 @@ package pang.backend.character.player;
 public class PlayerReaction {
     public String fromKeyName(char keyName) {
         return switch (keyName) {
-            case 'a', 'd' -> "posX";
-            case 'w'-> "posY";
-            case 'k' -> "ammunition";
+            case 'a', 'A', 'd', 'D' -> "posX";
+            case 'w', 'W' -> "posY";
+            case 'k', 'K' -> "ammunition";
             default -> "none";
         };
     }

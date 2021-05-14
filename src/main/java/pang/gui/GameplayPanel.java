@@ -42,9 +42,8 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        char keyChar = e.getKeyChar();
-        ifKeyCharHasConfigSteer(keyChar);
-        repaint(); //TODO jest ok ale w sumie nie nie ten poziom abstrakcji, do zmiany żeby lepeij wyglądało
+        pauseActivation(e.getKeyChar());
+        ifPauseNotActivatedSteer(e.getKeyChar());
     }
 
     @Override
@@ -54,7 +53,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     public boolean hasKeyListener(){
         return true;
     }
-
 
     @Override
     public KeyListener getKeyListener(){
@@ -66,6 +64,27 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         Path defaultLevelPath = Path.of("./data/main/level/1.txt");
         WorldLoader worldLoader = WorldLoader.fromConfigPathAndLevelPath(defaultConfigPath, defaultLevelPath);
         world = worldLoader.getWorld();
+    }
+
+    private void pauseActivation(char keyChar) {
+        if ( isPauseKey(keyChar) && isPause())
+            gameTimer.start();
+        else if(isPauseKey(keyChar))
+            gameTimer.stop();
+    }
+
+    private boolean isPauseKey(char keyChar) {
+        return keyChar == 'p' || keyChar == 'P';
+    }
+
+    private boolean isPause() {
+        return !gameTimer.isRunning();
+    }
+
+    private void ifPauseNotActivatedSteer(char keyChar) {
+        if (gameTimer.isRunning()) {
+            ifKeyCharHasConfigSteer(keyChar);
+        }
     }
 
     private void ifKeyCharHasConfigSteer(char keyChar) {
