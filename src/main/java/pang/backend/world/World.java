@@ -15,13 +15,13 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class World {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
-    private BulletController bulletController;
+    private final BulletController playerBulletController;
 
     public World(GameConfig worldConfig, Player player){
         int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
-        bulletController = new BulletController();
+        playerBulletController = new BulletController(player);
     }
 
     public void addEnemy(Enemy enemy){
@@ -38,7 +38,7 @@ public class World {
 
     public void draw(Graphics g) {
         player.draw(g);
-        bulletController.draw(g);
+        playerBulletController.draw(g);
         drawEnemies(g);
 
     }
@@ -55,12 +55,11 @@ public class World {
                 player.steerKey('w', value);
             }
         }
-
     }
 
     public void steerTime(long time){
-        bulletController.steer();
         player.setNewPlayerInfo();
+        playerBulletController.steer();
         manageEnemies(time);
         playerGravity(time);
     }
@@ -91,7 +90,7 @@ public class World {
 
     private void addBulletToPlayer() {
         if (player.canShoot()) {
-            bulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition() - 20));
+            playerBulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition() - 20));
         }
     }
 
@@ -111,9 +110,17 @@ public class World {
     }
 
     private void attackEnemy(Enemy enemy) {
-        if (player.intersects(enemy)) {
+        enemyAttackPlayer(enemy);
+        playerAttackEnemy(enemy);
+    }
+
+    private void enemyAttackPlayer(Enemy enemy) {
+        if (player.intersects(enemy))
             enemy.attack(player);
-        }
+    }
+
+    private void playerAttackEnemy(Enemy enemy) {
+        playerBulletController.interact(enemy);
     }
 
     private void moveEnemy(Enemy enemy) {

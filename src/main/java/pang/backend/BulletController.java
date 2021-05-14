@@ -1,43 +1,47 @@
 package pang.backend;
 
+import pang.backend.character.Character;
+
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BulletController {
-    private LinkedList<Bullet> bullets = new LinkedList<Bullet>();
+    private ConcurrentLinkedQueue <Bullet> bullets = new ConcurrentLinkedQueue<>();
+    private Character owner;
 
-    private Bullet tempBullet;
-
-    public BulletController(){
+    public BulletController(Character owner){
+        this.owner = owner;
     }
 
     public void draw(Graphics g){
-        for(int i = 0; i<bullets.size(); i++){
-            tempBullet = bullets.get(i);
-            tempBullet.draw(g);
-        }
+        for (Bullet bullet : bullets)
+            bullet.draw(g);
     }
 
     public void steer(){
-        for(int i = 0; i<bullets.size(); i++){
-            tempBullet = bullets.get(i);
-
-            if(tempBullet.getY()<0){
-                removeBullet(tempBullet);
+        for (Bullet bullet : bullets) {
+            if(bullet.getY()<0){
+                removeBullet(bullet);
             }
-            tempBullet.fire();
+            bullet.fire();
         }
     }
 
-    public void removeBullet(Bullet bullet){
+    public void removeBullet(Bullet bullet) {
         bullets.remove(bullet);
     }
 
-    public void addBullet(Bullet bullet){
+    public void addBullet(Bullet bullet) {
         bullets.add(bullet);
     }
 
-
-
+    public void interact(Character target) {
+        for (Bullet bullet : bullets) {
+            if (bullet.intersects(target)) {
+                owner.attack(target);
+            }
+        }
+    }
 
 }
