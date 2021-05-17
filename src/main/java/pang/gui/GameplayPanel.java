@@ -14,8 +14,11 @@ import java.awt.event.KeyListener;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
+
+    private static Path levelPath;
+    private static World world;
+
     private final GameConfig keyboardConfig;
-    private World world;
     private final Timer gameTimer;
     private long gameTime = 0;
 
@@ -30,6 +33,11 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         gameTimer.start();
         //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
         //add(backButton);
+    }
+
+    public static void setLevelPath(Path path){
+        levelPath = path;
+        System.out.println("Loading level: path -> " + path);
     }
 
     public void paint (Graphics g) {
@@ -59,9 +67,9 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         return this;
     }
 
-    private void loadConfig() {
+    private static void loadConfig() {
         Path defaultConfigPath = Path.of("./data/main/configs.txt");
-        Path defaultLevelPath = Path.of("./data/main/level/1.txt");
+        Path defaultLevelPath = levelPath;
         WorldLoader worldLoader = WorldLoader.fromConfigPathAndLevelPath(defaultConfigPath, defaultLevelPath);
         world = worldLoader.getWorld();
     }
