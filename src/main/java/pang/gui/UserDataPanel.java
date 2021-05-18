@@ -12,10 +12,15 @@ import java.util.Collections;
 
 public class UserDataPanel extends PangPanel{
     private ArrayList <File> levelNumbers;
+    private static  JTextField userNickname;
+
+    public static String getUserName(){
+        return userNickname.getText();
+    }
 
     public UserDataPanel(Screen screen) {
+        userNickname = new JTextField();
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
-        JTextField userNickname = new JTextField();
         userNickname.setPreferredSize(new Dimension(200,30));
         userNickname.setMaximumSize(new Dimension(200,30));
 
@@ -61,6 +66,7 @@ public class UserDataPanel extends PangPanel{
         String nameOfLevelButton = getNameOfLevelButton(levelName);
         JButton levelButton = createButtonToChangeWindowTo(nameOfLevelButton, "Gameplay", screen);
         levelButton.addActionListener(e -> GameplayPanel.setLevelPath(Path.of("data","main", "level", levelName)));
+        levelButton.addActionListener(e-> GameplayPanel.setMapName(levelName));
         return levelButton;
     }
 
