@@ -3,6 +3,7 @@ package pang.backend.world;
 import pang.backend.Bullet;
 import pang.backend.BulletController;
 import pang.backend.character.PangVector;
+import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
@@ -124,13 +125,28 @@ public class World {
     }
 
     private void moveEnemy(Enemy enemy) {
-        if (enemy.isSpawned())
+        if (enemy.isSpawned()) {
+            bounceOffBall(enemy);
             enemy.move();
+        }
     }
 
     private void killEnemy(Enemy enemy) {
         if (!enemy.isAlive())
             enemies.remove(enemy);
+    }
+
+    private void bounceOffBall(Enemy enemy) {
+        if (enemy instanceof Ball) {
+            Ball ball = (Ball) enemy;
+            bounceBallOffPlayer(ball);
+        }
+    }
+
+    private void bounceBallOffPlayer(Ball ball) {
+        if (player.intersects(ball)) {
+            ball.bounceOff();
+        }
     }
 
 }

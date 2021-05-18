@@ -1,0 +1,10 @@
+SmallBall 5
+SmallBall 10
+MegaBall 15
+LargeBall 20
+SmallBall 25
+MegaBall 30
+SmallBall 35
+SmallBall 40
+MegaBall 45
+LargeBall 50

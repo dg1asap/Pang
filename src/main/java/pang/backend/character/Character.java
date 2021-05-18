@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Character implements HitBox {
+    protected CoolDown coolDown;
     private final Map<String, Double> stats = new HashMap<>();
-    private CoolDown coolDown;
 
     public Character(GameConfig config, CoolDown coolDown){
         addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY");
