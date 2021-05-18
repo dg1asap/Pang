@@ -11,6 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
@@ -21,6 +24,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private final GameConfig keyboardConfig;
     private final Timer gameTimer;
     private long gameTime = 0;
+    private static String mapName;
 
     public GameplayPanel(Screen screen) {
         Path configPath = Path.of("./data/main/configs.txt");
@@ -31,8 +35,10 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
         gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
         gameTimer.start();
-        //JButton backButton = createButtonToChangeWindowTo("Back", "Menu", screen);
-        //add(backButton);
+    }
+
+    public static void setMapName(String map){
+        mapName = map;
     }
 
     public static void setLevelPath(Path path){
@@ -118,13 +124,39 @@ public class GameplayPanel extends PangPanel implements KeyListener {
             gameTimer.stop();
             JOptionPane.showMessageDialog(null,"Press Ok to return to menu", "Congratulations! YOU WON", JOptionPane.PLAIN_MESSAGE);
             screen.render("Menu");
+            saveScore();
         }
         else{
             gameTimer.stop();
             JOptionPane.showMessageDialog(null,"Press Ok to return to menu","GAME OVER", JOptionPane.PLAIN_MESSAGE);
             screen.render("Menu");
+            saveScore();
         }
     }
+
+    private void saveScore(){
+        File highScores = Path.of("data","main", "highScores", mapName).toFile();
+        try{
+            int levelScore = 10000;
+            if(highScores.exists()){
+                FileWriter score = new FileWriter(highScores, true);
+                score.write("\n" + UserDataPanel.getUserName() + " " + levelScore);
+                score.close();
+                System.out.println("Added score to file: " + mapName);
+            }
+            else{
+                FileWriter score = new FileWriter(highScores);
+                score.write(UserDataPanel.getUserName() + " " + levelScore);
+                score.close();
+                System.out.println("Created new HighScores file: " + mapName);
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void resizePanel(){
         PangFrame.setActualScreenHeight(this.getHeight());
