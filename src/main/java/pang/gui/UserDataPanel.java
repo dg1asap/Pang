@@ -6,11 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class UserDataPanel extends PangPanel{
-
-    private File levels;
-    private File[] levelNumber;
+    private ArrayList <File> levelNumbers;
 
     public UserDataPanel(Screen screen) {
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
@@ -32,21 +33,39 @@ public class UserDataPanel extends PangPanel{
 
     }
 
-    private void loadLevelButtons(Screen screen){
-        levels = Path.of("data","main","level").toFile();
-        levelNumber = levels.listFiles();
+    @Override
+    public boolean hasKeyListener() {
+        return false;
+    }
 
-        for(int i=levelNumber.length -1; i>=0 ; i--){
-            JButton levelButton = createButtonToChangeWindowTo("Level "+ levelNumber[i].getName().substring(0, levelNumber[i].getName().lastIndexOf(".")),"Gameplay", screen);
-            String levelName = levelNumber[i].getName();
-            levelButton.addActionListener(e->GameplayPanel.setLevelPath(Path.of("data","main","level",levelName)));
+    private void loadLevelButtons(Screen screen){
+        loadLevelNumbers();
+        addLevelNumbersAsButtons(screen);
+    }
+
+    private void loadLevelNumbers() {
+        File levels = Path.of("data","main", "level").toFile();
+        levelNumbers = new ArrayList<>(Arrays.asList(levels.listFiles()));
+        Collections.sort(levelNumbers);
+    }
+
+    private void addLevelNumbersAsButtons(Screen screen) {
+        for(File levelNumber : levelNumbers) {
+            JButton levelButton = createLevelButton(levelNumber, screen);
             add(levelButton);
         }
     }
 
-    @Override
-    public boolean hasKeyListener() {
-        return false;
+    private JButton createLevelButton(File levelNumber, Screen screen) {
+        String levelName = levelNumber.getName();
+        String nameOfLevelButton = getNameOfLevelButton(levelName);
+        JButton levelButton = createButtonToChangeWindowTo(nameOfLevelButton, "Gameplay", screen);
+        levelButton.addActionListener(e -> GameplayPanel.setLevelPath(Path.of("data","main", "level", levelName)));
+        return levelButton;
+    }
+
+    private String getNameOfLevelButton(String levelName) {
+        return "Level " + levelName.substring(0, levelName.lastIndexOf("."));
     }
 
 }
