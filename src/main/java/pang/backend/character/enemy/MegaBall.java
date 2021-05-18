@@ -1,5 +1,6 @@
 package pang.backend.character.enemy;
 
+import pang.backend.character.CoolDown;
 import pang.backend.character.HitBox;
 import pang.backend.character.PangVector;
 import pang.backend.config.GameConfig;
@@ -13,12 +14,8 @@ import java.awt.geom.RectangularShape;
 public class MegaBall extends Enemy {
     private final PangVector vectorMovement;
 
-    public static MegaBall fromConfigAndSpawnTime(GameConfig config, int spawnTime){
-        return new MegaBall(config, spawnTime);
-    }
-
-    protected MegaBall(GameConfig config, int spawnTime){
-        super(config, spawnTime);
+    protected MegaBall(GameConfig config, CoolDown coolDown, int spawnTime){
+        super(config, coolDown, spawnTime);
         vectorMovement = PangVector.randPangVector(-10, 10);
         spawnEnemyAtTopOfMap();
     }

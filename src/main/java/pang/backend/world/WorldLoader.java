@@ -1,5 +1,6 @@
 package pang.backend.world;
 
+import pang.backend.character.CoolDown;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.enemy.EnemyFactory;
 import pang.backend.character.player.Player;
@@ -15,6 +16,7 @@ public class WorldLoader {
     private Path path;
     private World world;
     private EnemyFactory enemyFactory;
+    private ConfigLoader configLoader;
 
     public static WorldLoader fromConfigPathAndLevelPath(Path configPath, Path levelPath) {
         return new WorldLoader(configPath, levelPath);
@@ -25,33 +27,35 @@ public class WorldLoader {
     }
 
     protected WorldLoader (Path configPath, Path levelPath) {
-        createWorld(configPath);
-        createEnemyFactory(configPath);
+        this.configLoader = ConfigLoader.fromConfigPath(configPath);
+        this.enemyFactory = EnemyFactory.fromConfigPath(configPath);
+        createWorld();
         loadWorld(levelPath);
     }
 
-    private void createWorld(Path configPath) {
-        GameConfig worldConfig = getWorldConfig(configPath);
-        Player player = createPlayer(configPath);
+    private void createWorld() {
+        GameConfig worldConfig = getWorldConfig();
+        Player player = createPlayer();
         world = new World(worldConfig, player);
     }
 
-    private GameConfig getWorldConfig(Path configPath) {
-        ConfigLoader worldConfigLoader = ConfigLoader.fromConfigPath(configPath);
-        return worldConfigLoader.getConfig("World");
+    private GameConfig getWorldConfig() {
+        return configLoader.getConfig("World");
     }
 
-    private Player createPlayer(Path configPath) {
-        GameConfig playerConfig = getPlayerConfig(configPath);
-        return new Player(playerConfig);
+    private Player createPlayer() {
+        GameConfig playerConfig = getPlayerConfig();
+        CoolDown coolDown = getPlayerCoolDown();
+        return new Player(playerConfig, coolDown);
     }
 
-    private GameConfig getPlayerConfig(Path configPath) {
-        ConfigLoader playerConfigLoader = ConfigLoader.fromConfigPath(configPath);
-        return playerConfigLoader.getConfig("Player");
+    private GameConfig getPlayerConfig() {
+        return configLoader.getConfig("Player");
     }
-    private void createEnemyFactory(Path configPath) {
-        enemyFactory = EnemyFactory.fromConfigPath(configPath);
+
+    private CoolDown getPlayerCoolDown() {
+        GameConfig coolDownConfig = configLoader.getConfig("PlayerCoolDown");
+        return new CoolDown(coolDownConfig);
     }
 
     private void loadWorld(Path path){

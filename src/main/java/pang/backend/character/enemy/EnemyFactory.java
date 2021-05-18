@@ -3,6 +3,7 @@ package pang.backend.character.enemy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pang.backend.character.CoolDown;
 import pang.backend.config.GameConfig;
 import pang.backend.config.ConfigLoader;
 
@@ -14,6 +15,7 @@ public class EnemyFactory {
     private final ConfigLoader configLoader;
     private final ArrayList <GameConfig> enemiesConfigs = new ArrayList<>();
     private GameConfig enemyConfig;
+    private CoolDown enemyCoolDown;
     private String enemyName;
     private int spawnTime;
 
@@ -24,6 +26,7 @@ public class EnemyFactory {
     public Enemy createEnemyWithNameAndRespawnTime(String name, Integer spawnTime) throws IllegalArgumentException {
         setEnemyNameAndSpawnTime(name, spawnTime);
         setEnemyConfig(name);
+        setEnemyCoolDown(name);
         return tryGetEnemy();
     }
 
@@ -64,6 +67,11 @@ public class EnemyFactory {
         enemiesConfigs.add(enemyConfig);
     }
 
+    private void setEnemyCoolDown(String name) {
+        GameConfig coolDownConfig = configLoader.getConfig(name + "CoolDown");
+        this.enemyCoolDown = new CoolDown(coolDownConfig);
+    }
+
     private Enemy tryGetEnemy() {
         try {
             return getEnemy();
@@ -75,11 +83,12 @@ public class EnemyFactory {
 
     private Enemy getEnemy() throws IllegalArgumentException {
         return switch (enemyName) {
-            case "SmallBall" -> SmallBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
-            case "LargeBall" -> LargeBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
-            case "MegaBall" -> MegaBall.fromConfigAndSpawnTime(enemyConfig, spawnTime);
+            case "SmallBall" -> new SmallBall(enemyConfig, enemyCoolDown, spawnTime);
+            case "LargeBall" -> new LargeBall(enemyConfig, enemyCoolDown, spawnTime);
+            case "MegaBall" -> new MegaBall(enemyConfig, enemyCoolDown, spawnTime);
             default -> throw new IllegalArgumentException();
         };
     }
+
 
 }

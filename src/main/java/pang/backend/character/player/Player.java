@@ -1,6 +1,7 @@
 package pang.backend.character.player;
 
 import pang.backend.character.Character;
+import pang.backend.character.CoolDown;
 import pang.backend.config.GameConfig;
 import pang.gui.InfoInGame;
 import pang.gui.PangFrame;
@@ -15,8 +16,8 @@ public class Player extends Character{
     private boolean isJumping = false;
     private final InfoInGame infoInGame;
 
-    public Player(GameConfig config) {
-        super(config);
+    public Player(GameConfig config, CoolDown coolDown) {
+        super(config, coolDown);
         addStat(config, "ammunition", "gravityForce");
         setPlayerStartPosition();
         turnOffShooting();

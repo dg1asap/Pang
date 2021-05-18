@@ -1,19 +1,15 @@
 package pang.backend.character;
 
-import pang.backend.config.ConfigLoader;
 import pang.backend.config.GameConfig;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CoolDown {
-    private final Map <String, Long> lastActionsTime = new HashMap<>();
+    private final ConcurrentHashMap <String, Long> lastActionsTime = new ConcurrentHashMap<>();
     private final GameConfig config;
 
-    public CoolDown(Path path, String configName) {
-        ConfigLoader configLoader = ConfigLoader.fromConfigPath(path);
-        this.config = configLoader.getConfig(configName);
+    public CoolDown(GameConfig config) {
+        this.config = config;
     }
 
     public boolean isCoolDown(String action) {
@@ -21,7 +17,7 @@ public class CoolDown {
         Long lastActionTime = lastActionsTime.get(action);
 
         ifNoLastActionTimeAddAction(lastActionTime, action);
-        return compareActionWithSystemTime(action, lastActionTime, coolDown);
+        return compareActionWithSystemTime(action, coolDown);
     }
 
     private void ifNoLastActionTimeAddAction(Long lastActionTime, String action) {
@@ -33,8 +29,9 @@ public class CoolDown {
         lastActionsTime.put(action, 0L);
     }
 
-    private boolean compareActionWithSystemTime(String action, Long lastActionTime, long coolDown) {
+    private boolean compareActionWithSystemTime(String action, long coolDown) {
         long time = System.currentTimeMillis();
+        Long lastActionTime = lastActionsTime.get(action);
         if(time > lastActionTime + coolDown) {
             lastActionsTime.replace(action, time);
             return false;

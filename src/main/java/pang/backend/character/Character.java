@@ -8,9 +8,11 @@ import java.util.Map;
 
 public abstract class Character implements HitBox {
     private final Map<String, Double> stats = new HashMap<>();
+    private CoolDown coolDown;
 
-    public Character(GameConfig config){
+    public Character(GameConfig config, CoolDown coolDown){
         addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY");
+        this.coolDown = coolDown;
     }
 
     protected void addStat(GameConfig config, String... newStats) {
@@ -38,8 +40,10 @@ public abstract class Character implements HitBox {
     }
 
     public void attack(Character character) {
-        double damage = this.getStat("damage");
-        character.increaseStatByValue("health", -damage);
+        if (!coolDown.isCoolDown("attack")) {
+            double damage = this.getStat("damage");
+            character.increaseStatByValue("health", -damage);
+        }
     }
 
     public abstract void draw(Graphics g);

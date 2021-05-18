@@ -1,5 +1,6 @@
 package pang.backend.character.enemy;
 
+import pang.backend.character.CoolDown;
 import pang.backend.character.PangVector;
 import pang.backend.config.GameConfig;
 import pang.backend.world.WorldBorder;
@@ -13,12 +14,8 @@ public class SmallBall extends Enemy {
     private final PangVector vectorMovement;
     private Ellipse2D.Double shape;
 
-    public static SmallBall fromConfigAndSpawnTime(GameConfig config, int spawnTime){
-        return new SmallBall(config, spawnTime);
-    }
-
-    protected SmallBall(GameConfig config, int spawnTime){
-        super(config, spawnTime);
+    protected SmallBall(GameConfig config, CoolDown coolDown, int spawnTime){
+        super(config, coolDown, spawnTime);
         vectorMovement = PangVector.randPangVector(-10, 10);
         spawnEnemyAtTopOfMap();
     }

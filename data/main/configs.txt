@@ -8,6 +8,9 @@ Player
     gravityForce=1
     posX=0
     posY=0
+PlayerCoolDown
+    attack=1000
+    move=5
 World
     worldCapacity=100
     maxSpawnCount=50
@@ -19,6 +22,9 @@ SmallBall
     width=30
     posX=0
     posY=0
+SmallBallCoolDown
+    attack=100000
+    move=5
 LargeBall
     health=3
     damage=1.5
@@ -27,6 +33,9 @@ LargeBall
     width=70
     posX=30
     posY=30
+LargeBallCoolDown
+    attack=100000
+    move=5
 MegaBall
     health=7
     damage=3
@@ -35,6 +44,9 @@ MegaBall
     width=50
     posX=1
     posY=1
+MegaBallCoolDown
+    attack=100000
+    move=5
 Keyboard
     a=-30
     A=-30
