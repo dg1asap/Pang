@@ -22,6 +22,28 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
 }
 
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Pang',
+                'Main-Class': 'pang.Main'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task moveJar{
+    doLast {
+        copy{
+            from('./build/libs/proze21l_gorski_ogrodnik-1.0-SNAPSHOT.jar')
+            into('.')
+        }
+    }
+}
+
+
 test {
     useJUnitPlatform()
 }
+
+
