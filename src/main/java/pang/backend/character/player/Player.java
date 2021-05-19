@@ -106,7 +106,7 @@ public class Player extends Character{
     }
 
     public boolean canPlayerJump(){
-       // return true;
+        //return true;
         return !isJumping;
     }
 
@@ -124,7 +124,7 @@ public class Player extends Character{
         if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
             increaseStatByValue("posY", getStat("gravityForce").intValue());
         }
-        else if(getActualYPlayerPosition()==PangFrame.getActualScreenHeight()-getPlayerHeight()){
+        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 100){
             isJumping = false;
         }
     }
