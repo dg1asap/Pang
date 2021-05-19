@@ -8,7 +8,13 @@
 2 -> task moveJar
 
 #Uruchomienie:
- 1. Będąc w głównym katalogu(proze21l_gorski_ogrodnik), należy wpisać w terminalu komendę: 
+1. Uruchomić (poprzez kliknięcie zielonej strzałki) .jar w głównym katalogu
+   
+
+lub
+
+
+2. Będąc w głównym katalogu(proze21l_gorski_ogrodnik), należy wpisać w terminalu komendę: 
     
     java -jar proze21l_gorski_ogrodnik-1.0-SNAPSHOT.jar
 
