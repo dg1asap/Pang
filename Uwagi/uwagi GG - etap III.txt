@@ -1,0 +1,23 @@
+
+wybór poziomu:
+- po przejściu jednego poziomu, gra ma automatycznie przechodzić do kolejnego, 
+  wybór poziomu przez kliknięcie przycisku jakby sugeruje, że gramy tylko na tym jednym...
+- poziomów ma być tyle, ile zapisane w pliku konfiguracyjnym!!!!! 
+  Jak będzie wyglądało GUI, gdy do pliku wpiszę 84027 poziomów???
+
+skalowanie:
+- pole gry ma się skalować do aktualnego rozmiaru okna, ale "widoczne" ma być 100% pola gry;
+  mam wrażenie, że po zmianie rozmiaru okna zmienia się również rozmiar pola gry - gracz nagle nie jest na dole,
+  tylko "wewnątrz" i zaczyna spadać; kulki poruszają się zawsze do granicy okna, ale są nadal tej samej
+  wielkości i poruszają się tą samą prekością... 
+  nie wiem jak to dobrze opisać, ale to tak, jakby po rozszerzeniu okna droga do pokonania zwiększyła się z 10m do 15m,
+  a to ma być "ta sama droga", tylko jak gdyby widziana z mniejszszej czy większej odległości.
+
+  Może analogia do stołu bilardowego: proszę sobie wyobrazić, że gracz i kulki poruszają się po stole i odbijają
+  od jego krawędzi... zmiana rozmiaru okna nie "poiększa/pomniejsza" stołu, powoduje jedynie, że jest on 
+  rysowany (oraz wszystkie elementy na nim) w większej bądź mniejszej skali, ale zawsze jest widoczny w całości...
+
+
+Bardzo długo nic się nie dzieje (zamierzone?), ale w końcu "coś" się pojawia i animacja jest...
+
+Etap zaliczony.
