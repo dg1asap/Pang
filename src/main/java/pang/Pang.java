@@ -1,6 +1,6 @@
 package pang;
 
-import pang.gui.PanelCreator;
+import pang.gui.panel.PanelCreator;
 import pang.hardware.Audio;
 import pang.hardware.Screen;
 

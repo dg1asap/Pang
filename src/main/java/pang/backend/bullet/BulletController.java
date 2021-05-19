@@ -1,4 +1,4 @@
-package pang.backend;
+package pang.backend.bullet;
 
 import pang.backend.character.Character;
 
@@ -6,8 +6,8 @@ import java.awt.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BulletController {
-    private ConcurrentLinkedQueue <Bullet> bullets = new ConcurrentLinkedQueue<>();
-    private Character owner;
+    private final ConcurrentLinkedQueue <Bullet> bullets = new ConcurrentLinkedQueue<>();
+    private final Character owner;
 
     public BulletController(Character owner){
         this.owner = owner;

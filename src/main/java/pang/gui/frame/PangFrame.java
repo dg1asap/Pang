@@ -1,6 +1,7 @@
-package pang.gui;
+package pang.gui.frame;
 
-import pang.backend.character.PangVector;
+import pang.backend.util.PangVector;
+import pang.gui.panel.PangPanel;
 
 import javax.swing.*;
 import java.awt.*;

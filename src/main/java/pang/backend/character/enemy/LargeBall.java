@@ -1,9 +1,9 @@
 package pang.backend.character.enemy;
 
 import pang.backend.character.CoolDown;
-import pang.backend.character.PangVector;
+import pang.backend.util.PangVector;
 import pang.backend.config.GameConfig;
-import pang.gui.PangFrame;
+import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 

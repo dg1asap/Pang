@@ -4,7 +4,7 @@ import pang.backend.character.Character;
 import pang.backend.character.CoolDown;
 import pang.backend.config.GameConfig;
 import pang.gui.InfoInGame;
-import pang.gui.PangFrame;
+import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

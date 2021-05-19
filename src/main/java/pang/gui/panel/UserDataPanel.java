@@ -1,4 +1,4 @@
-package pang.gui;
+package pang.gui.panel;
 
 import pang.hardware.Screen;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class UserDataPanel extends PangPanel{
+public class UserDataPanel extends PangPanel {
     private ArrayList <File> levelNumbers;
     private static  JTextField userNickname;
 

@@ -1,14 +1,14 @@
 package pang.backend.world;
 
-import pang.backend.Bullet;
-import pang.backend.BulletController;
-import pang.backend.character.PangVector;
+import pang.backend.bullet.Bullet;
+import pang.backend.bullet.BulletController;
+import pang.backend.util.PangVector;
 import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
 import pang.backend.config.GameConfig;
-import pang.gui.PangFrame;
+import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;

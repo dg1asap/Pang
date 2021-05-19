@@ -1,4 +1,4 @@
-package pang.backend;
+package pang.backend.bullet;
 
 import pang.backend.character.HitBox;
 

@@ -1,4 +1,4 @@
-package pang.gui;
+package pang.gui.panel;
 
 import pang.hardware.Audio;
 import pang.hardware.Screen;

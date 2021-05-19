@@ -1,4 +1,4 @@
-package pang.backend.character;
+package pang.backend.util;
 
 import java.util.Random;
 

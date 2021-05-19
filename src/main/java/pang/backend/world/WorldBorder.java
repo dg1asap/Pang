@@ -1,6 +1,6 @@
 package pang.backend.world;
 
-import pang.backend.character.PangVector;
+import pang.backend.util.PangVector;
 import pang.backend.character.Character;
 
 public class WorldBorder {

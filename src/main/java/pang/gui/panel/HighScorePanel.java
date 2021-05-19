@@ -1,9 +1,8 @@
-package pang.gui;
+package pang.gui.panel;
 
 import pang.hardware.Screen;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;

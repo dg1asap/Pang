@@ -1,10 +1,10 @@
 package pang.backend.character.enemy;
 
 import pang.backend.character.CoolDown;
-import pang.backend.character.PangVector;
+import pang.backend.util.PangVector;
 import pang.backend.config.GameConfig;
 import pang.backend.world.WorldBorder;
-import pang.gui.PangFrame;
+import pang.gui.frame.PangFrame;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;

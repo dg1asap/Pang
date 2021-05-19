@@ -1,6 +1,6 @@
 package pang.gui;
 
-import pang.hardware.Screen;
+import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 

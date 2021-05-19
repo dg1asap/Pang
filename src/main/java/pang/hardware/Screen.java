@@ -1,8 +1,8 @@
 package pang.hardware;
 
-import pang.gui.PanelCreator;
-import pang.gui.PangFrame;
-import pang.gui.PangPanel;
+import pang.gui.panel.PanelCreator;
+import pang.gui.frame.PangFrame;
+import pang.gui.panel.PangPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
