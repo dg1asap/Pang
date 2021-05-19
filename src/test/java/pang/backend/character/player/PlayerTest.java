@@ -1,16 +1,12 @@
 package pang.backend.character.player;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 import pang.backend.config.ConfigLoader;
 import pang.backend.config.GameConfig;
-import pang.backend.exception.ConfigException;
 
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PlayerTest {
@@ -18,13 +14,13 @@ public class PlayerTest {
     static GameConfig config;
 
     @BeforeAll
-    static void setConfigLoader() throws ConfigException {
+    static void setConfigLoader() {
         Path path = Path.of("./data/test/configs/PlayerTest.txt");
         configLoader = ConfigLoader.fromConfigPath(path);
         config = configLoader.getConfig("Player");
     }
 
-    Player player = new Player(config);
+    //Player player = new Player(config);
 /*
     @Test
     void testPlayerHasStartHp(){

@@ -28,7 +28,6 @@ public class SmallBall extends Ball {
 
         increaseStatByValue("posX", posX - actualPosX);
         increaseStatByValue("posY", posY - actualPosY);
-
     }
 
 }

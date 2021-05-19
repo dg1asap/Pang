@@ -19,10 +19,12 @@ public abstract class Ball extends Enemy{
 
     @Override
     public void move() {
-        WorldBorder wall = new WorldBorder(PangFrame.getExtremePointOfFrame());
-        bounceOffVerticalWall(wall);
-        bounceOffHorizontalWall(wall);
-        changePosition();
+        if (!coolDown.isCoolDown("move")) {
+            WorldBorder wall = new WorldBorder(PangFrame.getExtremePointOfFrame());
+            bounceOffVerticalWall(wall);
+            bounceOffHorizontalWall(wall);
+            changePosition();
+        }
     }
 
     @Override

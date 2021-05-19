@@ -24,7 +24,7 @@ SmallBall
     posY=0
 SmallBallCoolDown
     attack=10000
-    move=5
+    move=30
     bounceOff=600
 LargeBall
     health=3
@@ -36,7 +36,7 @@ LargeBall
     posY=30
 LargeBallCoolDown
     attack=100000
-    move=5
+    move=30
     bounceOff=600
 MegaBall
     health=7
@@ -48,7 +48,7 @@ MegaBall
     posY=1
 MegaBallCoolDown
     attack=100000
-    move=5
+    move=30
     bounceOff=600
 Keyboard
     a=-30

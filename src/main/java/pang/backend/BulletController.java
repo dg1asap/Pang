@@ -3,7 +3,6 @@ package pang.backend;
 import pang.backend.character.Character;
 
 import java.awt.*;
-import java.util.LinkedList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BulletController {
@@ -37,11 +36,9 @@ public class BulletController {
     }
 
     public void interact(Character target) {
-        for (Bullet bullet : bullets) {
-            if (bullet.intersects(target)) {
+        for (Bullet bullet : bullets)
+            if (bullet.intersects(target))
                 owner.attack(target);
-            }
-        }
     }
 
 }

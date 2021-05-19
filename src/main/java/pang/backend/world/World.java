@@ -99,9 +99,7 @@ public class World {
         for (Enemy enemy : enemies) {
             spawnEnemy(enemy, time);
             attackEnemy(enemy);
-            if (time % 30 == 0) {
-                moveEnemy(enemy);
-            }
+            moveEnemy(enemy);
             killEnemy(enemy);
         }
     }
