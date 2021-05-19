@@ -15,7 +15,14 @@ public class UserDataPanel extends PangPanel {
     private static  JTextField userNickname;
 
     public static String getUserName(){
-        return userNickname.getText();
+        if(userNickname.getText().trim().equals("")){
+            return "Unknown";
+        }
+        else{
+            return userNickname.getText().trim().replaceAll("\\s+"," ");
+
+        }
+
     }
 
     public UserDataPanel(Screen screen) {

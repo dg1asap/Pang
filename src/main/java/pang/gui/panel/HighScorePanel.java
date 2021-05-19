@@ -1,5 +1,6 @@
 package pang.gui.panel;
 
+import com.google.common.collect.*;
 import pang.hardware.Screen;
 
 import javax.swing.*;
@@ -31,18 +32,14 @@ public class HighScorePanel extends PangPanel {
         add(backButton);
     }
 
-    private static HashMap<String, Integer> sortHashMapByValueToGet5BestScores (HashMap<String, Integer> notSortedHashMap){
-        List<Map.Entry<String, Integer>> pointsList = new LinkedList<>(notSortedHashMap.entrySet());
-        Collections.sort(pointsList, Comparator.comparing(Map.Entry::getValue));
+    private List<Map.Entry<String, Integer>> sortMultiMap(Multimap<String, Integer> notSortedMultiMap){
+        List<Map.Entry<String, Integer>> pointsList = new LinkedList<>(notSortedMultiMap.entries());
+        Collections.sort(pointsList,Comparator.comparing(Map.Entry::getValue));
         Collections.reverse(pointsList);
 
         List<Map.Entry<String, Integer>> bestPointsList = pointsList.stream().limit(5).collect(Collectors.toList());
-        HashMap<String, Integer> sortedHashMap = new LinkedHashMap<>();
 
-        for (Map.Entry<String, Integer> element : bestPointsList) {
-            sortedHashMap.put(element.getKey(), element.getValue());
-        }
-        return sortedHashMap;
+        return bestPointsList;
     }
 
     private void loadHighScoreButtons(){
@@ -80,7 +77,7 @@ public class HighScorePanel extends PangPanel {
         try{
             Scanner scanner = new Scanner(highScores);
             highScoreText.setText("Best players on " + getNameOfHighScoreButton(mapName) + ":");
-            HashMap<String, Integer> listOfScores = new HashMap<>();
+            Multimap<String, Integer> listOfScores = ArrayListMultimap.create();
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -90,8 +87,7 @@ public class HighScorePanel extends PangPanel {
                 listOfScores.put(name,points);
             }
 
-            sortHashMapByValueToGet5BestScores(listOfScores);
-            scoresLabel.setText(sortHashMapByValueToGet5BestScores(listOfScores).toString());
+            scoresLabel.setText(sortMultiMap(listOfScores).toString());
 
             scanner.close();
         } catch (IOException e){

@@ -138,7 +138,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private void saveScore(){
         File highScores = Path.of("data","main", "highScores", mapName).toFile();
         try{
-            int levelScore = 10000;
+            int levelScore = 10;
             if(highScores.exists()){
                 FileWriter score = new FileWriter(highScores, true);
                 score.write("\n" + UserDataPanel.getUserName() + " " + levelScore);

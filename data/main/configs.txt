@@ -4,8 +4,8 @@ Player
     speed=2
     height=40
     width=40
-    ammunition=28
-    gravityForce=1
+    ammunition=100
+    gravityForce=2
     posX=0
     posY=0
 PlayerCoolDown
@@ -23,23 +23,23 @@ SmallBall
     posX=0
     posY=0
 SmallBallCoolDown
-    attack=10000
+    attack=1000
     move=30
     bounceOff=600
 LargeBall
-    health=3
+    health=2
     damage=1.5
     speed=1.12
-    height=70
-    width=70
+    height=40
+    width=40
     posX=30
     posY=30
 LargeBallCoolDown
-    attack=100000
+    attack=1000
     move=30
     bounceOff=600
 MegaBall
-    health=7
+    health=3
     damage=3
     speed=1.12
     height=50
@@ -47,7 +47,7 @@ MegaBall
     posX=1
     posY=1
 MegaBallCoolDown
-    attack=100000
+    attack=1000
     move=30
     bounceOff=600
 Keyboard
@@ -55,7 +55,7 @@ Keyboard
     A=-30
     d=30
     D=30
-    w=-80
-    W=-80
+    w=-140
+    W=-140
     k=-1
     K=-1

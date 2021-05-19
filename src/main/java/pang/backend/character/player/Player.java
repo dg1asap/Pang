@@ -106,8 +106,8 @@ public class Player extends Character{
     }
 
     public boolean canPlayerJump(){
-        return true;
-//        return !isJumping;
+       // return true;
+        return !isJumping;
     }
 
     public boolean canShoot() {
