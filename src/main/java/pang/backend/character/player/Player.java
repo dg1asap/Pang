@@ -96,7 +96,7 @@ public class Player extends Character{
     }
 
     private void turnOnShootingIfKeyPressed(char keyChar){
-        if(keyChar =='k'){
+        if(keyChar =='k' || keyChar =='K'){
             isShooting = true;
         }
     }
@@ -124,7 +124,7 @@ public class Player extends Character{
         if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
             increaseStatByValue("posY", getStat("gravityForce").intValue());
         }
-        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 100){
+        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 50){
             isJumping = false;
         }
     }
