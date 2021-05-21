@@ -8,6 +8,7 @@ Player
     gravityForce=2
     posX=0
     posY=0
+    score=0
 PlayerCoolDown
     attack=1000
     move=5
@@ -22,6 +23,7 @@ SmallBall
     width=30
     posX=0
     posY=0
+    score=1
 SmallBallCoolDown
     attack=1000
     move=30
@@ -34,6 +36,7 @@ LargeBall
     width=40
     posX=30
     posY=30
+    score=3
 LargeBallCoolDown
     attack=1000
     move=30
@@ -46,6 +49,7 @@ MegaBall
     width=50
     posX=1
     posY=1
+    score=5
 MegaBallCoolDown
     attack=1000
     move=30
@@ -56,6 +60,6 @@ Keyboard
     d=30
     D=30
     w=-140
-    W=-1
+    W=-140
     k=-1
     K=-1

@@ -12,7 +12,7 @@ public abstract class Character implements HitBox {
     private final Map<String, Double> stats = new HashMap<>();
 
     public Character(GameConfig config, CoolDown coolDown){
-        addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY");
+        addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY", "score");
         this.coolDown = coolDown;
     }
 
@@ -41,12 +41,28 @@ public abstract class Character implements HitBox {
     }
 
     public void attack(Character character) {
-        if (!coolDown.isCoolDown("attack")) {
-            double damage = this.getStat("damage");
-            character.increaseStatByValue("health", -damage);
+        if (characterCanAttack()) {
+            damageCharacter(character);
+            stealPoints(character);
         }
     }
 
     public abstract void draw(Graphics g);
+
+    private boolean characterCanAttack() {
+        return !coolDown.isCoolDown("attack");
+    }
+
+    private void damageCharacter(Character target) {
+        double damage = this.getStat("damage");
+        target.increaseStatByValue("health", -damage);
+    }
+
+    private void stealPoints(Character target) {
+        if (!target.isAlive()) {
+            Double score = target.getStat("score");
+            this.increaseStatByValue("score", score);
+        }
+    }
 
 }

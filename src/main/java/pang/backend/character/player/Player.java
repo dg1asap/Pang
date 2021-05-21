@@ -53,7 +53,9 @@ public class Player extends Character{
     }
 
     public void setNewPlayerInfo(){
-        infoInGame.setNewPlayerInfo(1,getStat("health").intValue(),getAmmoAmount());
+        int score = this.getStat("score").intValue();
+        int health = this.getStat("health").intValue();
+        infoInGame.setNewPlayerInfo(score, health, getAmmoAmount());
     }
 
     public int getActualYPlayerPosition(){
