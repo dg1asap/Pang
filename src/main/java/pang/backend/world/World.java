@@ -7,7 +7,7 @@ import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 import pang.gui.frame.PangFrame;
 
 import java.awt.*;

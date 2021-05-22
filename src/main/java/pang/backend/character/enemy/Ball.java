@@ -2,7 +2,7 @@ package pang.backend.character.enemy;
 
 import pang.backend.character.CoolDown;
 import pang.backend.util.PangVector;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 import pang.backend.world.WorldBorder;
 import pang.gui.frame.PangFrame;
 

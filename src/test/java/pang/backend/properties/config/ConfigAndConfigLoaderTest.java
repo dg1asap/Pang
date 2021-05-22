@@ -1,4 +1,4 @@
-package pang.backend.config;
+package pang.backend.properties.config;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

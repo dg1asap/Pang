@@ -2,8 +2,8 @@ package pang.backend.character.player;
 
 import org.junit.jupiter.api.BeforeAll;
 
-import pang.backend.config.ConfigLoader;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.ConfigLoader;
+import pang.backend.properties.config.GameConfig;
 
 import java.nio.file.Path;
 

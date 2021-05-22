@@ -1,35 +1,16 @@
-package pang.backend.config;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package pang.backend.properties.config;
 
 import pang.backend.exception.ConfigException;
+import pang.backend.properties.GameProperties;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class GameConfig {
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String name;
-    private final Map <String, Double> attributes = new HashMap<>();
+public class GameConfig extends GameProperties {
     private double attribute;
 
     public GameConfig(String name) {
-        this.name = name;
+        super(name);
     }
 
-    public void addAttribute(String name, Double value) {
-        attributes.put(name, value);
-    }
-
-    public boolean hasName(String name) {
-        return this.name.equals(name);
-    }
-
-    public String getName() {
-        return name;
-    }
-
+    @Override
     public double getAttribute(String attributeName) {
         setAttribute(attributeName);
         return attribute;
@@ -53,5 +34,6 @@ public class GameConfig {
     private boolean hasAttribute(String attributeName) {
         return attributes.containsKey(attributeName);
     }
+
 
 }

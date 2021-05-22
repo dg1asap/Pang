@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pang.backend.character.CoolDown;
-import pang.backend.config.GameConfig;
-import pang.backend.config.ConfigLoader;
+import pang.backend.properties.config.GameConfig;
+import pang.backend.properties.config.ConfigLoader;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

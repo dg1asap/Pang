@@ -1,9 +1,8 @@
 package pang.gui.panel;
 
-import pang.backend.character.enemy.MegaBall;
 import pang.backend.character.player.PlayerReaction;
-import pang.backend.config.ConfigLoader;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.ConfigLoader;
+import pang.backend.properties.config.GameConfig;
 import pang.backend.world.World;
 import pang.backend.world.WorldLoader;
 import pang.gui.frame.PangFrame;

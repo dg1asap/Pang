@@ -2,7 +2,7 @@ package pang.backend.character.player;
 
 import pang.backend.character.Character;
 import pang.backend.character.CoolDown;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 import pang.gui.InfoInGame;
 import pang.gui.frame.PangFrame;
 
