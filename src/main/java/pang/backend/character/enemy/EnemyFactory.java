@@ -7,21 +7,12 @@ import pang.backend.character.CoolDown;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.config.ConfigLoader;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-
 public class EnemyFactory {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    private final ConfigLoader configLoader;
-    private final ArrayList <GameConfig> enemiesConfigs = new ArrayList<>();
     private GameConfig enemyConfig;
     private CoolDown enemyCoolDown;
     private String enemyName;
     private int spawnTime;
-
-    public static EnemyFactory fromConfigPath(Path configPath) {
-        return new EnemyFactory(configPath);
-    }
 
     public Enemy createEnemyWithNameAndRespawnTime(String name, Integer spawnTime) throws IllegalArgumentException {
         setEnemyNameAndSpawnTime(name, spawnTime);
@@ -30,53 +21,26 @@ public class EnemyFactory {
         return tryGetEnemy();
     }
 
-    protected EnemyFactory(Path configPath) {
-        configLoader = ConfigLoader.fromConfigPath(configPath);
-    }
-
     private void setEnemyNameAndSpawnTime(String name, int spawnTime) {
         this.enemyName = name;
         this.spawnTime = spawnTime;
     }
 
     private void setEnemyConfig(String name) {
-        setEnemyConfigFromData(name);
-        ifNoEnemyConfigInDataSetNew(name);
-    }
-
-    private void setEnemyConfigFromData(String name) {
-        enemiesConfigs.forEach((config) -> ifEnemyConfigHasNameSet(config, name));
-    }
-
-    private void ifEnemyConfigHasNameSet(GameConfig config, String name) {
-        if(config.hasName(name))
-            enemyConfig = config;
-    }
-
-    private void ifNoEnemyConfigInDataSetNew(String name) {
-        if (!hasEnemyConfig(name))
-            setNewEnemyConfig(name);
-    }
-
-    private boolean hasEnemyConfig(String name) {
-        return enemyConfig != null && enemyConfig.hasName(name);
-    }
-
-    private void setNewEnemyConfig(String name) {
-        enemyConfig = configLoader.getConfig(name);
-        enemiesConfigs.add(enemyConfig);
+        enemyConfig = ConfigLoader.CONFIG_LOADER.getConfig(name);
     }
 
     private void setEnemyCoolDown(String name) {
-        GameConfig coolDownConfig = configLoader.getConfig(name + "CoolDown");
+        GameConfig coolDownConfig = ConfigLoader.CONFIG_LOADER.getConfig(name + "CoolDown");
         this.enemyCoolDown = new CoolDown(coolDownConfig);
     }
 
     private Enemy tryGetEnemy() {
+        System.out.println("#" + enemyName + "#");
         try {
             return getEnemy();
         } catch (IllegalArgumentException e) {
-            logger.error("[EnemyLoader] Enemy named " + enemyName + "not found");
+            logger.error("[EnemyLoader] Enemy named " + enemyName + " was not found");
         }
         return null;
     }

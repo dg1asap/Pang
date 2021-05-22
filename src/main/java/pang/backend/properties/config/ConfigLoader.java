@@ -11,14 +11,23 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ConfigLoader {
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
+public enum ConfigLoader {
+    CONFIG_LOADER;
+    protected final Logger logger = LoggerFactory.getLogger(ConfigLoader.class);
     private final ArrayList <GameConfig> configs = new ArrayList<>();
-    private final Path configPath;
+    private Path configPath;
     private GameConfig currentConfig;
 
-    public static ConfigLoader fromConfigPath(Path configPath) {
-        return new ConfigLoader(configPath);
+    public void init(Path path) {
+        configPath = path;
+
+        try {
+            loadConfigs();
+        } catch(ConfigException e) {
+            logger.error(e.errorMessage());
+        } catch(FileNotFoundException e) {
+            logger.error("[FileNotFound] The scanner in ConfigLoader cannot open the file with path " + configPath + " because it does not exist");
+        }
     }
 
     public GameConfig getConfig(String name) {
@@ -28,19 +37,7 @@ public class ConfigLoader {
         } catch(ConfigException e) {
             logger.error(e.errorMessage());
         }
-        return getSelectedConfig();
-    }
-
-    protected ConfigLoader(Path configPath) {
-        this.configPath = configPath;
-
-        try {
-            loadConfigs();
-        } catch(ConfigException e) {
-            logger.error(e.errorMessage());
-        } catch(FileNotFoundException e) {
-            logger.error("[FileNotFound] The scanner in ConfigLoader cannot open the file with path " + configPath + " because it does not exist");
-        }
+        return currentConfig;
     }
 
     private void loadConfigs() throws FileNotFoundException, ConfigException {
@@ -61,7 +58,7 @@ public class ConfigLoader {
         scanner.close();
     }
 
-    void loadDataIntoConfigLoader(String data) {
+    private void loadDataIntoConfigLoader(String data) {
         if (isConfigName(data))
             addConfig(data);
         else
@@ -102,7 +99,7 @@ public class ConfigLoader {
 
     private void compareConfigName(GameConfig config, String name) {
         if(config.hasName(name))
-            this.currentConfig = config;
+            currentConfig = config;
     }
 
     private void checkSelectedConfig(String name) throws ConfigException {
@@ -114,8 +111,5 @@ public class ConfigLoader {
         return currentConfig != null && currentConfig.hasName(name);
     }
 
-    private GameConfig getSelectedConfig() {
-        return currentConfig;
-    }
 
 }

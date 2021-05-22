@@ -8,23 +8,48 @@ Player
     width=3.167
     ammunition=21
     gravityForce=1.12
-    startPosX=50
-    startPosY=100
+    posX=0
+    posY=0
+    score=0
+PlayerCoolDown
+    attack=10
+    move=10
 SmallBall
     health=1
     damage=2
     speed=3
     height=4
     width=5
+    score=1
+    posX=0
+    posY=2
+SmallBallCoolDown
+    attack=10
+    move=20
+    bounceOff=200
 LargeBall
     health=1
     damage=2
     speed=3
     height=4
     width=5
+    score=2
+    posX=2
+    posY=200
+LargeBallCoolDown
+    attack=10
+    move=20
+    bounceOff=200
 MegaBall
     health=1
     damage=2
     speed=3
     height=4
     width=5
+    score=4
+    posX=22
+    posY=2
+MegaBallCoolDown
+    attack=10
+    move=20
+    bounceOff=200

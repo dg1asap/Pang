@@ -28,9 +28,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private static String mapName;
 
     public GameplayPanel(Screen screen) {
-        Path configPath = Path.of("./data/main/configs.txt");
-        ConfigLoader configLoader = ConfigLoader.fromConfigPath(configPath);
-        keyboardConfig = configLoader.getConfig("Keyboard");
+        keyboardConfig = ConfigLoader.CONFIG_LOADER.getConfig("Keyboard");
 
         loadConfig();
 
@@ -75,9 +73,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private static void loadConfig() {
-        Path defaultConfigPath = Path.of("./data/main/configs.txt");
-        Path defaultLevelPath = levelPath;
-        WorldLoader worldLoader = WorldLoader.fromConfigPathAndLevelPath(defaultConfigPath, defaultLevelPath);
+        WorldLoader worldLoader = new WorldLoader(levelPath);
         world = worldLoader.getWorld();
     }
 

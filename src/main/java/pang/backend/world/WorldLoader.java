@@ -13,65 +13,44 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 public class WorldLoader {
-    private Path path;
     private World world;
-    private EnemyFactory enemyFactory;
-    private ConfigLoader configLoader;
+    private final EnemyFactory enemyFactory = new EnemyFactory();
 
-    public static WorldLoader fromConfigPathAndLevelPath(Path configPath, Path levelPath) {
-        return new WorldLoader(configPath, levelPath);
+    public WorldLoader(Path levelPath) {
+        createWorld();
+        tryLoadWorld(levelPath);
     }
 
     public World getWorld(){
         return world;
     }
 
-    protected WorldLoader (Path configPath, Path levelPath) {
-        this.configLoader = ConfigLoader.fromConfigPath(configPath);
-        this.enemyFactory = EnemyFactory.fromConfigPath(configPath);
-        createWorld();
-        loadWorld(levelPath);
-    }
-
     private void createWorld() {
-        GameConfig worldConfig = getWorldConfig();
+        GameConfig worldConfig = ConfigLoader.CONFIG_LOADER.getConfig("World");
         Player player = createPlayer();
         world = new World(worldConfig, player);
     }
 
-    private GameConfig getWorldConfig() {
-        return configLoader.getConfig("World");
-    }
-
     private Player createPlayer() {
-        GameConfig playerConfig = getPlayerConfig();
+        GameConfig playerConfig = ConfigLoader.CONFIG_LOADER.getConfig("Player");
         CoolDown coolDown = getPlayerCoolDown();
         return new Player(playerConfig, coolDown);
     }
 
-    private GameConfig getPlayerConfig() {
-        return configLoader.getConfig("Player");
-    }
-
     private CoolDown getPlayerCoolDown() {
-        GameConfig coolDownConfig = configLoader.getConfig("PlayerCoolDown");
+        GameConfig coolDownConfig = ConfigLoader.CONFIG_LOADER.getConfig("PlayerCoolDown");
         return new CoolDown(coolDownConfig);
     }
 
-    private void loadWorld(Path path){
+    private void tryLoadWorld(Path path){
         try{
-            selectWorld(path);
-            loadWorld();
+            loadWorld(path);
         } catch (FileNotFoundException e) {
             logError(e);
         }
     }
 
-    private void selectWorld(Path path){
-        this.path = path;
-    }
-
-    private void loadWorld() throws FileNotFoundException {
+    private void loadWorld(Path path) throws FileNotFoundException {
         File file = path.toFile();
         Scanner scanner = new Scanner(file);
         loadWordFromScanner(scanner);

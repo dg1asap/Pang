@@ -10,14 +10,13 @@ import java.nio.file.Path;
 
 
 public class PlayerTest {
-    static ConfigLoader configLoader;
     static GameConfig config;
 
     @BeforeAll
     static void setConfigLoader() {
         Path path = Path.of("./data/test/configs/PlayerTest.txt");
-        configLoader = ConfigLoader.fromConfigPath(path);
-        config = configLoader.getConfig("Player");
+        ConfigLoader.CONFIG_LOADER.init(path);
+        config = ConfigLoader.CONFIG_LOADER.getConfig("Player");
     }
 
     //Player player = new Player(config);

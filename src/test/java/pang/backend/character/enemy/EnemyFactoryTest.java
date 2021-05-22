@@ -2,8 +2,7 @@ package pang.backend.character.enemy;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import pang.backend.exception.ConfigException;
+import pang.backend.properties.config.ConfigLoader;
 
 import java.nio.file.Path;
 
@@ -15,7 +14,8 @@ public class EnemyFactoryTest {
     @BeforeAll
     static void createEnemyFactory() {
         Path configPath = Path.of("./data/test/configs/EnemyFactoryTest.txt");
-        enemyFactory = EnemyFactory.fromConfigPath(configPath);
+        ConfigLoader.CONFIG_LOADER.init(configPath);
+        enemyFactory = new EnemyFactory();
     }
 
     @Test

@@ -6,15 +6,34 @@ SmallBall
     width=5
     posX=5
     posY=5
+    score=2
+SmallBallCoolDown
+    attack=1
+    move=2
+    bounceOff=22
 LargeBall
     health=1
     damage=2
     speed=3
     height=4
     width=5
+    posX=5
+    posY=5
+    score=2
+LargeBallCoolDown
+    attack=1
+    move=2
+    bounceOff=22
 MegaBall
     health=1
     damage=2
     speed=3
     height=4
     width=5
+    posX=5
+    posY=5
+    score=4
+MegaBallCoolDown
+    attack=1
+    move=2
+    bounceOff=22

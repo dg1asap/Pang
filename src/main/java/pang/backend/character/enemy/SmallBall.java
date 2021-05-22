@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class SmallBall extends Ball {
 
-    protected SmallBall(GameConfig config, CoolDown coolDown, int spawnTime){
+    public SmallBall(GameConfig config, CoolDown coolDown, int spawnTime){
         super(config, coolDown, spawnTime);
         spawnEnemyAtTopOfMap();
     }
