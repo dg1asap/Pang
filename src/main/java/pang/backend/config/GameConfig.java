@@ -5,22 +5,21 @@ import org.slf4j.LoggerFactory;
 
 import pang.backend.exception.ConfigException;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameConfig {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final String name;
-    private final ArrayList <String> namesOfAttributes = new ArrayList<>();
-    private final ArrayList <Double> valuesOfAttributes = new ArrayList<>();
+    private final Map <String, Double> attributes = new HashMap<>();
     private double attribute;
 
-    public static GameConfig byName(String name) {
-        return new GameConfig(name);
+    public GameConfig(String name) {
+        this.name = name;
     }
 
     public void addAttribute(String name, Double value) {
-        namesOfAttributes.add(name);
-        valuesOfAttributes.add(value);
+        attributes.put(name, value);
     }
 
     public boolean hasName(String name) {
@@ -36,10 +35,6 @@ public class GameConfig {
         return attribute;
     }
 
-    protected GameConfig(String name) {
-        this.name = name;
-    }
-
     private void setAttribute(String attributeName) {
         try {
             setAttributeNamed(attributeName);
@@ -49,20 +44,14 @@ public class GameConfig {
     }
 
     private void setAttributeNamed(String attributeName) throws ConfigException {
-        if (hasAttribute(attributeName)) {
-            int attributeIndex = getAttributeIndex(attributeName);
-            this.attribute = valuesOfAttributes.get(attributeIndex);
-        } else {
+        if (hasAttribute(attributeName))
+            this.attribute = attributes.get(attributeName);
+        else
             throw ConfigException.noAttributeInConfig(attributeName, this.name);
-        }
     }
 
-    private boolean hasAttribute(String attribute) {
-        return namesOfAttributes.contains(attribute);
-    }
-
-    private int getAttributeIndex(String attributeName) {
-        return namesOfAttributes.indexOf(attributeName);
+    private boolean hasAttribute(String attributeName) {
+        return attributes.containsKey(attributeName);
     }
 
 }

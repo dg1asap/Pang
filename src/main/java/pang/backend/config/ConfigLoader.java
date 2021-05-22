@@ -73,7 +73,7 @@ public class ConfigLoader {
     }
 
     private void addConfig(String name){
-        GameConfig config = GameConfig.byName(name);
+        GameConfig config = new GameConfig(name);
         configs.add(config);
     }
 
