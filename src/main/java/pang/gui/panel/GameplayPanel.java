@@ -65,7 +65,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     @Override
     public GameInfo getGameInfo() {
-        return new GameInfo("Gameplay");
+        return gameplayInfo;
     }
 
     private void loadUserControl(){
