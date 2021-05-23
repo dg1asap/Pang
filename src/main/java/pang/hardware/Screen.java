@@ -14,14 +14,12 @@ public class Screen implements ActionListener, Info {
     private final PangFrame mainWindow = new PangFrame();
     private PanelCreator panelCreator;
     private PangPanel currentPanel;
-    private final GameInfo screenInfo;
+    private GameInfo screenInfo;
     private JLabel actualLevel;
 
     public Screen() {
-        this.panelCreator = new PanelCreator(this);
-        screenInfo = new GameInfo("Screen");
-        screenInfo.addAttribute("nextPanel", "Menu");
-        loadNextPanel();
+        initTools();
+        setDefaultPanel();
         makeLabels();
     }
 
@@ -30,7 +28,7 @@ public class Screen implements ActionListener, Info {
     }
 
     public void loadNextPanel() {
-        selectPanel();
+        selectPanelFromCurrentPanel();
         setPanel();
         activePanel();
     }
@@ -42,7 +40,7 @@ public class Screen implements ActionListener, Info {
     @Override
     public void actionPerformed(ActionEvent e) {
         String panelName = e.getActionCommand();
-        screenInfo.addAttribute("nextPanel", panelName);
+        selectPanel(panelName);
         loadNextPanel();
     }
 
@@ -51,12 +49,26 @@ public class Screen implements ActionListener, Info {
         return screenInfo;
     }
 
-    private void selectPanel() {
-        if (currentPanel != null) {
-            GameInfo panelInfo = currentPanel.getGameInfo();
-            if (panelInfo.hasAttribute("nextPanel")) {
-                screenInfo.addAttribute("nextPanel", panelInfo.getAttribute("nextPanel"));
-            }
+    private void initTools() {
+        this.panelCreator = new PanelCreator(this);
+        this.screenInfo = new GameInfo("Screen");
+    }
+
+    private void setDefaultPanel() {
+        selectPanel("Menu");
+        setPanel();
+        activePanel();
+    }
+
+    private void selectPanel(String panelName) {
+        screenInfo.addAttribute("nextPanel", panelName);
+    }
+
+    private void selectPanelFromCurrentPanel() {
+        GameInfo panelInfo = currentPanel.getGameInfo();
+        if (panelInfo.hasAttribute("nextPanel")) {
+            String panelName = panelInfo.getAttribute("nextPanel");
+            selectPanel(panelName);
         }
     }
 
@@ -77,7 +89,6 @@ public class Screen implements ActionListener, Info {
     private void makeLabels() {
         actualLevel = new JLabel("Default difficulty level: NORMAL");
     }
-
 
 
 }
