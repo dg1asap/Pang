@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GameProperties {
+public abstract class GameProperties<V> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    protected final Map<String, Double> attributes = new HashMap<>();
+    protected Map<String, V> attributes = new HashMap<>();
     protected final String name;
 
     public GameProperties(String name) {
@@ -23,11 +23,15 @@ public abstract class GameProperties {
         return name;
     }
 
-    public void addAttribute(String name, Double value) {
+    public boolean hasAttribute(String name) {
+        return attributes.containsKey(name);
+    }
+
+    public void addAttribute(String name, V value) {
         attributes.put(name, value);
     }
 
-    public double getAttribute(String attributeName) {
+    public V getAttribute(String attributeName) {
         return attributes.get(attributeName);
     }
 

@@ -19,7 +19,7 @@ public class World {
     private final BulletController playerBulletController;
 
     public World(GameConfig worldConfig, Player player){
-        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
+        int worldCapacity = worldConfig.getAttribute("worldCapacity").intValue();
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
         playerBulletController = new BulletController(player);

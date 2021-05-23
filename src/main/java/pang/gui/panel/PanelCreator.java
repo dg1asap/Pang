@@ -1,25 +1,35 @@
 package pang.gui.panel;
 
+import pang.backend.properties.info.GameInfo;
 import pang.hardware.Audio;
 import pang.hardware.Screen;
 
 public class PanelCreator {
 
-    private Screen screen;
+    private final Screen screen;
     private Audio audio;
 
     public PanelCreator(Screen screen, Audio audio){
         this.screen = screen;
         this.audio = audio;
-
     }
 
     public PanelCreator(Screen screen){
         this.screen = screen;
     }
 
-    public PangPanel create(String panelName) throws IllegalArgumentException {
-        return switch (panelName){
+    public PangPanel getNextPanel() throws IllegalArgumentException {
+        String nextPanelName = getNextPanelName();
+        return createPanel(nextPanelName);
+    }
+
+    public String getNextPanelName() {
+        GameInfo screenInfo = screen.getGameInfo();
+        return screenInfo.getAttribute("nextPanel");
+    }
+
+    public PangPanel createPanel(String nextPanelName) {
+        return switch (nextPanelName){
             case "Menu" -> new MenuPanel(screen);
             case "UserData" -> new UserDataPanel(screen);
             case "Gameplay" -> new GameplayPanel(screen);

@@ -3,7 +3,7 @@ package pang.backend.properties.config;
 import pang.backend.exception.ConfigException;
 import pang.backend.properties.GameProperties;
 
-public class GameConfig extends GameProperties {
+public class GameConfig extends GameProperties<Double> {
     private double attribute;
 
     public GameConfig(String name) {
@@ -11,7 +11,7 @@ public class GameConfig extends GameProperties {
     }
 
     @Override
-    public double getAttribute(String attributeName) {
+    public Double getAttribute(String attributeName) {
         setAttribute(attributeName);
         return attribute;
     }
@@ -29,10 +29,6 @@ public class GameConfig extends GameProperties {
             this.attribute = attributes.get(attributeName);
         else
             throw ConfigException.noAttributeInConfig(attributeName, this.name);
-    }
-
-    private boolean hasAttribute(String attributeName) {
-        return attributes.containsKey(attributeName);
     }
 
 

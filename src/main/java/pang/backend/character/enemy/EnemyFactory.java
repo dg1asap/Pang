@@ -36,7 +36,6 @@ public class EnemyFactory {
     }
 
     private Enemy tryGetEnemy() {
-        System.out.println("#" + enemyName + "#");
         try {
             return getEnemy();
         } catch (IllegalArgumentException e) {

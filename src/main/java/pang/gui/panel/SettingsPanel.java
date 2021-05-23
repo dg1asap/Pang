@@ -1,5 +1,6 @@
 package pang.gui.panel;
 
+import pang.backend.properties.info.GameInfo;
 import pang.hardware.Audio;
 import pang.hardware.Screen;
 
@@ -28,5 +29,10 @@ public class SettingsPanel extends PangPanel {
     @Override
     public boolean hasKeyListener() {
         return false;
+    }
+
+    @Override
+    public GameInfo getGameInfo() {
+        return new GameInfo("Settings");
     }
 }
