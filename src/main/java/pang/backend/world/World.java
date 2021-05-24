@@ -2,6 +2,8 @@ package pang.backend.world;
 
 import pang.backend.bullet.Bullet;
 import pang.backend.bullet.BulletController;
+import pang.backend.properties.info.GameInfo;
+import pang.backend.properties.info.Info;
 import pang.backend.util.PangVector;
 import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
@@ -13,16 +15,18 @@ import pang.gui.frame.PangFrame;
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class World {
+public class World implements Info {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
+    private GameInfo worldInfo;
 
-    public World(GameConfig worldConfig, Player player){
+    public World(GameConfig worldConfig, Player player) {
         int worldCapacity = worldConfig.getAttribute("worldCapacity").intValue();
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
-        playerBulletController = new BulletController(player);
+        this.playerBulletController = new BulletController(player);
+        this.worldInfo = new GameInfo("World");
     }
 
     public void addEnemy(Enemy enemy){
@@ -63,6 +67,19 @@ public class World {
         playerBulletController.steer();
         manageEnemies(time);
         playerGravity(time);
+    }
+
+    @Override
+    public GameInfo getGameInfo() {
+        if (isEmpty()) {
+            worldInfo.addAttribute("ending", "win");
+        }
+
+        if (isGameOver()) {
+            worldInfo.addAttribute("ending", "lose");
+        }
+
+        return worldInfo;
     }
 
     private void playerGravity(long time) {

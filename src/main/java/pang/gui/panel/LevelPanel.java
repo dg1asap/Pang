@@ -7,6 +7,7 @@ import javax.swing.*;
 
 public class LevelPanel extends PangPanel {
     public LevelPanel(Screen screen) {
+        super("Level");
         JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         JLabel chooseLevel = new JLabel("Choose difficulty:");
 

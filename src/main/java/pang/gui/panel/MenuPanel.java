@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class MenuPanel extends PangPanel {
     MenuPanel(Screen screen) {
+        super("Menu");
         this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(0,10,200,30));
 

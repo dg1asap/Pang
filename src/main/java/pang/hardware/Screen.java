@@ -19,7 +19,7 @@ public class Screen implements ActionListener, Info {
 
     public Screen() {
         initTools();
-        setDefaultPanel();
+        loadNextPanel("Menu");
         makeLabels();
     }
 
@@ -28,7 +28,17 @@ public class Screen implements ActionListener, Info {
     }
 
     public void loadNextPanel() {
-        selectPanelFromCurrentPanel();
+        GameInfo panelInfo = currentPanel.getGameInfo();
+        if (panelInfo.hasAttribute("nextPanel")) {
+            String panelName = panelInfo.getAttribute("nextPanel");
+            selectPanel(panelName);
+            setPanel();
+            activePanel();
+        }
+    }
+
+    public void loadNextPanel(String panelName) {
+        selectPanel(panelName);
         setPanel();
         activePanel();
     }
@@ -40,8 +50,7 @@ public class Screen implements ActionListener, Info {
     @Override
     public void actionPerformed(ActionEvent e) {
         String panelName = e.getActionCommand();
-        selectPanel(panelName);
-        loadNextPanel();
+        loadNextPanel(panelName);
     }
 
     @Override
@@ -54,23 +63,10 @@ public class Screen implements ActionListener, Info {
         this.screenInfo = new GameInfo("Screen");
     }
 
-    private void setDefaultPanel() {
-        selectPanel("Menu");
-        setPanel();
-        activePanel();
-    }
-
     private void selectPanel(String panelName) {
         screenInfo.addAttribute("nextPanel", panelName);
     }
 
-    private void selectPanelFromCurrentPanel() {
-        GameInfo panelInfo = currentPanel.getGameInfo();
-        if (panelInfo.hasAttribute("nextPanel")) {
-            String panelName = panelInfo.getAttribute("nextPanel");
-            selectPanel(panelName);
-        }
-    }
 
     private void setPanel(){
         currentPanel = panelCreator.getNextPanel();

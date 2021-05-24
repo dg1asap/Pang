@@ -20,7 +20,6 @@ import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
     private final Timer gameTimer;
-    private final GameInfo gameplayInfo = new GameInfo("Gameplay");
     private GameConfig keyboardConfig;
     private World world;
     private Path levelPath;
@@ -28,6 +27,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private long gameTime = 0;
 
     public GameplayPanel(Screen screen) {
+        super("Gameplay");
         loadUserControl();
         getLevelNameAndPathFromUserChoice(screen);
         loadWorld();
@@ -65,7 +65,19 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     @Override
     public GameInfo getGameInfo() {
-        return gameplayInfo;
+        GameInfo worldInfo = world.getGameInfo();
+        if (worldInfo.hasAttribute("ending")) {
+            String ending = worldInfo.getAttribute("ending");
+            if (ending.equals("win")) {
+                panelInfo.addAttribute("nextPanel", "Menu");
+            }
+
+            if (ending.equals("lose")) {
+                panelInfo.addAttribute("nextPanel", "Menu");
+            }
+        }
+
+        return panelInfo;
     }
 
     private void loadUserControl(){
@@ -118,6 +130,15 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void refresh(Screen screen){
+        screen.loadNextPanel();
+        resizePanel();
+        if (canSteer()) {
+            gameTime += 1;
+            world.steerTime(gameTime);
+        }
+        repaint();
+
+/*
         if(!world.isGameOver() && !world.isEmpty()) {
             gameTime += 1;
             resizePanel();
@@ -138,6 +159,11 @@ public class GameplayPanel extends PangPanel implements KeyListener {
             screen.loadNextPanel();
             saveScore();
         }
+ */
+    }
+
+    private boolean canSteer() {
+        return !world.isGameOver() && !world.isEmpty();
     }
 
     private void saveScore(){

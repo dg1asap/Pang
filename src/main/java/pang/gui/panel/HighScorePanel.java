@@ -19,6 +19,7 @@ public class HighScorePanel extends PangPanel {
     private JComboBox<String> levelBox;
 
     public HighScorePanel(Screen screen) {
+        super("HighScore");
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         highScoreText = new JLabel();

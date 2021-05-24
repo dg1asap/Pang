@@ -8,6 +8,7 @@ import javax.swing.*;
 
 public class SettingsPanel extends PangPanel {
     SettingsPanel(Screen screen, Audio audio) {
+        super("Settings");
         JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         JButton musicButton = new JButton("Turn On/Off music");
 

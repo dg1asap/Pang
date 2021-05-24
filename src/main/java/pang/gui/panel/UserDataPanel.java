@@ -26,6 +26,7 @@ public class UserDataPanel extends PangPanel {
     }
 
     public UserDataPanel(Screen screen) {
+        super("UserData");
         userNickname = new JTextField();
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         userNickname.setPreferredSize(new Dimension(200,30));
