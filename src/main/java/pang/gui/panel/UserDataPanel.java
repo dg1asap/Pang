@@ -49,11 +49,10 @@ public class UserDataPanel extends PangPanel {
         levelBox.addActionListener(e -> {
             if(levelBox.getSelectedIndex() != 0){
                 GameInfo screenInfo = screen.getGameInfo();
-
                 String levelPath = Path.of("data","main", "level", levelBox.getSelectedItem() + ".txt").toString();
+                screenInfo.addAttribute("levelPath", levelPath);
                 String levelName = String.valueOf(levelBox.getSelectedItem());
 
-                screenInfo.addAttribute("levelPath", levelPath);
                 screenInfo.addAttribute("levelName", levelName);
                 levelButton.setVisible(true);
             }

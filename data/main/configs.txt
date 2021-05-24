@@ -1,3 +1,5 @@
+Pang
+    difficulty=2
 Player
     health=10
     damage=1.5

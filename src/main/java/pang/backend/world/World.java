@@ -45,7 +45,6 @@ public class World implements Info {
         player.draw(g);
         playerBulletController.draw(g);
         drawEnemies(g);
-
     }
 
     public void steerKey(char keyChar, double value){
@@ -63,23 +62,30 @@ public class World implements Info {
     }
 
     public void steerTime(long time){
-        player.setNewPlayerInfo();
-        playerBulletController.steer();
+        managePlayer(time);
         manageEnemies(time);
-        playerGravity(time);
     }
 
     @Override
     public GameInfo getGameInfo() {
         if (isEmpty()) {
             worldInfo.addAttribute("ending", "win");
+            addScoreToWorldInfo();
         }
 
         if (isGameOver()) {
             worldInfo.addAttribute("ending", "lose");
+            addScoreToWorldInfo();
         }
 
         return worldInfo;
+    }
+
+
+    private void managePlayer(long time) {
+        player.setNewPlayerInfo();
+        playerBulletController.steer();
+        playerGravity(time);
     }
 
     private void playerGravity(long time) {
@@ -162,6 +168,12 @@ public class World implements Info {
         if (player.intersects(ball)) {
             ball.bounceOff();
         }
+    }
+
+    private void addScoreToWorldInfo() {
+        GameInfo playerInfo = player.getGameInfo();
+        String scoreWithBonus = playerInfo.getAttribute("scoreWithBonus");
+        worldInfo.addAttribute("scoreWithBonus", scoreWithBonus);
     }
 
 }

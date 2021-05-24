@@ -2,7 +2,10 @@ package pang.backend.character.player;
 
 import pang.backend.character.Character;
 import pang.backend.character.CoolDown;
+import pang.backend.properties.config.ConfigLoader;
 import pang.backend.properties.config.GameConfig;
+import pang.backend.properties.info.GameInfo;
+import pang.backend.properties.info.Info;
 import pang.gui.InfoInGame;
 import pang.gui.frame.PangFrame;
 
@@ -10,18 +13,20 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-public class Player extends Character{
+public class Player extends Character implements Info {
 
     private boolean isShooting = false;
     private boolean isJumping = false;
     private final InfoInGame infoInGame;
+    private GameInfo playerInfo;
 
     public Player(GameConfig config, CoolDown coolDown) {
         super(config, coolDown);
         addStat(config, "ammunition", "gravityForce");
         setPlayerStartPosition();
         turnOffShooting();
-        infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
+        this.infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
+        this.playerInfo = new GameInfo("Player");
     }
 
     @Override
@@ -43,6 +48,12 @@ public class Player extends Character{
         infoInGame.draw(playerGraphic);
     }
 
+    @Override
+    public GameInfo getGameInfo() {
+        addScoreToGameInfo();
+        return playerInfo;
+    }
+
     public void steerKey(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String playerParameter = playerReaction.fromKeyName(keyChar);
@@ -60,6 +71,39 @@ public class Player extends Character{
 
     public int getActualYPlayerPosition(){
         return getStat("posY").intValue();
+    }
+
+    public int getBulletXPos(){
+        return getPlayerWidth()/2 + getStat("posX").intValue() - 5;
+    }
+
+    public boolean canPlayerJump(){
+        //return true;
+        return !isJumping;
+    }
+
+    public boolean canShoot() {
+        return getAmmoAmount() > 0 && getShootingStatus();
+    }
+
+    public void gravity(){
+        if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
+            increaseStatByValue("posY", getStat("gravityForce").intValue());
+        }
+        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 50){
+            isJumping = false;
+        }
+    }
+
+    private void addScoreToGameInfo() {
+        Double score = getStat("score");
+        GameConfig gameConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
+        Double k = gameConfig.getAttribute("difficulty");
+        Double p = getStat("health");
+        Double s = getStat("ammunition");
+
+        Double scoreWithBonuses = score + Math.ceil( 10 * ( 0.028*Math.pow(k,6) - 0.4*Math.pow(k,2) + 2.3*k - 2.55 + 0.4*(p-2.5) + 0.8*(s-3) ) + 29);
+        playerInfo.addAttribute("scoreWithBonus", scoreWithBonuses.toString());
     }
 
     private void setPlayerStartPosition(){
@@ -84,10 +128,6 @@ public class Player extends Character{
         return getStat("width").intValue();
     }
 
-    public int getBulletXPos(){
-        return getPlayerWidth()/2 + getStat("posX").intValue() - 5;
-    }
-
     private void shoot(char keyChar){
         turnOffShooting();
         turnOnShootingIfKeyPressed(keyChar);
@@ -107,14 +147,6 @@ public class Player extends Character{
         return isShooting;
     }
 
-    public boolean canPlayerJump(){
-        //return true;
-        return !isJumping;
-    }
-
-    public boolean canShoot() {
-        return getAmmoAmount() > 0 && getShootingStatus();
-    }
 
     private void jump(char keyChar){
         if(keyChar =='w'){
@@ -122,13 +154,5 @@ public class Player extends Character{
         }
     }
 
-    public void gravity(){
-        if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
-            increaseStatByValue("posY", getStat("gravityForce").intValue());
-        }
-        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 50){
-            isJumping = false;
-        }
-    }
 
 }

@@ -4,6 +4,7 @@ import pang.backend.character.player.PlayerReaction;
 import pang.backend.properties.config.ConfigLoader;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
+import pang.backend.util.ScoreSaver;
 import pang.backend.world.World;
 import pang.backend.world.WorldLoader;
 import pang.gui.frame.PangFrame;
@@ -14,9 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
@@ -25,7 +23,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private GameConfig keyboardConfig;
     private World world;
     private Path levelPath;
-    private String levelName;
     private long gameTime = 0;
 
     public GameplayPanel(Screen screen) {
@@ -88,7 +85,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     private void getLevelNameAndPathFromUserChoice(Screen screen) {
         GameInfo screenInfo = screen.getGameInfo();
-        levelName = screenInfo.getAttribute("levelName");
         levelPath = Path.of(screenInfo.getAttribute("levelPath"));
         System.out.println("Loading level: path -> " + levelPath);
     }
@@ -132,15 +128,32 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void refresh(Screen screen){
-        quit();
+        quit(screen);
         renderGUI(screen);
         steerTime();
         repaint();
     }
 
-    private void quit(){
-        if (!canSteerTime())
-            gameTimer.stop();
+    private void quit(Screen screen){
+        if (!canSteerTime()) {
+            saveData(screen);
+            turnOffRefresh();
+        }
+    }
+
+    private void saveData(Screen screen) {
+        GameInfo screenInfo = screen.getGameInfo();
+        String levelName = screenInfo.getAttribute("levelName");
+
+        GameInfo worldInfo = world.getGameInfo();
+        String scoreWithBonus = worldInfo.getAttribute("scoreWithBonus");
+
+        ScoreSaver scoreSaver = new ScoreSaver(levelName, Double.parseDouble(scoreWithBonus));
+        scoreSaver.save();
+    }
+
+    private void turnOffRefresh() {
+        gameTimer.stop();
     }
 
     private void renderGUI(Screen screen) {
@@ -160,28 +173,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         return !world.isGameOver() && !world.isEmpty();
     }
 
-    private void saveScore(){
-        File highScores = Path.of("data","main", "highScores", levelName + ".txt").toFile();
-        try{
-            int levelScore = 10;
-            if(highScores.exists()){
-                FileWriter score = new FileWriter(highScores, true);
-                score.write("\n" + UserDataPanel.getUserName() + " " + levelScore);
-                score.close();
-                System.out.println("Added score to file: " + levelName);
-            }
-            else{
-                FileWriter score = new FileWriter(highScores);
-                score.write(UserDataPanel.getUserName() + " " + levelScore);
-                score.close();
-                System.out.println("Created new HighScores file: " + levelName);
-            }
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-    }
 
     private void resizePanel(){
         PangFrame.setActualScreenHeight(this.getHeight());
