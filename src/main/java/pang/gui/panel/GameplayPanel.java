@@ -7,6 +7,7 @@ import pang.backend.properties.info.GameInfo;
 import pang.backend.world.World;
 import pang.backend.world.WorldLoader;
 import pang.gui.frame.PangFrame;
+import pang.gui.messageDialog.GameMessageDialog;
 import pang.hardware.Screen;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
+    private GameMessageDialog messageDialog = new GameMessageDialog();
     private final Timer gameTimer;
     private GameConfig keyboardConfig;
     private World world;
@@ -130,39 +132,31 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void refresh(Screen screen){
-        screen.loadNextPanel();
-        resizePanel();
-        if (canSteer()) {
-            gameTime += 1;
-            world.steerTime(gameTime);
-        }
+        quit();
+        renderGUI(screen);
+        steerTime();
         repaint();
-
-/*
-        if(!world.isGameOver() && !world.isEmpty()) {
-            gameTime += 1;
-            resizePanel();
-            world.steerTime(gameTime);
-            repaint();
-        }
-        else if(world.isEmpty()){
-            gameTimer.stop();
-            JOptionPane.showMessageDialog(null,"Press Ok to return to menu", "Congratulations! YOU WON", JOptionPane.PLAIN_MESSAGE);
-            gameplayInfo.addAttribute("nextPanel", "Menu");
-            screen.loadNextPanel();
-            saveScore();
-        }
-        else{
-            gameTimer.stop();
-            JOptionPane.showMessageDialog(null,"Press Ok to return to menu","GAME OVER", JOptionPane.PLAIN_MESSAGE);
-            gameplayInfo.addAttribute("nextPanel", "Menu");
-            screen.loadNextPanel();
-            saveScore();
-        }
- */
     }
 
-    private boolean canSteer() {
+    private void quit(){
+        if (!canSteerTime())
+            gameTimer.stop();
+    }
+
+    private void renderGUI(Screen screen) {
+        messageDialog.showMessageDialog(world.getGameInfo());
+        screen.loadNextPanel();
+        resizePanel();
+    }
+
+    private void steerTime() {
+        if (canSteerTime()) {
+            gameTime += 1;
+            world.steerTime(gameTime);
+        }
+    }
+
+    private boolean canSteerTime() {
         return !world.isGameOver() && !world.isEmpty();
     }
 
