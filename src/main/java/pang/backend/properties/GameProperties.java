@@ -35,4 +35,8 @@ public abstract class GameProperties<V> {
         return attributes.get(attributeName);
     }
 
+    public void merge(GameProperties<V> gameProperties) {
+        this.attributes.putAll(gameProperties.attributes);
+    }
+
 }

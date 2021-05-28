@@ -19,14 +19,12 @@ public class World implements Info {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
-    private GameInfo worldInfo;
 
     public World(GameConfig worldConfig, Player player) {
         int worldCapacity = worldConfig.getAttribute("worldCapacity").intValue();
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
         this.playerBulletController = new BulletController(player);
-        this.worldInfo = new GameInfo("World");
     }
 
     public void addEnemy(Enemy enemy){
@@ -68,19 +66,21 @@ public class World implements Info {
 
     @Override
     public GameInfo getGameInfo() {
-        if (isEmpty()) {
-            worldInfo.addAttribute("ending", "win");
-            addScoreToWorldInfo();
-        }
-
-        if (isGameOver()) {
-            worldInfo.addAttribute("ending", "lose");
-            addScoreToWorldInfo();
-        }
-
-        return worldInfo;
+        WorldInfoFactory infoFactory = new WorldInfoFactory();
+        updateWorldInfoFactory(infoFactory);
+        return infoFactory.create(this);
     }
 
+    private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {
+        if (needPlayerInfo()) {
+            GameInfo playerInfo = player.getGameInfo();
+            infoFactory.update(playerInfo);
+        }
+    }
+
+    private boolean needPlayerInfo() {
+        return isGameOver() || isEmpty();
+    }
 
     private void managePlayer(long time) {
         player.setNewPlayerInfo();
@@ -170,10 +170,5 @@ public class World implements Info {
         }
     }
 
-    private void addScoreToWorldInfo() {
-        GameInfo playerInfo = player.getGameInfo();
-        String scoreWithBonus = playerInfo.getAttribute("scoreWithBonus");
-        worldInfo.addAttribute("scoreWithBonus", scoreWithBonus);
-    }
 
 }

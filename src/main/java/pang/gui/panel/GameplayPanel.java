@@ -65,18 +65,9 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     @Override
     public GameInfo getGameInfo() {
         GameInfo worldInfo = world.getGameInfo();
-        if (worldInfo.hasAttribute("ending")) {
-            String ending = worldInfo.getAttribute("ending");
-            if (ending.equals("win")) {
-                panelInfo.addAttribute("nextPanel", "Menu");
-            }
-
-            if (ending.equals("lose")) {
-                panelInfo.addAttribute("nextPanel", "Menu");
-            }
-        }
-
-        return panelInfo;
+        GameplayInfoFactory infoFactory = new GameplayInfoFactory();
+        infoFactory.update(worldInfo);
+        return infoFactory.create(this);
     }
 
     private void loadUserControl(){

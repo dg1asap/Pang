@@ -1,8 +1,8 @@
 package pang.backend.character.player;
 
 import pang.backend.character.Character;
+import pang.backend.character.CharacterInfoFactory;
 import pang.backend.character.CoolDown;
-import pang.backend.properties.config.ConfigLoader;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
@@ -50,8 +50,8 @@ public class Player extends Character implements Info {
 
     @Override
     public GameInfo getGameInfo() {
-        addScoreToGameInfo();
-        return playerInfo;
+        CharacterInfoFactory infoFactory = new CharacterInfoFactory();
+        return infoFactory.create(this);
     }
 
     public void steerKey(char keyChar, double value) {
@@ -93,17 +93,6 @@ public class Player extends Character implements Info {
         else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 50){
             isJumping = false;
         }
-    }
-
-    private void addScoreToGameInfo() {
-        Double score = getStat("score");
-        GameConfig gameConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
-        Double k = gameConfig.getAttribute("difficulty");
-        Double p = getStat("health");
-        Double s = getStat("ammunition");
-
-        Double scoreWithBonuses = score + Math.ceil( 10 * ( 0.028*Math.pow(k,6) - 0.4*Math.pow(k,2) + 2.3*k - 2.55 + 0.4*(p-2.5) + 0.8*(s-3) ) + 29);
-        playerInfo.addAttribute("scoreWithBonus", scoreWithBonuses.toString());
     }
 
     private void setPlayerStartPosition(){
