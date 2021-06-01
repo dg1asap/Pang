@@ -3,10 +3,7 @@ package pang.backend.world;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import pang.backend.character.enemy.Enemy;
-import pang.backend.character.enemy.LargeBall;
-import pang.backend.character.enemy.SmallBall;
-import pang.backend.exception.ConfigException;
+import pang.backend.properties.config.ConfigLoader;
 
 import java.nio.file.Path;
 
@@ -21,10 +18,11 @@ public class WorldAndWorldLoaderTest {
     @BeforeAll
     static void loadEnemiesFromTxtFile() {
         Path configPath = Path.of("./data/test/configs/WorldAndWorldLoaderTest.txt");
+        ConfigLoader.CONFIG_LOADER.init(configPath);
         Path pathToLevel1 = Path.of("./data/test/level/999999999.txt");
         Path pathToLevel2 = Path.of("./data/test/level/999999998.txt");
-        worldLoader1 = WorldLoader.fromConfigPathAndLevelPath(configPath, pathToLevel1);
-        worldLoader2 = WorldLoader.fromConfigPathAndLevelPath(configPath, pathToLevel2);
+        worldLoader1 = new WorldLoader(pathToLevel1);
+        worldLoader2 = new WorldLoader(pathToLevel2);
         world1 = worldLoader1.getWorld();
         world2 = worldLoader2.getWorld();
     }

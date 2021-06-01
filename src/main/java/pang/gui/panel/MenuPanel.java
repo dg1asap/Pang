@@ -1,5 +1,6 @@
 package pang.gui.panel;
 
+import pang.backend.properties.info.GameInfo;
 import pang.hardware.Screen;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import java.awt.*;
 
 public class MenuPanel extends PangPanel {
     MenuPanel(Screen screen) {
+        super("Menu");
         this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(0,10,200,30));
 
@@ -32,4 +34,8 @@ public class MenuPanel extends PangPanel {
         return false;
     }
 
+    @Override
+    public GameInfo getGameInfo() {
+        return new GameInfo("Menu");
+    }
 }

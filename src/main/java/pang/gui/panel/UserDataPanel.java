@@ -1,5 +1,6 @@
 package pang.gui.panel;
 
+import pang.backend.properties.info.GameInfo;
 import pang.hardware.Screen;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class UserDataPanel extends PangPanel {
     }
 
     public UserDataPanel(Screen screen) {
+        super("UserData");
         userNickname = new JTextField();
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         userNickname.setPreferredSize(new Dimension(200,30));
@@ -45,10 +47,13 @@ public class UserDataPanel extends PangPanel {
         levelButton.setVisible(false);
 
         levelBox.addActionListener(e -> {
-            System.out.println(levelBox.getItemAt(levelBox.getSelectedIndex()) + ".txt");
             if(levelBox.getSelectedIndex() != 0){
-                GameplayPanel.setLevelPath(Path.of("data","main", "level", levelBox.getItemAt(levelBox.getSelectedIndex()) + ".txt"));
-                GameplayPanel.setMapName(levelBox.getItemAt(levelBox.getSelectedIndex()) + ".txt");
+                GameInfo screenInfo = screen.getGameInfo();
+                String levelPath = Path.of("data","main", "level", levelBox.getSelectedItem() + ".txt").toString();
+                screenInfo.addAttribute("levelPath", levelPath);
+                String levelName = String.valueOf(levelBox.getSelectedItem());
+
+                screenInfo.addAttribute("levelName", levelName);
                 levelButton.setVisible(true);
             }
             else{
@@ -90,6 +95,10 @@ public class UserDataPanel extends PangPanel {
         return false;
     }
 
+    @Override
+    public GameInfo getGameInfo() {
+        return new GameInfo("UserDataPanel");
+    }
 }
 
 

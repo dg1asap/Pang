@@ -2,7 +2,7 @@ package pang.backend.character.enemy;
 
 import pang.backend.character.Character;
 import pang.backend.character.CoolDown;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 
 public abstract class Enemy extends Character {
     private boolean spawned = false;

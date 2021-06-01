@@ -1,6 +1,6 @@
 package pang.backend.character;
 
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,7 +13,7 @@ public class CoolDown {
     }
 
     public boolean isCoolDown(String action) {
-        long coolDown = (long) config.getAttribute(action);
+        long coolDown = config.getAttribute(action).longValue();
         Long lastActionTime = lastActionsTime.get(action);
 
         ifNoLastActionTimeAddAction(lastActionTime, action);

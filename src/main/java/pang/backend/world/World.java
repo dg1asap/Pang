@@ -2,27 +2,29 @@ package pang.backend.world;
 
 import pang.backend.bullet.Bullet;
 import pang.backend.bullet.BulletController;
+import pang.backend.properties.info.GameInfo;
+import pang.backend.properties.info.Info;
 import pang.backend.util.PangVector;
 import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class World {
+public class World implements Info {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
 
-    public World(GameConfig worldConfig, Player player){
-        int worldCapacity = (int) worldConfig.getAttribute("worldCapacity");
+    public World(GameConfig worldConfig, Player player) {
+        int worldCapacity = worldConfig.getAttribute("worldCapacity").intValue();
         this.enemies = new ArrayBlockingQueue<>(worldCapacity);
         this.player = player;
-        playerBulletController = new BulletController(player);
+        this.playerBulletController = new BulletController(player);
     }
 
     public void addEnemy(Enemy enemy){
@@ -41,7 +43,6 @@ public class World {
         player.draw(g);
         playerBulletController.draw(g);
         drawEnemies(g);
-
     }
 
     public void steerKey(char keyChar, double value){
@@ -59,9 +60,31 @@ public class World {
     }
 
     public void steerTime(long time){
+        managePlayer(time);
+        manageEnemies(time);
+    }
+
+    @Override
+    public GameInfo getGameInfo() {
+        WorldInfoFactory infoFactory = new WorldInfoFactory();
+        updateWorldInfoFactory(infoFactory);
+        return infoFactory.create(this);
+    }
+
+    private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {
+        if (needPlayerInfo()) {
+            GameInfo playerInfo = player.getGameInfo();
+            infoFactory.update(playerInfo);
+        }
+    }
+
+    private boolean needPlayerInfo() {
+        return isGameOver() || isEmpty();
+    }
+
+    private void managePlayer(long time) {
         player.setNewPlayerInfo();
         playerBulletController.steer();
-        manageEnemies(time);
         playerGravity(time);
     }
 
@@ -146,5 +169,6 @@ public class World {
             ball.bounceOff();
         }
     }
+
 
 }

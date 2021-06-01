@@ -2,14 +2,14 @@ package pang.backend.character.enemy;
 
 import pang.backend.character.CoolDown;
 import pang.backend.util.PangVector;
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 
 public class SmallBall extends Ball {
 
-    protected SmallBall(GameConfig config, CoolDown coolDown, int spawnTime){
+    public SmallBall(GameConfig config, CoolDown coolDown, int spawnTime){
         super(config, coolDown, spawnTime);
         spawnEnemyAtTopOfMap();
     }

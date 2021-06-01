@@ -1,6 +1,6 @@
 package pang.backend.character;
 
-import pang.backend.config.GameConfig;
+import pang.backend.properties.config.GameConfig;
 import pang.backend.util.PangVector;
 
 import java.awt.*;

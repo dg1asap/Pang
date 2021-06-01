@@ -1,6 +1,7 @@
 package pang.gui.panel;
 
 import com.google.common.collect.*;
+import pang.backend.properties.info.GameInfo;
 import pang.hardware.Screen;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class HighScorePanel extends PangPanel {
     private JComboBox<String> levelBox;
 
     public HighScorePanel(Screen screen) {
+        super("HighScore");
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         highScoreText = new JLabel();
@@ -101,4 +103,8 @@ public class HighScorePanel extends PangPanel {
         return false;
     }
 
+    @Override
+    public GameInfo getGameInfo() {
+        return new GameInfo("HighScore");
+    }
 }

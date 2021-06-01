@@ -1,11 +1,13 @@
 package pang.gui.panel;
 
+import pang.backend.properties.info.GameInfo;
 import pang.hardware.Screen;
 
 import javax.swing.*;
 
 public class LevelPanel extends PangPanel {
     public LevelPanel(Screen screen) {
+        super("Level");
         JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         JLabel chooseLevel = new JLabel("Choose difficulty:");
 
@@ -30,4 +32,8 @@ public class LevelPanel extends PangPanel {
         return false;
     }
 
+    @Override
+    public GameInfo getGameInfo() {
+        return new GameInfo("Level");
+    }
 }

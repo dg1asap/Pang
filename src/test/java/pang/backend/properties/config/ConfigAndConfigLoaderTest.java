@@ -1,25 +1,22 @@
-package pang.backend.config;
+package pang.backend.properties.config;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import pang.backend.exception.ConfigException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 
 public class ConfigAndConfigLoaderTest {
-    static ConfigLoader configLoader;
     static GameConfig playerConfig;
     static GameConfig worldConfig;
 
     @BeforeAll
-    static void loadConfigs() throws ConfigException {
+    static void loadConfigs() {
         Path path = Path.of("./data/test/configs/ConfigAndConfigLoaderTest.txt");
-        configLoader = ConfigLoader.fromConfigPath(path);
-        playerConfig = configLoader.getConfig("Player");
-        worldConfig = configLoader.getConfig("World");
+        ConfigLoader.CONFIG_LOADER.init(path);
+        playerConfig = ConfigLoader.CONFIG_LOADER.getConfig("Player");
+        worldConfig = ConfigLoader.CONFIG_LOADER.getConfig("World");
     }
 
     @Test
