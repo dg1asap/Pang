@@ -1,3 +1,7 @@
+#Nagranie instruktażowe
+
+tutorial.mkv
+
 #Kompilacja:
 
 ###1.Należy wejść do pliku build.gradle
