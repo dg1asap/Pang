@@ -6,13 +6,14 @@ import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.GameInfoFactory;
 import pang.backend.properties.info.Info;
+import pang.backend.util.ClassNameConverter;
 
 public class CharacterInfoFactory extends GameInfoFactory {
     @Override
     public GameInfo create(Info character) throws IllegalArgumentException {
-        Class<? extends Info> instanceOfCharacter = character.getClass();
-        return switch (instanceOfCharacter.getName()) {
-            case "pang.backend.character.player.Player" -> getPlayerInfo((Player) character);
+        String className = ClassNameConverter.getSimpleClassNameOf(character);
+        return switch (className) {
+            case "Player" -> getPlayerInfo((Player) character);
             default -> throw new IllegalArgumentException();
         };
     }
