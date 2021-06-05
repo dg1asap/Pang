@@ -21,7 +21,7 @@ public class Player extends Character implements Info {
 
     public Player(GameConfig config, CoolDown coolDown) {
         super(config, coolDown);
-        addStat(config, "ammunition", "gravityForce");
+        addStat(config, "motionVectorX", "motionVectorY", "motionVectorBlanking", "ammunition", "gravityForce");
         setPlayerStartPosition();
         turnOffShooting();
         this.infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
@@ -61,10 +61,10 @@ public class Player extends Character implements Info {
 
     }
 
-    public void setNewPlayerInfo(){
-        int score = this.getStat("score").intValue();
-        int health = this.getStat("health").intValue();
-        infoInGame.setNewPlayerInfo(score, health, getAmmoAmount());
+    public void steerTime() {
+        setNewPlayerInfo();
+        move();
+        affectByGravity();
     }
 
     public int getActualYPlayerPosition(){
@@ -84,7 +84,7 @@ public class Player extends Character implements Info {
         return getAmmoAmount() > 0 && getShootingStatus();
     }
 
-    public void gravity(){
+    public void useGravity(){
         PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
         int frameHeight = extremePointOfFrame.getY();
         if(getActualYPlayerPosition() < frameHeight - getPlayerHeight()){
@@ -95,12 +95,45 @@ public class Player extends Character implements Info {
         }
     }
 
+    private void move() {
+        if (canMove())
+            moveUsingMotionVectors();
+    }
+
+    private boolean canMove() {
+        return !coolDown.isCoolDown("movingVector");
+    }
+
+    private void moveUsingMotionVectors() {
+        double motionVectorX = getStat("motionVectorX");
+        double motionVectorY = getStat("motionVectorY");
+        double motionVectorBlanking = getStat("motionVectorBlanking");
+        increaseStatByValue("motionVectorX", -motionVectorX / motionVectorBlanking);
+        increaseStatByValue("motionVectorY", -motionVectorY / motionVectorBlanking);
+        increaseStatByValue("posX", motionVectorX);
+        increaseStatByValue("posY", motionVectorY);
+    }
+
+    private void affectByGravity() {
+        if(canUseGravity())
+            useGravity();
+    }
+
+    private boolean canUseGravity() {
+        return !coolDown.isCoolDown("gravity");
+    }
+
+    private void setNewPlayerInfo(){
+        int score = this.getStat("score").intValue();
+        int health = this.getStat("health").intValue();
+        infoInGame.setNewPlayerInfo(score, health, getAmmoAmount());
+    }
+
     private void setPlayerStartPosition(){
         PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
         int frameWidth = extremePointOfFrame.getX();
         int frameHeight = extremePointOfFrame.getY();
         int startPosX = frameWidth / 2 - getPlayerWidth() / 2;
-        //int startPosY = frameHeight - getPlayerHeight() - 50; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
         int startPosY = frameHeight - getPlayerHeight(); //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
         increaseStatByValue("posX", startPosX);
         increaseStatByValue("posY", startPosY);

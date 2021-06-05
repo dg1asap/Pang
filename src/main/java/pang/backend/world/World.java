@@ -60,7 +60,7 @@ public class World implements Info {
     }
 
     public void steerTime(long time){
-        managePlayer(time);
+        managePlayer();
         manageEnemies(time);
     }
 
@@ -82,16 +82,9 @@ public class World implements Info {
         return isGameOver() || isEmpty();
     }
 
-    private void managePlayer(long time) {
-        player.setNewPlayerInfo();
+    private void managePlayer() {
         playerBulletController.steer();
-        playerGravity(time);
-    }
-
-    private void playerGravity(long time) {
-        if (time % 10 == 0) {
-            player.gravity();
-        }
+        player.steerTime();
     }
 
     private void drawEnemies(Graphics g) {

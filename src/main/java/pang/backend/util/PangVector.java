@@ -33,7 +33,7 @@ public class PangVector {
         return x;
     }
 
-    public double getXScalingRation() {
+    public double getXScalingRatio() {
         GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
         return getX() / pangConfig.getAttribute("defaultXFrameSize");
     }
@@ -46,7 +46,7 @@ public class PangVector {
         return y;
     }
 
-    public double getYScalingRation() {
+    public double getYScalingRatio() {
         GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
         return getY() / pangConfig.getAttribute("defaultYFrameSize");
     }

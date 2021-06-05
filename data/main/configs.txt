@@ -12,10 +12,15 @@ Player
     gravityForce=2
     posX=0
     posY=0
+    movingVectorX=0
+    motionVectorY=0
+    motionVectorBlanking=50
     score=0
 PlayerCoolDown
     attack=1000
     move=5
+    gravity=10
+    movingVector=20
 World
     worldCapacity=100
     maxSpawnCount=50
@@ -59,11 +64,11 @@ MegaBallCoolDown
     move=30
     bounceOff=600
 Keyboard
-    a=-30
-    A=-30
-    d=30
-    D=30
-    w=-140
-    W=-140
+    a=-10
+    A=-10
+    d=10
+    D=10
+    w=-10
+    W=-10
     k=-1
     K=-1
