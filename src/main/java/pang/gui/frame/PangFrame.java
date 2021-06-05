@@ -15,19 +15,14 @@ public class PangFrame extends JFrame {
         return extremePointOfFrame;
     }
 
-    public void setSize(int width, int height) {
-        extremePointOfFrame = new PangVector(width, height - 29);
-    }
-
     public PangFrame() {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 int width = getWidth();
-                int height = getHeight() - 29;
-                System.out.println(width);
-                extremePointOfFrame = new PangVector(width, height);
+                int height = getHeight();
+                extremePointOfFrame = new PangVector(width, height - 29);
             }
         });
 
@@ -35,10 +30,10 @@ public class PangFrame extends JFrame {
         setTitle("Pang");
         setScreenResolution();
         setResizable(true);
-        setPreferredSize(new Dimension(extremePointOfFrame.getY(), extremePointOfFrame.getX()));
+        setPreferredSize(new Dimension(extremePointOfFrame.getX(), extremePointOfFrame.getY()));
         //mainWindow.setResizable(false);
 
-        setMinimumSize(new Dimension(extremePointOfFrame.getY(), extremePointOfFrame.getX()));
+        setMinimumSize(new Dimension(extremePointOfFrame.getX(), extremePointOfFrame.getY()));
         setMaximumSize(getMaxScreenSize());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -64,7 +59,8 @@ public class PangFrame extends JFrame {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int)size.getWidth()/2;
         int height = (int)size.getHeight()/2;
-        setSize(height, width); //TODO odwrotne parametry, powinny być wczytywane z configa
+        setSize(width, height); //TODO odwrotne parametry, mogą być wczytywane z configa
+        extremePointOfFrame = new PangVector(width, height);
     }
 
     private Dimension getMaxScreenSize(){

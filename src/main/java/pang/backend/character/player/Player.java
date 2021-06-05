@@ -18,7 +18,6 @@ public class Player extends Character implements Info {
     private boolean isShooting = false;
     private boolean isJumping = false;
     private final InfoInGame infoInGame;
-    private final GameInfo playerInfo;
 
     public Player(GameConfig config, CoolDown coolDown) {
         super(config, coolDown);
@@ -26,7 +25,6 @@ public class Player extends Character implements Info {
         setPlayerStartPosition();
         turnOffShooting();
         this.infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
-        this.playerInfo = new GameInfo("Player");
     }
 
     @Override
@@ -51,7 +49,6 @@ public class Player extends Character implements Info {
     @Override
     public GameInfo getGameInfo() {
         CharacterInfoFactory infoFactory = new CharacterInfoFactory();
-        infoFactory.update(playerInfo);
         return infoFactory.create(this);
     }
 

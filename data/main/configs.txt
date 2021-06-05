@@ -1,5 +1,7 @@
 Pang
     difficulty=2
+    defaultXFrameSize=960
+    defaultYFrameSize=540
 Player
     health=10
     damage=1.5
