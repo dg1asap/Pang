@@ -7,7 +7,6 @@ import pang.backend.properties.info.GameInfo;
 import pang.backend.util.ScoreSaver;
 import pang.backend.world.World;
 import pang.backend.world.WorldLoader;
-import pang.gui.frame.PangFrame;
 import pang.gui.messageDialog.GameMessageDialog;
 import pang.hardware.Screen;
 
@@ -27,6 +26,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     public GameplayPanel(Screen screen) {
         super("Gameplay");
+
         loadUserControl();
         getLevelNameAndPathFromUserChoice(screen);
         loadWorld();
@@ -67,6 +67,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         GameInfo worldInfo = world.getGameInfo();
         GameplayInfoFactory infoFactory = new GameplayInfoFactory();
         infoFactory.update(worldInfo);
+        infoFactory.update(panelInfo);
         return infoFactory.create(this);
     }
 
@@ -150,7 +151,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     private void renderGUI(Screen screen) {
         messageDialog.showMessageDialog(world.getGameInfo());
         screen.loadNextPanel();
-        resizePanel();
     }
 
     private void steerTime() {
@@ -162,12 +162,6 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     private boolean canSteerTime() {
         return !world.isGameOver() && !world.isEmpty();
-    }
-
-
-    private void resizePanel(){
-        PangFrame.setActualScreenHeight(this.getHeight());
-        PangFrame.setActualScreenWidth(this.getWidth());
     }
 
 

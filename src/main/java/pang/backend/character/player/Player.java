@@ -6,6 +6,7 @@ import pang.backend.character.CoolDown;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
+import pang.backend.util.PangVector;
 import pang.gui.InfoInGame;
 import pang.gui.frame.PangFrame;
 
@@ -14,11 +15,10 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
 public class Player extends Character implements Info {
-
     private boolean isShooting = false;
     private boolean isJumping = false;
     private final InfoInGame infoInGame;
-    private GameInfo playerInfo;
+    private final GameInfo playerInfo;
 
     public Player(GameConfig config, CoolDown coolDown) {
         super(config, coolDown);
@@ -51,6 +51,7 @@ public class Player extends Character implements Info {
     @Override
     public GameInfo getGameInfo() {
         CharacterInfoFactory infoFactory = new CharacterInfoFactory();
+        infoFactory.update(playerInfo);
         return infoFactory.create(this);
     }
 
@@ -87,17 +88,23 @@ public class Player extends Character implements Info {
     }
 
     public void gravity(){
-        if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
+        PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
+        int frameHeight = extremePointOfFrame.getY();
+        if(getActualYPlayerPosition() < frameHeight - getPlayerHeight()){
             increaseStatByValue("posY", getStat("gravityForce").intValue());
         }
-        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 50){
+        else if(getActualYPlayerPosition() >= frameHeight - getPlayerHeight() - 50){
             isJumping = false;
         }
     }
 
     private void setPlayerStartPosition(){
-        int startPosX = PangFrame.getActualScreenWidth() / 2 - getPlayerWidth() / 2;
-        int startPosY = PangFrame.getActualScreenHeight() - getPlayerHeight() - 50; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
+        int frameWidth = extremePointOfFrame.getX();
+        int frameHeight = extremePointOfFrame.getY();
+        int startPosX = frameWidth / 2 - getPlayerWidth() / 2;
+        //int startPosY = frameHeight - getPlayerHeight() - 50; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        int startPosY = frameHeight - getPlayerHeight(); //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
         increaseStatByValue("posX", startPosX);
         increaseStatByValue("posY", startPosY);
     }

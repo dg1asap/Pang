@@ -5,38 +5,40 @@ import pang.gui.panel.PangPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class PangFrame extends JFrame {
-    private static int preferredGameWidth;
-    private static int preferredGameHeight;
+    private static PangVector extremePointOfFrame;
 
     public static PangVector getExtremePointOfFrame() {
-        return new PangVector(preferredGameWidth,preferredGameHeight);
+        return extremePointOfFrame;
     }
 
-    public static void setActualScreenWidth(int width){
-        preferredGameWidth = width;
-    }
-    public static void setActualScreenHeight(int height){
-        preferredGameHeight = height;
-    }
-
-    public static int getActualScreenWidth(){
-        return preferredGameWidth;
-    }
-    public static int getActualScreenHeight(){
-        return preferredGameHeight;
+    public void setSize(int width, int height) {
+        extremePointOfFrame = new PangVector(width, height - 29);
     }
 
     public PangFrame() {
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                int width = getWidth();
+                int height = getHeight() - 29;
+                System.out.println(width);
+                extremePointOfFrame = new PangVector(width, height);
+            }
+        });
+
         setColour();
         setTitle("Pang");
         setScreenResolution();
         setResizable(true);
-        setPreferredSize(new Dimension(preferredGameWidth, preferredGameHeight));
+        setPreferredSize(new Dimension(extremePointOfFrame.getY(), extremePointOfFrame.getX()));
         //mainWindow.setResizable(false);
 
-        setMinimumSize(new Dimension(preferredGameWidth, preferredGameHeight));
+        setMinimumSize(new Dimension(extremePointOfFrame.getY(), extremePointOfFrame.getX()));
         setMaximumSize(getMaxScreenSize());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
@@ -60,8 +62,9 @@ public class PangFrame extends JFrame {
 
     private void setScreenResolution(){
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        preferredGameWidth = (int)size.getWidth()/2;
-        preferredGameHeight = (int)size.getHeight()/2;
+        int width = (int)size.getWidth()/2;
+        int height = (int)size.getHeight()/2;
+        setSize(height, width); //TODO odwrotne parametry, powinny być wczytywane z configa
     }
 
     private Dimension getMaxScreenSize(){

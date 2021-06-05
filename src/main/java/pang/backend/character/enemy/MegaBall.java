@@ -20,7 +20,9 @@ public class MegaBall extends Ball {
     }
 
     private void spawnEnemyAtTopOfMap() {
-        int posX = PangVector.randComponentOfVector(50,PangFrame.getActualScreenWidth() - 50);
+        PangVector extremePointOfFrame = PangFrame.getExtremePointOfFrame();
+        int frameWidth = extremePointOfFrame.getX();
+        int posX = PangVector.randComponentOfVector(50,frameWidth - 50);
         int posY = 50;
         Double actualPosX = getStat("posX");
         Double actualPosY = getStat("posY");
