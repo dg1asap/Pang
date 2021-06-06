@@ -1,11 +1,12 @@
 package pang.backend.bullet;
 
 import pang.backend.character.Character;
+import pang.backend.util.PangObserver;
 
 import java.awt.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class BulletController {
+public class BulletController implements PangObserver {
     private final ConcurrentLinkedQueue <Bullet> bullets = new ConcurrentLinkedQueue<>();
     private final Character owner;
 
@@ -40,5 +41,12 @@ public class BulletController {
             if (bullet.intersects(target))
                 owner.attack(target);
     }
+
+    @Override
+    public void pangUpdate() {
+        for (Bullet bullet : bullets)
+            bullet.pangUpdate();
+    }
+
 
 }

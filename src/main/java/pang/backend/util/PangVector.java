@@ -1,8 +1,5 @@
 package pang.backend.util;
 
-import pang.backend.properties.config.ConfigLoader;
-import pang.backend.properties.config.GameConfig;
-
 import java.util.Random;
 
 public class PangVector {

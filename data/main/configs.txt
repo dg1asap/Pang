@@ -21,6 +21,9 @@ PlayerCoolDown
     move=5
     gravity=10
     movingVector=20
+Bullet
+    width=10
+    height=20
 World
     worldCapacity=100
     maxSpawnCount=50

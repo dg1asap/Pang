@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-public class Player extends Character implements Info, PangObserver {
+public class Player extends Character implements Info {
     private boolean isShooting = false;
     private boolean isJumping = false;
     private final InfoInGame infoInGame;
@@ -99,13 +99,6 @@ public class Player extends Character implements Info, PangObserver {
         }
     }
 
-    @Override
-    public void pangUpdate() {
-        scaleStatToX("posX");
-        scaleStatToY("posY");
-        scaleStatToX("width");
-        scaleStatToY("height");
-    }
 
 
     private void move() {

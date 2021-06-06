@@ -1,6 +1,7 @@
 package pang.backend.character;
 
 import pang.backend.properties.config.GameConfig;
+import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.gui.frame.PangFrame;
 
@@ -8,9 +9,9 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Character implements HitBox {
-    protected CoolDown coolDown;
+public abstract class Character implements HitBox, PangObserver {
     private final Map<String, Double> stats = new HashMap<>();
+    protected CoolDown coolDown;
 
     public Character(GameConfig config, CoolDown coolDown){
         addStat(config,"health", "damage", "speed", "height", "width", "posX", "posY", "score");
@@ -60,6 +61,14 @@ public abstract class Character implements HitBox {
             damageCharacter(character);
             stealPoints(character);
         }
+    }
+
+    @Override
+    public void pangUpdate() {
+        scaleStatToX("posX");
+        scaleStatToY("posY");
+        scaleStatToX("width");
+        scaleStatToY("height");
     }
 
     public abstract void draw(Graphics g);
