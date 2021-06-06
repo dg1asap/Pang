@@ -6,6 +6,7 @@ import pang.backend.character.CoolDown;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
+import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.gui.InfoInGame;
 import pang.gui.frame.PangFrame;
@@ -14,7 +15,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-public class Player extends Character implements Info {
+public class Player extends Character implements Info, PangObserver {
     private boolean isShooting = false;
     private boolean isJumping = false;
     private final InfoInGame infoInGame;
@@ -39,10 +40,13 @@ public class Player extends Character implements Info {
     @Override
     public void draw(Graphics playerGraphic) {
         playerGraphic.setColor(Color.RED);
+
         int dx = getStat("posX").intValue();
         int dy = getStat("posY").intValue();
+        int width = getStat("width").intValue();
+        int height = getStat("height").intValue();
+        playerGraphic.fillRect(dx, dy, width, height);
 
-        playerGraphic.fillRect(dx, dy, getPlayerWidth(), getPlayerHeight());
         infoInGame.draw(playerGraphic);
     }
 
@@ -72,7 +76,7 @@ public class Player extends Character implements Info {
     }
 
     public int getBulletXPos(){
-        return getPlayerWidth()/2 + getStat("posX").intValue() - 5;
+        return getStat("width").intValue()/2 + getStat("posX").intValue() - 5;
     }
 
     public boolean canPlayerJump(){
@@ -87,13 +91,22 @@ public class Player extends Character implements Info {
     public void useGravity(){
         PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
         int frameHeight = extremePointOfFrame.getY();
-        if(getActualYPlayerPosition() < frameHeight - getPlayerHeight()){
+        if(getActualYPlayerPosition() < frameHeight - getStat("height").intValue()){
             increaseStatByValue("posY", getStat("gravityForce").intValue());
         }
-        else if(getActualYPlayerPosition() >= frameHeight - getPlayerHeight() - 50){
+        else if(getActualYPlayerPosition() >= frameHeight - getStat("height").intValue() - 50){
             isJumping = false;
         }
     }
+
+    @Override
+    public void pangUpdate() {
+        scaleStatToX("posX");
+        scaleStatToY("posY");
+        scaleStatToX("width");
+        scaleStatToY("height");
+    }
+
 
     private void move() {
         if (canMove())
@@ -133,8 +146,8 @@ public class Player extends Character implements Info {
         PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
         int frameWidth = extremePointOfFrame.getX();
         int frameHeight = extremePointOfFrame.getY();
-        int startPosX = frameWidth / 2 - getPlayerWidth() / 2;
-        int startPosY = frameHeight - getPlayerHeight(); //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
+        int startPosX = frameWidth / 2 - getStat("width").intValue() / 2;
+        int startPosY = frameHeight - getStat("height").intValue();
         increaseStatByValue("posX", startPosX);
         increaseStatByValue("posY", startPosY);
     }
@@ -144,14 +157,6 @@ public class Player extends Character implements Info {
             return getStat("ammunition").intValue();
         }
         else return 0;
-    }
-
-    private int getPlayerHeight(){
-        return getStat("height").intValue();
-    }
-
-    private int getPlayerWidth(){
-        return getStat("width").intValue();
     }
 
     private void shoot(char keyChar){

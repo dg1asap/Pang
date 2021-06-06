@@ -1,7 +1,10 @@
 package pang.gui.frame;
 
+import pang.backend.util.PangObservable;
+import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.gui.panel.PangPanel;
+import pang.hardware.Screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,19 +13,23 @@ import java.awt.event.ComponentEvent;
 
 public class PangFrame extends JFrame {
     private static PangVector extremePointOfFrame;
+    private static PangVector lastExtremePointOfFrame;
 
     public static PangVector getExtremePointOfFrame() {
         return extremePointOfFrame;
     }
 
-    public PangFrame() {
+    public PangFrame(Screen screen) {
+        lastExtremePointOfFrame = new PangVector(getWidth(), getHeight());
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 int width = getWidth();
                 int height = getHeight();
-                extremePointOfFrame = new PangVector(width, height - 29);
+                extremePointOfFrame = new PangVector(width, height - 29, lastExtremePointOfFrame.getX(), lastExtremePointOfFrame.getY());
+                lastExtremePointOfFrame = extremePointOfFrame;
+                screen.notifyPang();
             }
         });
 

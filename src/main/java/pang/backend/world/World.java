@@ -4,6 +4,7 @@ import pang.backend.bullet.Bullet;
 import pang.backend.bullet.BulletController;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
+import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
@@ -15,10 +16,11 @@ import pang.gui.frame.PangFrame;
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class World implements Info {
+public class World implements Info, PangObserver {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
+    private WorldBorder worldBorder;
 
     public World(GameConfig worldConfig, Player player) {
         int worldCapacity = worldConfig.getAttribute("worldCapacity").intValue();
@@ -36,7 +38,7 @@ public class World implements Info {
     }
 
     public boolean isGameOver(){
-        return !player.isAlive();
+        return player.isDead();
     }
 
     public void draw(Graphics g) {
@@ -71,6 +73,13 @@ public class World implements Info {
         return infoFactory.create(this);
     }
 
+    @Override
+    public void pangUpdate() {
+        PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
+        worldBorder = new WorldBorder(extremePointOfMap);
+        player.pangUpdate();
+    }
+
     private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {
         if (needPlayerInfo()) {
             GameInfo playerInfo = player.getGameInfo();
@@ -100,8 +109,6 @@ public class World implements Info {
     private boolean canPlayerSteer(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String direction = playerReaction.fromKeyName(keyChar);
-        PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
-        WorldBorder worldBorder = new WorldBorder(extremePointOfMap);
         return worldBorder.isInBorderOfWorld(player, direction, (int)value);
     }
 
@@ -146,7 +153,7 @@ public class World implements Info {
     }
 
     private void killEnemy(Enemy enemy) {
-        if (!enemy.isAlive())
+        if (enemy.isDead())
             enemies.remove(enemy);
     }
 

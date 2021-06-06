@@ -2,6 +2,7 @@ package pang.backend.character;
 
 import pang.backend.properties.config.GameConfig;
 import pang.backend.util.PangVector;
+import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -30,14 +31,28 @@ public abstract class Character implements HitBox {
         stats.computeIfPresent(stat, (k, v) -> v + value);
     }
 
+    protected void scaleStatToX(String statName) {
+        PangVector extremePointOfFrame = PangFrame.getExtremePointOfFrame();
+        double stat = getStat(statName);
+        double scaledStat = extremePointOfFrame.getScaledXof(stat);
+        stats.replace(statName, scaledStat);
+    }
+
+    protected void scaleStatToY(String statName) {
+        PangVector extremePointOfFrame = PangFrame.getExtremePointOfFrame();
+        double stat = getStat(statName);
+        double scaledStat = extremePointOfFrame.getScaledYof(stat);
+        stats.replace(statName, scaledStat);
+    }
+
     public PangVector getPosition() {
         int intPosX = getStat("posX").intValue();
         int intPosY = getStat("posY").intValue();
         return new PangVector(intPosX, intPosY);
     }
 
-    public boolean isAlive(){
-        return stats.get("health") > 0;
+    public boolean isDead(){
+        return stats.get("health") < 0;
     }
 
     public void attack(Character character) {
@@ -59,7 +74,7 @@ public abstract class Character implements HitBox {
     }
 
     private void stealPoints(Character target) {
-        if (!target.isAlive()) {
+        if (target.isDead()) {
             Double score = target.getStat("score");
             this.increaseStatByValue("score", score);
         }

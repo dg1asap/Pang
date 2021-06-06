@@ -8,6 +8,8 @@ import java.util.Random;
 public class PangVector {
     private int x;
     private int y;
+    private int oldX = 1;
+    private int oldY = 1;
 
     public static PangVector randPangVector(int min, int max) {
         int x, y;
@@ -29,13 +31,20 @@ public class PangVector {
         this.y = y;
     }
 
+    public PangVector(int x, int y, int oldX, int oldY) {
+        this.x = x;
+        this.y = y;
+        this.oldX = oldX;
+        this.oldY = oldY;
+    }
+
     public int getX() {
         return x;
     }
 
-    public double getXScalingRatio() {
-        GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
-        return getX() / pangConfig.getAttribute("defaultXFrameSize");
+    public double getScaledXof(double value) {
+        double xRatio = (double) x / (double) oldX;
+        return value * xRatio;
     }
 
     public void invertX() {
@@ -46,9 +55,9 @@ public class PangVector {
         return y;
     }
 
-    public double getYScalingRatio() {
-        GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
-        return getY() / pangConfig.getAttribute("defaultYFrameSize");
+    public double getScaledYof(double value) {
+        double yRatio = (double) y / (double) oldY;
+        return value * yRatio;
     }
 
     public void invertY() {

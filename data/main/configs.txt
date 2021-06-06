@@ -12,7 +12,7 @@ Player
     gravityForce=2
     posX=0
     posY=0
-    movingVectorX=0
+    motionVectorX=0
     motionVectorY=0
     motionVectorBlanking=50
     score=0

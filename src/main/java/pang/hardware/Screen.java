@@ -2,6 +2,8 @@ package pang.hardware;
 
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
+import pang.backend.util.PangObservable;
+import pang.backend.util.PangObserver;
 import pang.gui.panel.PanelCreator;
 import pang.gui.frame.PangFrame;
 import pang.gui.panel.PangPanel;
@@ -9,9 +11,12 @@ import pang.gui.panel.PangPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Screen implements ActionListener, Info {
-    private final PangFrame mainWindow = new PangFrame();
+public class Screen implements ActionListener, Info, PangObservable {
+    private List<PangObserver> observers = new ArrayList<>();
+    private final PangFrame mainWindow = new PangFrame(this);
     private PanelCreator panelCreator;
     private PangPanel currentPanel;
     private GameInfo screenInfo;
@@ -23,6 +28,23 @@ public class Screen implements ActionListener, Info {
         makeLabels();
     }
 
+    @Override
+    public void addPangObserver(PangObserver observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removePangObserver(PangObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyPang() {
+        for (PangObserver observer : this.observers) {
+            observer.pangUpdate();
+        }
+    }
+
     public void setPanelCreator(PanelCreator panelCreator) {
         this.panelCreator = panelCreator;
     }
@@ -31,6 +53,7 @@ public class Screen implements ActionListener, Info {
         GameInfo panelInfo = currentPanel.getGameInfo();
         if (panelInfo.hasAttribute("nextPanel")) {
             String panelName = panelInfo.getAttribute("nextPanel");
+            observers.clear();
             selectPanel(panelName);
             setPanel();
             activePanel();
@@ -38,6 +61,7 @@ public class Screen implements ActionListener, Info {
     }
 
     public void loadNextPanel(String panelName) {
+        observers.clear();
         selectPanel(panelName);
         setPanel();
         activePanel();
