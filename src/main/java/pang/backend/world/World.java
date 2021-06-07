@@ -77,14 +77,14 @@ public class World implements Info, PangObserver {
     public void pangUpdate() {
         PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
         worldBorder = new WorldBorder(extremePointOfMap);
-        player.pangUpdate();
-        playerBulletController.pangUpdate();
+        player.rescale();
+        playerBulletController.rescaleBullets();
         pangUpdateEnemy();
     }
 
     private void pangUpdateEnemy() {
         for (Enemy enemy : enemies)
-            enemy.pangUpdate();
+            enemy.rescale();
     }
 
     private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {

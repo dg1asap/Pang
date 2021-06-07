@@ -3,7 +3,6 @@ package pang.backend.bullet;
 import pang.backend.character.HitBox;
 import pang.backend.properties.config.ConfigLoader;
 import pang.backend.properties.config.GameConfig;
-import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.gui.frame.PangFrame;
 
@@ -11,7 +10,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-public class Bullet implements HitBox, PangObserver {
+public class Bullet implements HitBox {
     private double xPosition;
     private double yPosition;
     private double width;
@@ -30,8 +29,7 @@ public class Bullet implements HitBox, PangObserver {
         return new Rectangle2D.Double(xPosition, yPosition, width, height);
     }
 
-    @Override
-    public void pangUpdate() {
+    public void rescale() {
         PangVector scalingVector = PangFrame.getExtremePointOfFrame();
         xPosition = scalingVector.getScaledXof(xPosition);
         yPosition = scalingVector.getScaledYof(yPosition);

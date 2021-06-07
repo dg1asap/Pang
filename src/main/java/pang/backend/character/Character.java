@@ -1,7 +1,6 @@
 package pang.backend.character;
 
 import pang.backend.properties.config.GameConfig;
-import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.gui.frame.PangFrame;
 
@@ -9,7 +8,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Character implements HitBox, PangObserver {
+public abstract class Character implements HitBox {
     private final Map<String, Double> stats = new HashMap<>();
     protected CoolDown coolDown;
 
@@ -63,8 +62,7 @@ public abstract class Character implements HitBox, PangObserver {
         }
     }
 
-    @Override
-    public void pangUpdate() {
+    public void rescale() {
         scaleStatToX("posX");
         scaleStatToY("posY");
         scaleStatToX("width");
