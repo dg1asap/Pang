@@ -1,3 +1,12 @@
+
+Aktualizacja po spotkaniu:
+
+Etap zaliczony WARUNKOWO!!!
+W wersji końcowej należy uwzględnić uwagi ze spotkania dotyczące sposobu opisu komunikatów!
+
+
+
+
 Bardzo ładny opis jak działa serwer, co, jak i kiedy robi klient, ale...
 to NIE JEST protokół sieciowy!!!!
 
