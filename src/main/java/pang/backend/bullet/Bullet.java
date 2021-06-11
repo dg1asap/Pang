@@ -22,11 +22,18 @@ public class Bullet implements HitBox {
         this.yPosition = yPosition;
         this.width = bulletConfig.getAttribute("width");
         this.height = bulletConfig.getAttribute("height");
+        initialRescale();
     }
 
     @Override
     public RectangularShape getHitBox() {
         return new Rectangle2D.Double(xPosition, yPosition, width, height);
+    }
+
+    public void initialRescale() {
+        PangVector scalingVector = PangFrame.getExtremePointOfFrame();
+        width = scalingVector.getScaledToInitialXof(width);
+        height = scalingVector.getScaledToInitialYof(height);
     }
 
     public void rescale() {

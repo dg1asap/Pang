@@ -1,7 +1,5 @@
 package pang.gui.frame;
 
-import pang.backend.util.PangObservable;
-import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
 import pang.gui.panel.PangPanel;
 import pang.hardware.Screen;
