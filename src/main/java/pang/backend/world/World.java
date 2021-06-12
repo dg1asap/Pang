@@ -4,7 +4,7 @@ import pang.backend.bullet.Bullet;
 import pang.backend.bullet.BulletController;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
-import pang.backend.util.PangObserver;
+import pang.backend.util.ResizeObserver;
 import pang.backend.util.PangVector;
 import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
@@ -16,7 +16,7 @@ import pang.gui.frame.PangFrame;
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class World implements Info, PangObserver {
+public class World implements Info, ResizeObserver {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
@@ -49,7 +49,7 @@ public class World implements Info, PangObserver {
 
     public void steerKey(char keyChar, double value){
         if(keyChar != 'w') {
-            if (canPlayerSteer(keyChar, value)){
+            if (canPlayerSteer(keyChar, value)) {
                 player.steerKey(keyChar, value);
                 addBulletToPlayer();
             }
@@ -74,7 +74,7 @@ public class World implements Info, PangObserver {
     }
 
     @Override
-    public void pangUpdate() {
+    public void resize() {
         PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
         worldBorder = new WorldBorder(extremePointOfMap);
         player.rescale();

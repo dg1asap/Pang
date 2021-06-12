@@ -2,8 +2,8 @@ package pang.hardware;
 
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
-import pang.backend.util.PangObservable;
-import pang.backend.util.PangObserver;
+import pang.backend.util.ResizeObservable;
+import pang.backend.util.ResizeObserver;
 import pang.gui.panel.PanelCreator;
 import pang.gui.frame.PangFrame;
 import pang.gui.panel.PangPanel;
@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Screen implements ActionListener, Info, PangObservable {
-    private List<PangObserver> observers = new ArrayList<>();
+public class Screen implements ActionListener, Info, ResizeObservable {
+    private final List<ResizeObserver> observers = new ArrayList<>();
     private final PangFrame mainWindow = new PangFrame(this);
     private PanelCreator panelCreator;
     private PangPanel currentPanel;
@@ -29,19 +29,19 @@ public class Screen implements ActionListener, Info, PangObservable {
     }
 
     @Override
-    public void addPangObserver(PangObserver observer) {
+    public void addResizeObserver(ResizeObserver observer) {
         this.observers.add(observer);
     }
 
     @Override
-    public void removePangObserver(PangObserver observer) {
+    public void removeResizeObserver(ResizeObserver observer) {
         this.observers.remove(observer);
     }
 
     @Override
-    public void notifyPang() {
-        for (PangObserver observer : this.observers) {
-            observer.pangUpdate();
+    public void resizeNotify() {
+        for (ResizeObserver observer : this.observers) {
+            observer.resize();
         }
     }
 

@@ -11,35 +11,38 @@ import java.awt.event.ComponentEvent;
 
 public class PangFrame extends JFrame {
     private static PangVector extremePointOfFrame;
-    private static PangVector lastExtremePointOfFrame;
 
     public static PangVector getExtremePointOfFrame() {
         return extremePointOfFrame;
     }
 
     public PangFrame(Screen screen) {
-        lastExtremePointOfFrame = new PangVector(getWidth(), getHeight());
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                int width = getWidth();
-                int height = getHeight();
-                extremePointOfFrame = new PangVector(width, height - 29, lastExtremePointOfFrame.getX(), lastExtremePointOfFrame.getY());
-                lastExtremePointOfFrame = extremePointOfFrame;
-                screen.notifyPang();
-            }
-        });
+        setPreferences();
+        setSizeProperties(screen);
+        setBasicOperations();
+    }
 
+    private void setPreferences() {
         setColour();
         setTitle("Pang");
+    }
+
+    private void setSizeProperties(Screen screen) {
+        setResizeResponses(screen);
         setScreenResolution();
         setResizable(true);
         setPreferredSize(new Dimension(extremePointOfFrame.getX(), extremePointOfFrame.getY()));
-        //mainWindow.setResizable(false);
-
         setMinimumSize(new Dimension(extremePointOfFrame.getX(), extremePointOfFrame.getY()));
         setMaximumSize(getMaxScreenSize());
+    }
+
+    private void setResizeResponses(Screen screen) {
+        extremePointOfFrame = new PangVector(getWidth(), getHeight());
+        addComponentListener(new ResizeAdapter(screen));
+
+    }
+
+    private void setBasicOperations() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
 
@@ -64,12 +67,30 @@ public class PangFrame extends JFrame {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int)size.getWidth()/2;
         int height = (int)size.getHeight()/2;
-        setSize(width, height); //TODO odwrotne parametry, mogą być wczytywane z configa
+        setSize(width, height);
         extremePointOfFrame = new PangVector(width, height);
     }
 
     private Dimension getMaxScreenSize(){
         return new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
+    }
+
+    class ResizeAdapter extends ComponentAdapter {
+        private final Screen screen;
+
+        ResizeAdapter(Screen screen) {
+            super();
+            this.screen = screen;
+        }
+
+        @Override
+        public void componentResized(ComponentEvent e) {
+            super.componentResized(e);
+            int width = getWidth();
+            int height = getHeight();
+            extremePointOfFrame = new PangVector(width, height - 29, extremePointOfFrame.getX(), extremePointOfFrame.getY());
+            screen.resizeNotify();
+        }
     }
 
 }

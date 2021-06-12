@@ -31,8 +31,8 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         getLevelNameAndPathFromUserChoice(screen);
         loadWorld();
 
-        screen.addPangObserver(world);
-        world.pangUpdate();
+        screen.addResizeObserver(world);
+        world.resize();
 
         gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
         gameTimer.start();
