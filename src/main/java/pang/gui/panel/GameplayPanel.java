@@ -32,7 +32,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         loadWorld();
 
         screen.addResizeObserver(world);
-        world.resize();
+        //world.resize();
 
         gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
         gameTimer.start();

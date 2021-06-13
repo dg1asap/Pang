@@ -10,9 +10,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class PangFrame extends JFrame {
-    private static PangVector extremePointOfFrame;
+    private PangVector extremePointOfFrame;
 
-    public static PangVector getExtremePointOfFrame() {
+    public PangVector getFrameSize() {
         return extremePointOfFrame;
     }
 

@@ -31,6 +31,7 @@ public class Screen implements ActionListener, Info, ResizeObservable {
     @Override
     public void addResizeObserver(ResizeObserver observer) {
         this.observers.add(observer);
+        observer.initialResize(mainWindow.getFrameSize());
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Screen implements ActionListener, Info, ResizeObservable {
     @Override
     public void resizeNotify() {
         for (ResizeObserver observer : this.observers) {
-            observer.resize();
+            observer.resize(mainWindow.getFrameSize());
         }
     }
 

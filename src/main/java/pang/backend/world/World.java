@@ -2,6 +2,7 @@ package pang.backend.world;
 
 import pang.backend.bullet.Bullet;
 import pang.backend.bullet.BulletController;
+import pang.backend.bullet.BulletCreator;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
 import pang.backend.util.ResizeObserver;
@@ -11,7 +12,6 @@ import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
 import pang.backend.properties.config.GameConfig;
-import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -20,6 +20,7 @@ public class World implements Info, ResizeObserver {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
+    private BulletCreator bulletCreator;
     private WorldBorder worldBorder;
 
     public World(GameConfig worldConfig, Player player) {
@@ -51,7 +52,7 @@ public class World implements Info, ResizeObserver {
         if(keyChar != 'w') {
             if (canPlayerSteer(keyChar, value)) {
                 player.steerKey(keyChar, value);
-                addBulletToPlayer();
+                createBullet();
             }
         }
         else{
@@ -74,17 +75,27 @@ public class World implements Info, ResizeObserver {
     }
 
     @Override
-    public void resize() {
-        PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
-        worldBorder = new WorldBorder(extremePointOfMap);
-        player.rescale();
-        playerBulletController.rescaleBullets();
-        pangUpdateEnemy();
+    public void initialResize(PangVector size) {
+        worldBorder = new WorldBorder(size);
+        bulletCreator = new BulletCreator(size);
+        for (Enemy enemy : enemies) {
+            enemy.initialResize(size);
+        }
+        player.initialResize(size);
+//        resize(size);
     }
 
-    private void pangUpdateEnemy() {
+    @Override
+    public void resize(PangVector size) {
+        worldBorder = new WorldBorder(size);
+        player.resize(size);
+        playerBulletController.rescaleBullets(size);
+        rescaleEnemy(size);
+    }
+
+    private void rescaleEnemy(PangVector size) {
         for (Enemy enemy : enemies)
-            enemy.rescale();
+            enemy.resize(size);
     }
 
     private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {
@@ -119,9 +130,13 @@ public class World implements Info, ResizeObserver {
         return worldBorder.isInBorderOfWorld(player, direction, (int)value);
     }
 
-    private void addBulletToPlayer() {
+    private void createBullet() {
         if (player.canShoot()) {
-            playerBulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition() - 20));
+            int xBulletPosition = player.getBulletXPos();
+            int yBulletPosition = player.getActualYPlayerPosition() - 20;
+//            Bullet bullet = new Bullet(xBulletPosition, yBulletPosition, size);
+            Bullet bullet = bulletCreator.create(xBulletPosition, yBulletPosition);
+            playerBulletController.addBullet(bullet);
         }
     }
 
@@ -155,7 +170,7 @@ public class World implements Info, ResizeObserver {
     private void moveEnemy(Enemy enemy) {
         if (enemy.isSpawned()) {
             bounceOffBall(enemy);
-            enemy.move();
+            enemy.moveInsideBorder(worldBorder);
         }
     }
 

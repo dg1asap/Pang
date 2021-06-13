@@ -6,10 +6,8 @@ import pang.backend.character.CoolDown;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
-import pang.backend.util.PangObserver;
 import pang.backend.util.PangVector;
-import pang.gui.InfoInGame;
-import pang.gui.frame.PangFrame;
+import pang.gui.StatusBar;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -17,15 +15,14 @@ import java.awt.geom.RectangularShape;
 
 public class Player extends Character implements Info {
     private boolean isShooting = false;
-    private boolean isJumping = false;
-    private final InfoInGame infoInGame;
+    private final StatusBar statusBar;
 
     public Player(GameConfig config, CoolDown coolDown) {
         super(config, coolDown);
-        addStat(config, "motionVectorX", "motionVectorY", "motionVectorBlanking", "ammunition", "gravityForce");
-        setPlayerStartPosition();
+        addStat(config, "motionVectorX", "motionVectorY", "motionVectorBlanking",
+                                    "ammunition", "gravityForce", "gravityLimit");
         turnOffShooting();
-        this.infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
+        this.statusBar = new StatusBar(0,getStat("health").intValue(),getAmmoAmount());
     }
 
     @Override
@@ -47,7 +44,7 @@ public class Player extends Character implements Info {
         int height = getStat("height").intValue();
         playerGraphic.fillRect(dx, dy, width, height);
 
-        infoInGame.draw(playerGraphic);
+        statusBar.draw(playerGraphic);
     }
 
     @Override
@@ -59,7 +56,6 @@ public class Player extends Character implements Info {
     public void steerKey(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String playerParameter = playerReaction.fromKeyName(keyChar);
-        jump(keyChar);
         shoot(keyChar);
         increaseStatByValue(playerParameter, value);
 
@@ -71,6 +67,32 @@ public class Player extends Character implements Info {
         affectByGravity();
     }
 
+    @Override
+    public void initialResize(PangVector mapSize) {
+        int frameWidth = mapSize.getX();
+        int frameHeight = mapSize.getY();
+        int startPosX = frameWidth / 2 - getStat("width").intValue() / 2;
+        int startPosY = frameHeight - getStat("height").intValue();
+        increaseStatByValue("posX", startPosX);
+        increaseStatByValue("posY", startPosY);
+
+        resizeGravityLimit(mapSize);
+
+        statusBar.initialResize(mapSize);
+    }
+
+    @Override
+    public void resize(PangVector mapSize) {
+        super.resize(mapSize);
+        resizeGravityLimit(mapSize);
+        statusBar.resize(mapSize);
+    }
+
+    private void resizeGravityLimit(PangVector mapSize) {
+        double gravityLimit = getStat("gravityLimit");
+        increaseStatByValue("gravityLimit", mapSize.getY() - gravityLimit);
+    }
+
     public int getActualYPlayerPosition(){
         return getStat("posY").intValue();
     }
@@ -80,8 +102,7 @@ public class Player extends Character implements Info {
     }
 
     public boolean canPlayerJump(){
-        //return true;
-        return !isJumping;
+        return !coolDown.isCoolDown("jumping");
     }
 
     public boolean canShoot() {
@@ -89,17 +110,8 @@ public class Player extends Character implements Info {
     }
 
     public void useGravity(){
-        PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
-        int frameHeight = extremePointOfFrame.getY();
-        if(getActualYPlayerPosition() < frameHeight - getStat("height").intValue()){
-            increaseStatByValue("posY", getStat("gravityForce").intValue());
-        }
-        else if(getActualYPlayerPosition() >= frameHeight - getStat("height").intValue() - 50){
-            isJumping = false;
-        }
+        increaseStatByValue("posY", getStat("gravityForce").intValue());
     }
-
-
 
     private void move() {
         if (canMove())
@@ -126,23 +138,21 @@ public class Player extends Character implements Info {
     }
 
     private boolean canUseGravity() {
-        return !coolDown.isCoolDown("gravity");
+        return !isGravityCoolDown() && !isExceededGravityLimit();
+    }
+
+    private boolean isGravityCoolDown() {
+        return coolDown.isCoolDown("gravity");
+    }
+
+    private boolean isExceededGravityLimit() {
+        return getStat("posY") >= getStat("gravityLimit") - getStat("height");
     }
 
     private void setNewPlayerInfo(){
         int score = this.getStat("score").intValue();
         int health = this.getStat("health").intValue();
-        infoInGame.setNewPlayerInfo(score, health, getAmmoAmount());
-    }
-
-    private void setPlayerStartPosition(){
-        PangVector extremePointOfFrame =  PangFrame.getExtremePointOfFrame();
-        int frameWidth = extremePointOfFrame.getX();
-        int frameHeight = extremePointOfFrame.getY();
-        int startPosX = frameWidth / 2 - getStat("width").intValue() / 2;
-        int startPosY = frameHeight - getStat("height").intValue();
-        increaseStatByValue("posX", startPosX);
-        increaseStatByValue("posY", startPosY);
+        statusBar.setNewPlayerInfo(score, health, getAmmoAmount());
     }
 
     private int getAmmoAmount(){
@@ -169,13 +179,6 @@ public class Player extends Character implements Info {
 
     private boolean getShootingStatus(){
         return isShooting;
-    }
-
-
-    private void jump(char keyChar){
-        if(keyChar =='w'){
-            isJumping = true;
-        }
     }
 
 

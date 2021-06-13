@@ -10,6 +10,7 @@ Player
     width=40
     ammunition=100
     gravityForce=2
+    gravityLimit=0
     posX=0
     posY=0
     motionVectorX=0
@@ -21,6 +22,7 @@ PlayerCoolDown
     move=5
     gravity=10
     movingVector=20
+    jumping=2000
 Bullet
     width=10
     height=20

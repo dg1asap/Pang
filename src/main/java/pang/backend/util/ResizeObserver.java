@@ -1,5 +1,6 @@
 package pang.backend.util;
 
 public interface ResizeObserver {
-    void resize();
+    void initialResize(PangVector size);
+    void resize(PangVector size);
 }

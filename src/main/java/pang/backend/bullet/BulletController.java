@@ -1,6 +1,7 @@
 package pang.backend.bullet;
 
 import pang.backend.character.Character;
+import pang.backend.util.PangVector;
 
 import java.awt.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -41,9 +42,9 @@ public class BulletController {
                 owner.attack(target);
     }
 
-    public void rescaleBullets() {
+    public void rescaleBullets(PangVector size) {
         for (Bullet bullet : bullets)
-            bullet.rescale();
+            bullet.resize(size);
     }
 
 

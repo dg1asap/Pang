@@ -4,7 +4,6 @@ import pang.backend.character.CoolDown;
 import pang.backend.util.PangVector;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.world.WorldBorder;
-import pang.gui.frame.PangFrame;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
@@ -18,11 +17,10 @@ public abstract class Ball extends Enemy{
     }
 
     @Override
-    public void move() {
+    public void moveInsideBorder(WorldBorder border) {
         if (!coolDown.isCoolDown("move")) {
-            WorldBorder wall = new WorldBorder(PangFrame.getExtremePointOfFrame());
-            bounceOffVerticalWall(wall);
-            bounceOffHorizontalWall(wall);
+            bounceOffVerticalWall(border);
+            bounceOffHorizontalWall(border);
             changePosition();
         }
     }

@@ -2,13 +2,13 @@ package pang.backend.character;
 
 import pang.backend.properties.config.GameConfig;
 import pang.backend.util.PangVector;
-import pang.gui.frame.PangFrame;
+import pang.backend.util.ResizeObserver;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Character implements HitBox {
+public abstract class Character implements HitBox, ResizeObserver {
     private final Map<String, Double> stats = new HashMap<>();
     protected CoolDown coolDown;
 
@@ -31,17 +31,15 @@ public abstract class Character implements HitBox {
         stats.computeIfPresent(stat, (k, v) -> v + value);
     }
 
-    protected void scaleStatToX(String statName) {
-        PangVector extremePointOfFrame = PangFrame.getExtremePointOfFrame();
+    protected void scaleStatToX(String statName, PangVector size) {
         double stat = getStat(statName);
-        double scaledStat = extremePointOfFrame.getScaledXof(stat);
+        double scaledStat = size.getScaledXof(stat);
         stats.replace(statName, scaledStat);
     }
 
-    protected void scaleStatToY(String statName) {
-        PangVector extremePointOfFrame = PangFrame.getExtremePointOfFrame();
+    protected void scaleStatToY(String statName, PangVector size) {
         double stat = getStat(statName);
-        double scaledStat = extremePointOfFrame.getScaledYof(stat);
+        double scaledStat = size.getScaledYof(stat);
         stats.replace(statName, scaledStat);
     }
 
@@ -62,14 +60,15 @@ public abstract class Character implements HitBox {
         }
     }
 
-    public void rescale() {
-        scaleStatToX("posX");
-        scaleStatToY("posY");
-        scaleStatToX("width");
-        scaleStatToY("height");
-    }
-
     public abstract void draw(Graphics g);
+
+    @Override
+    public void resize(PangVector size) {
+        scaleStatToX("posX", size);
+        scaleStatToY("posY", size);
+        scaleStatToX("width", size);
+        scaleStatToY("height", size);
+    }
 
     private boolean characterCanAttack() {
         return !coolDown.isCoolDown("attack");
