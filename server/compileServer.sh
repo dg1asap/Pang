@@ -1,0 +1,1 @@
+javac src/Main.java src/Server.java src/ClientHandler.java src/DataSaver.java src/DataSender.java src/MessageHandler.java

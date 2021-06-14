@@ -1,0 +1,67 @@
+Pang
+    difficulty=2
+Player
+    health=5
+    damage=50
+    speed=20
+    height=90
+    width=140
+    ammunition=1070
+    gravityForce=2
+    posX=0
+    posY=0
+    score=0
+PlayerCoolDown
+    attack=1000
+    move=5
+World
+    worldCapacity=100
+    maxSpawnCount=50
+SmallBall
+    health=1
+    damage=1
+    speed=1.12
+    height=30
+    width=30
+    posX=0
+    posY=0
+    score=1
+SmallBallCoolDown
+    attack=1000
+    move=30
+    bounceOff=600
+LargeBall
+    health=2
+    damage=1.5
+    speed=1.12
+    height=40
+    width=40
+    posX=30
+    posY=30
+    score=3
+LargeBallCoolDown
+    attack=1000
+    move=30
+    bounceOff=600
+MegaBall
+    health=3
+    damage=3
+    speed=1.12
+    height=50
+    width=50
+    posX=1
+    posY=1
+    score=5
+MegaBallCoolDown
+    attack=1000
+    move=30
+    bounceOff=600
+Keyboard
+    a=-30
+    A=-30
+    d=30
+    D=30
+    w=-140
+    W=-140
+    k=-1
+    K=-1

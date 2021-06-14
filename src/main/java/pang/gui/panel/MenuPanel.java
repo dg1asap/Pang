@@ -16,6 +16,7 @@ public class MenuPanel extends PangPanel {
         JButton levelButton = createButtonToChangeWindowTo("Level", "Level", screen);
         JButton scoreButton = createButtonToChangeWindowTo("High scores", "HighScores", screen);
         JButton settingsButton = createButtonToChangeWindowTo("Settings","Settings", screen);
+        JButton onlineButton = createButtonToChangeWindowTo("Online","Online", screen);
 
         JButton quitButton = new JButton("QUIT");
         quitButton.addActionListener(e -> System.exit(0));
@@ -25,6 +26,7 @@ public class MenuPanel extends PangPanel {
         add(levelButton);
         add(scoreButton);
         add(settingsButton);
+        add(onlineButton);
         add(quitButton);
 
     }

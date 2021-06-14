@@ -1,6 +1,10 @@
 package pang.gui.panel;
 
 import pang.backend.properties.info.GameInfo;
+import pang.gui.panel.onlinePanels.OnlineGameplayPanel;
+import pang.gui.panel.onlinePanels.OnlineHighScorePanel;
+import pang.gui.panel.onlinePanels.OnlinePanel;
+import pang.gui.panel.onlinePanels.OnlineUserDataPanel;
 import pang.hardware.Audio;
 import pang.hardware.Screen;
 
@@ -36,6 +40,10 @@ public class PanelCreator {
             case "Settings" -> new SettingsPanel(screen, audio);
             case "Level" -> new LevelPanel(screen);
             case "HighScores" -> new HighScorePanel(screen);
+            case "Online" -> new OnlinePanel(screen);
+            case "OnlineUserData" -> new OnlineUserDataPanel(screen);
+            case "OnlineGameplay" -> new OnlineGameplayPanel(screen);
+            case "OnlineHighScore" -> new OnlineHighScorePanel(screen);
             default -> throw new IllegalArgumentException();
         };
     }
