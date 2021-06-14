@@ -17,8 +17,8 @@ public class Pang {
     }
 
     private void loadConfigs() {
-        Path path = Path.of("./data/main/configs.txt");
-        ConfigLoader.CONFIG_LOADER.init(path);
+//        Path path = Path.of("./data/main/configs.txt");
+//        ConfigLoader.CONFIG_LOADER.init(path);
     }
 
     private void loadScreen() {

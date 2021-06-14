@@ -52,7 +52,7 @@ public class Client {
 
     public void connectToServer(){
         try{
-            socket = new Socket("localhost",53911);
+            socket = new Socket("localhost",44444);
             connectionStatus = "Connected to server";
         } catch (UnknownHostException e){
             System.err.println("Unknown host.");

@@ -3,12 +3,12 @@ Pang
     defaultXFrameSize=960
     defaultYFrameSize=540
 Player
-    health=5
+    health=10
     damage=1.5
     speed=2
-    height=200
-    width=100
-    ammunition=1000
+    height=40
+    width=40
+    ammunition=100
     gravityForce=2
     gravityLimit=0
     posX=0

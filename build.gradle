@@ -23,27 +23,44 @@ dependencies {
 }
 
 
-task fatJar(type: Jar) {
+task fatJarPang(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Pang',
                 'Main-Class': 'pang.Main'
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveName 'pang.jar'
     with jar
 }
 
-task moveJar{
+task moveJarPang {
     doLast {
         copy{
-            from('./build/libs/proze21l_gorski_ogrodnik-1.0-SNAPSHOT.jar')
+            from('./build/libs/pang.jar')
             into('.')
         }
     }
 }
 
+task fatJarServer(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Server',
+                'Main-Class': 'server.Main'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveName 'server.jar'
+    with jar
+}
+
+task moveJarServer {
+    doLast {
+        copy{
+            from('./build/libs/server.jar')
+            into('.')
+        }
+    }
+}
 
 test {
     useJUnitPlatform()
 }
-
-

@@ -27,6 +27,9 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     public GameplayPanel(Screen screen) {
         super("Gameplay");
 
+        Path path = Path.of("./data/main/configs.txt");
+        ConfigLoader.CONFIG_LOADER.init(path);
+
         loadUserControl();
         getLevelNameAndPathFromUserChoice(screen);
         loadWorld();
