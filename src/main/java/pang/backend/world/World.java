@@ -49,17 +49,10 @@ public class World implements Info, ResizeObserver {
     }
 
     public void steerKey(char keyChar, double value){
-        if(keyChar != 'w') {
-            if (canPlayerSteer(keyChar, value)) {
-                player.steerKey(keyChar, value);
-                createBullet();
-            }
-        }
-        else{
-            if (canPlayerSteer(keyChar, value) && player.canPlayerJump()){
-                player.steerKey('w', value);
-            }
-        }
+        if(keyChar == 'w')
+            jumpPlayer(value);
+        else
+            attackOrMovePlayer(keyChar, value);
     }
 
     public void steerTime(long time){
@@ -99,6 +92,19 @@ public class World implements Info, ResizeObserver {
     private void drawEnemy(Enemy enemy, Graphics g) {
         if (enemy.isSpawned())
             enemy.draw(g);
+    }
+
+    private void jumpPlayer(double jumpLength) {
+        if (canPlayerSteer('w', jumpLength) && player.canPlayerJump()){
+            player.steerKey('w', jumpLength);
+        }
+    }
+
+    private void attackOrMovePlayer(char keyChar, double value) {
+        if (canPlayerSteer(keyChar, value)) {
+            player.steerKey(keyChar, value);
+            createBullet();
+        }
     }
 
     private void createBullet() {
