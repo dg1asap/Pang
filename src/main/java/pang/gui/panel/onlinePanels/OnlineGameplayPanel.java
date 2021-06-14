@@ -34,6 +34,8 @@ public class OnlineGameplayPanel extends PangPanel implements KeyListener {
         getLevelNameAndPathFromUserChoice(screen);
         loadWorld();
 
+        screen.addResizeObserver(world);
+
         gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
         gameTimer.start();
     }
@@ -70,6 +72,7 @@ public class OnlineGameplayPanel extends PangPanel implements KeyListener {
         GameInfo worldInfo = world.getGameInfo();
         GameplayInfoFactory infoFactory = new GameplayInfoFactory();
         infoFactory.update(worldInfo);
+        infoFactory.update(panelInfo);
         return infoFactory.create(this);
     }
 
@@ -152,7 +155,6 @@ public class OnlineGameplayPanel extends PangPanel implements KeyListener {
     private void renderGUI(Screen screen) {
         messageDialog.showMessageDialog(world.getGameInfo());
         screen.loadNextPanel();
-        resizePanel();
     }
 
     private void steerTime() {
@@ -165,12 +167,5 @@ public class OnlineGameplayPanel extends PangPanel implements KeyListener {
     private boolean canSteerTime() {
         return !world.isGameOver() && !world.isEmpty();
     }
-
-
-    private void resizePanel(){
-        PangFrame.setActualScreenHeight(this.getHeight());
-        PangFrame.setActualScreenWidth(this.getWidth());
-    }
-
 
 }

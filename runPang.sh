@@ -1,0 +1,1 @@
+java -jar pang.jar

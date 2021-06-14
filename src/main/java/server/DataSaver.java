@@ -1,4 +1,4 @@
-
+package server;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,7 +17,7 @@ public class DataSaver {
     }
 
     public void save() {
-        File highScoresFile = Path.of("server","data", "highScores", levelName + ".txt").toFile();
+        File highScoresFile = Path.of("./ServerData", "highScores", levelName + ".txt").toFile();
         try{
             if(highScoresFile.exists()){
                 FileWriter scoreWriter = new FileWriter(highScoresFile, true);

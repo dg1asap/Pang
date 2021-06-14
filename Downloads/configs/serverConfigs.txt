@@ -1,19 +1,31 @@
 Pang
     difficulty=2
+    defaultXFrameSize=960
+    defaultYFrameSize=540
 Player
     health=5
-    damage=50
-    speed=20
-    height=90
-    width=140
-    ammunition=1070
+    damage=1.5
+    speed=2
+    height=200
+    width=100
+    ammunition=1000
     gravityForce=2
+    gravityLimit=0
     posX=0
     posY=0
+    motionVectorX=0
+    motionVectorY=0
+    motionVectorBlanking=50
     score=0
 PlayerCoolDown
     attack=1000
     move=5
+    gravity=10
+    movingVector=20
+    jumping=2000
+Bullet
+    width=10
+    height=20
 World
     worldCapacity=100
     maxSpawnCount=50
@@ -57,11 +69,11 @@ MegaBallCoolDown
     move=30
     bounceOff=600
 Keyboard
-    a=-30
-    A=-30
-    d=30
-    D=30
-    w=-140
-    W=-140
+    a=-10
+    A=-10
+    d=10
+    D=10
+    w=-10
+    W=-10
     k=-1
     K=-1
