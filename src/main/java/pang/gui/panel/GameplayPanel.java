@@ -17,8 +17,8 @@ import java.awt.event.KeyListener;
 import java.nio.file.Path;
 
 public class GameplayPanel extends PangPanel implements KeyListener {
-    private GameMessageDialog messageDialog = new GameMessageDialog();
-    private final Timer gameTimer;
+    private final GameMessageDialog messageDialog = new GameMessageDialog();
+    private Timer gameTimer;
     private GameConfig keyboardConfig;
     private World world;
     private Path levelPath;
@@ -26,19 +26,12 @@ public class GameplayPanel extends PangPanel implements KeyListener {
 
     public GameplayPanel(Screen screen) {
         super("Gameplay");
-
-        Path path = Path.of("./data/main/configs.txt");
-        ConfigLoader.CONFIG_LOADER.init(path);
-
+        setLevelNameAndPathFromUserChoice(screen);
+        loadOfflineConfig();
         loadUserControl();
-        getLevelNameAndPathFromUserChoice(screen);
         loadWorld();
-
-        screen.addResizeObserver(world);
-        //world.resize();
-
-        gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
-        gameTimer.start();
+        addResizeObserverToSubObjects(screen);
+        turnOnTimeControl(screen);
     }
 
     public void paint (Graphics g) {
@@ -77,19 +70,32 @@ public class GameplayPanel extends PangPanel implements KeyListener {
         return infoFactory.create(this);
     }
 
-    private void loadUserControl(){
-        keyboardConfig = ConfigLoader.CONFIG_LOADER.getConfig("Keyboard");
+    private void loadOfflineConfig() {
+        Path path = Path.of("./data/main/configs.txt");
+        ConfigLoader.CONFIG_LOADER.init(path);
     }
 
-    private void getLevelNameAndPathFromUserChoice(Screen screen) {
-        GameInfo screenInfo = screen.getGameInfo();
-        levelPath = Path.of(screenInfo.getAttribute("levelPath"));
-        System.out.println("Loading level: path -> " + levelPath);
+    private void loadUserControl(){
+        keyboardConfig = ConfigLoader.CONFIG_LOADER.getConfig("Keyboard");
     }
 
     private void loadWorld() {
         WorldLoader worldLoader = new WorldLoader(levelPath);
         world = worldLoader.getWorld();
+    }
+
+    private void setLevelNameAndPathFromUserChoice(Screen screen) {
+        GameInfo screenInfo = screen.getGameInfo();
+        levelPath = Path.of(screenInfo.getAttribute("levelPath"));
+    }
+
+    private void addResizeObserverToSubObjects(Screen screen) {
+        screen.addResizeObserver(world);
+    }
+
+    private void turnOnTimeControl(Screen screen) {
+        gameTimer = new Timer(1, taskPerformer -> refresh(screen) );
+        gameTimer.start();
     }
 
     private void pauseActivation(char keyChar) {
@@ -108,7 +114,7 @@ public class GameplayPanel extends PangPanel implements KeyListener {
     }
 
     private void ifPauseNotActivatedSteer(char keyChar) {
-        if (gameTimer.isRunning()) {
+        if (!isPause()) {
             ifKeyCharHasConfigSteer(keyChar);
         }
     }

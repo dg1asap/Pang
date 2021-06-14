@@ -9,22 +9,8 @@ import javax.swing.*;
 public class SettingsPanel extends PangPanel {
     SettingsPanel(Screen screen, Audio audio) {
         super("Settings");
-        JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
-        JButton musicButton = new JButton("Turn On/Off music");
-
-        musicButton.addActionListener(e -> {
-            if(audio.getAudioStatus()) {
-                audio.getAudio().pause();
-            }
-            else if(!audio.getAudioStatus()) {
-                audio.getAudio().resumeLoop();
-            }
-        });
-
-
-        add(musicButton);
-        add(backButton);
-
+        addMusicButton(audio);
+        addBackButton(screen);
     }
 
     @Override
@@ -36,4 +22,23 @@ public class SettingsPanel extends PangPanel {
     public GameInfo getGameInfo() {
         return new GameInfo("Settings");
     }
+
+    private void addMusicButton(Audio audio) {
+        JButton musicButton = new JButton("Turn On/Off music");
+        musicButton.addActionListener(e -> playPauseMusic(audio));
+        add(musicButton);
+    }
+
+    private void addBackButton(Screen screen) {
+        JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
+        add(backButton);
+    }
+
+    private void playPauseMusic(Audio audio) {
+        if(audio.getAudioStatus())
+            audio.getAudio().pause();
+        else if(!audio.getAudioStatus())
+            audio.getAudio().resumeLoop();
+    }
+
 }

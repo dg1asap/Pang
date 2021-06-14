@@ -26,12 +26,6 @@ public class Bullet implements HitBox, ResizeObserver {
         height = size.getScaledToInitialYof(height);
     }
 
-    @Override
-    public RectangularShape getHitBox() {
-        return new Rectangle2D.Double(xPosition, yPosition, width, height);
-    }
-
-
     public void draw(Graphics g){
         g.setColor(Color.BLACK);
         g.fillRect((int)xPosition,(int)yPosition,(int) width,(int) height);
@@ -45,12 +39,13 @@ public class Bullet implements HitBox, ResizeObserver {
         return (int)yPosition;
     }
 
+    @Override
+    public RectangularShape getHitBox() {
+        return new Rectangle2D.Double(xPosition, yPosition, width, height);
+    }
 
     @Override
-    public void initialResize(PangVector size) {
-        //width = size.getScaledToInitialXof(width);
-        //height = size.getScaledToInitialYof(height);
-    }
+    public void initialResize(PangVector size) {}
 
     @Override
     public void resize(PangVector size) {

@@ -21,9 +21,7 @@ public class BulletController {
 
     public void steer(){
         for (Bullet bullet : bullets) {
-            if(bullet.getY()<0){
-                removeBullet(bullet);
-            }
+            ifBulletLeavesMapRemove(bullet);
             bullet.fire();
         }
     }
@@ -38,15 +36,24 @@ public class BulletController {
 
     public void interact(Character target) {
         for (Bullet bullet : bullets)
-            if (bullet.intersects(target)) {
-                owner.attack(target);
-                bullets.remove(bullet);
-            }
+            consumeBulletOnTarget(bullet, target);
     }
 
     public void rescaleBullets(PangVector size) {
         for (Bullet bullet : bullets)
             bullet.resize(size);
+    }
+
+    private void ifBulletLeavesMapRemove(Bullet bullet) {
+        if(bullet.getY()<0)
+            removeBullet(bullet);
+    }
+
+    private void consumeBulletOnTarget(Bullet bullet, Character target) {
+        if (bullet.intersects(target)) {
+            owner.attack(target);
+            bullets.remove(bullet);
+        }
     }
 
 
