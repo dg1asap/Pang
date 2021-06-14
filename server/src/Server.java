@@ -37,7 +37,7 @@ public class Server implements Runnable {
                 Socket socket = serverSocket.accept();
 
                 clients++;
-                System.out.println("\u001B[32m" + "Client connected" + "\u001B[0m");
+                //System.out.println("\u001B[32m" + "Client connected" + "\u001B[0m");
                 Thread clientThread = new Thread(new ClientHandler(socket));
                 clientThread.start();
 
