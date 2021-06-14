@@ -14,39 +14,47 @@ import java.util.stream.Collectors;
 
 public class HighScorePanel extends PangPanel {
     private ArrayList <File> levelNumbers;
-    private JLabel scoresLabel;
-    private JLabel highScoreText;
-    private JComboBox<String> levelBox;
+    private final JLabel scoresLabel = new JLabel();
+    private final JLabel highScoreText = new JLabel();
+    private final JComboBox<String> levelBox = new JComboBox<>();
 
     public HighScorePanel(Screen screen) {
         super("HighScore");
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
-        JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
-        highScoreText = new JLabel();
-        scoresLabel = new JLabel();
 
+        addChooseMapLabel();
+        addLevelBox();
+        addRankingLabel();
+        addButtons(screen);
+    }
+
+    private void addChooseMapLabel() {
         JLabel chooseMap = new JLabel("Choose Map to see best players:");
         add(chooseMap);
-        levelBox = new JComboBox<>();
+    }
+
+    private void addLevelBox() {
         loadHighScoreBox();
         loadHighScores(levelBox.getItemAt(levelBox.getSelectedIndex())  + ".txt");
-
         levelBox.addActionListener(e -> loadHighScores(levelBox.getItemAt(levelBox.getSelectedIndex())  + ".txt"));
+    }
 
+    private void addRankingLabel() {
         add(highScoreText);
         add(scoresLabel);
+    }
 
+    private void addButtons(Screen screen) {
+        JButton backButton = createButtonToChangeWindowTo("Back","Menu", screen);
         add(backButton);
     }
 
     private List<Map.Entry<String, Integer>> sortMultiMap(Multimap<String, Integer> notSortedMultiMap){
         List<Map.Entry<String, Integer>> pointsList = new LinkedList<>(notSortedMultiMap.entries());
-        Collections.sort(pointsList,Comparator.comparing(Map.Entry::getValue));
+        pointsList.sort(Map.Entry.comparingByValue());
         Collections.reverse(pointsList);
 
-        List<Map.Entry<String, Integer>> bestPointsList = pointsList.stream().limit(5).collect(Collectors.toList());
-
-        return bestPointsList;
+        return pointsList.stream().limit(5).collect(Collectors.toList());
     }
 
     private void loadHighScoreBox(){
@@ -56,7 +64,7 @@ public class HighScorePanel extends PangPanel {
 
     private void loadLevelNumbers() {
         File highScores = Path.of("data","main", "highScores").toFile();
-        levelNumbers = new ArrayList<>(Arrays.asList(highScores.listFiles()));
+        levelNumbers = new ArrayList<>(Arrays.asList(Objects.requireNonNull(highScores.listFiles())));
         Collections.sort(levelNumbers);
     }
 

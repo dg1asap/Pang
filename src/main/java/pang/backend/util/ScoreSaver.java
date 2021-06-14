@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class ScoreSaver {
-    private String levelName;
-    private Double score;
+    private final String levelName;
+    private final Double score;
 
     public ScoreSaver(String levelName, Double score) {
         this.levelName = levelName;
@@ -19,22 +19,20 @@ public class ScoreSaver {
     public void save() {
         File highScoresFile = Path.of("data","main", "highScores", levelName + ".txt").toFile();
         try{
-            if(highScoresFile.exists()){
-                FileWriter scoreWriter = new FileWriter(highScoresFile, true);
-                scoreWriter.write("\n" + UserDataPanel.getUserName() + " " + score.intValue());
-                scoreWriter.close();
-                System.out.println("Added score to file: " + levelName + ".txt");
-            }
-            else{
-                FileWriter scoreWriter = new FileWriter(highScoresFile, true);
-                scoreWriter.write(UserDataPanel.getUserName() + " " + score.intValue());
-                scoreWriter.close();
-                System.out.println("Created new HighScores file: " + levelName + ".txt");
-            }
+            saveHighScores(highScoresFile);
         } catch (IOException e){
             e.printStackTrace();
         }
-
     }
+
+    private void saveHighScores(File highScoresFile) throws IOException{
+        FileWriter scoreWriter = new FileWriter(highScoresFile, true);
+        if(highScoresFile.exists())
+            scoreWriter.write("\n" + UserDataPanel.getUserName() + " " + score.intValue());
+        else
+            scoreWriter.write(UserDataPanel.getUserName() + " " + score.intValue());
+        scoreWriter.close();
+    }
+
 
 }

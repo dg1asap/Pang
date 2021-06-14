@@ -10,25 +10,25 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 
 public class UserDataPanel extends PangPanel {
     private ArrayList <File> levelNumbers;
     private static  JTextField userNickname;
-    private JComboBox<String> levelBox;
+    private final JComboBox<String> levelBox;
 
     public static String getUserName(){
-        if(userNickname.getText().trim().equals("")){
+        if(userNickname.getText().trim().equals(""))
             return "Unknown";
-        }
-        else{
+        else
             return userNickname.getText().trim().replaceAll("\\s+"," ");
-        }
     }
 
     public UserDataPanel(Screen screen) {
         super("UserData");
-        userNickname = new JTextField();
         setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+
+        userNickname = new JTextField();
         userNickname.setPreferredSize(new Dimension(200,30));
         userNickname.setMaximumSize(new Dimension(200,30));
 
@@ -46,24 +46,24 @@ public class UserDataPanel extends PangPanel {
         JButton levelButton = createButtonToChangeWindowTo("Play", "Gameplay", screen);
         levelButton.setVisible(false);
 
-        levelBox.addActionListener(e -> {
-            if(levelBox.getSelectedIndex() != 0){
-                GameInfo screenInfo = screen.getGameInfo();
-                String levelPath = Path.of("data","main", "level", levelBox.getSelectedItem() + ".txt").toString();
-                screenInfo.addAttribute("levelPath", levelPath);
-                String levelName = String.valueOf(levelBox.getSelectedItem());
-
-                screenInfo.addAttribute("levelName", levelName);
-                levelButton.setVisible(true);
-            }
-            else{
-                levelButton.setVisible(false);
-            }
-        }
-        );
+        levelBox.addActionListener(e -> loadSelectedLevelAndNickname(levelButton, screen));
         add(levelButton);
         add(cancelButton);
+    }
 
+
+    private void loadSelectedLevelAndNickname(JButton levelButton, Screen screen) {
+        if(levelBox.getSelectedIndex() != 0){
+            GameInfo screenInfo = screen.getGameInfo();
+            String levelPath = Path.of("data","main", "level", levelBox.getSelectedItem() + ".txt").toString();
+            screenInfo.addAttribute("levelPath", levelPath);
+            String levelName = String.valueOf(levelBox.getSelectedItem());
+            screenInfo.addAttribute("levelName", levelName);
+            levelButton.setVisible(true);
+        }
+        else{
+            levelButton.setVisible(false);
+        }
     }
 
     private void loadLevelBox(){
@@ -73,7 +73,7 @@ public class UserDataPanel extends PangPanel {
 
     private void loadLevelNumbers() {
         File levels = Path.of("data","main", "level").toFile();
-        levelNumbers = new ArrayList<>(Arrays.asList(levels.listFiles()));
+        levelNumbers = new ArrayList<>(Arrays.asList(Objects.requireNonNull(levels.listFiles())));
         Collections.sort(levelNumbers);
     }
 

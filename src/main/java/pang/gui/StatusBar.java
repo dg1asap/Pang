@@ -16,17 +16,25 @@ public class StatusBar implements ResizeObserver {
     }
 
     public void setNewPlayerInfo(int score, int health, int ammo){
-        this.score = score;
-        this.health = health;
-        if(ammo > 0){
-            ammo = ammo - 1;
-        }
-        this.ammo = ammo;
+        setScoreAndHealth(score, health);
+        setAmmo(ammo);
     }
 
     public void draw (Graphics g){
         setFontPreferences(g);
         setContentAndPositionOfBar(g);
+    }
+
+    private void setScoreAndHealth(int score, int health) {
+        this.score = score;
+        this.health = health;
+    }
+
+    private void setAmmo(int ammo) {
+        if(ammo > 0){
+            ammo = ammo - 1;
+        }
+        this.ammo = ammo;
     }
 
     private void setFontPreferences(Graphics g) {

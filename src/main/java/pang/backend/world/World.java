@@ -82,12 +82,6 @@ public class World implements Info, ResizeObserver {
         player.initialResize(size);
     }
 
-    private void initialEnemyResize(PangVector size) {
-        for (Enemy enemy : enemies) {
-            enemy.initialResize(size);
-        }
-    }
-
     @Override
     public void resize(PangVector size) {
         worldBorder = new WorldBorder(size);
@@ -97,9 +91,29 @@ public class World implements Info, ResizeObserver {
         rescaleEnemy(size);
     }
 
-    private void rescaleEnemy(PangVector size) {
+    private void drawEnemies(Graphics g) {
         for (Enemy enemy : enemies)
-            enemy.resize(size);
+            drawEnemy(enemy, g);
+    }
+
+    private void drawEnemy(Enemy enemy, Graphics g) {
+        if (enemy.isSpawned())
+            enemy.draw(g);
+    }
+
+    private void createBullet() {
+        if (player.canShoot()) {
+            int xBulletPosition = player.getBulletXPos();
+            int yBulletPosition = player.getActualYPlayerPosition() - 20;
+            Bullet bullet = bulletCreator.create(xBulletPosition, yBulletPosition);
+            playerBulletController.addBullet(bullet);
+        }
+    }
+
+    private boolean canPlayerSteer(char keyChar, double value) {
+        PlayerReaction playerReaction = new PlayerReaction();
+        String direction = playerReaction.fromKeyName(keyChar);
+        return worldBorder.isInBorderOfWorld(player, direction, (int)value);
     }
 
     private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {
@@ -117,31 +131,6 @@ public class World implements Info, ResizeObserver {
         playerBulletController.steer();
         player.limitMovement(worldBorder);
         player.steerTime();
-    }
-
-    private void drawEnemies(Graphics g) {
-        for (Enemy enemy : enemies)
-            drawEnemy(enemy, g);
-    }
-
-    private void drawEnemy(Enemy enemy, Graphics g) {
-        if (enemy.isSpawned())
-            enemy.draw(g);
-    }
-
-    private boolean canPlayerSteer(char keyChar, double value) {
-        PlayerReaction playerReaction = new PlayerReaction();
-        String direction = playerReaction.fromKeyName(keyChar);
-        return worldBorder.isInBorderOfWorld(player, direction, (int)value);
-    }
-
-    private void createBullet() {
-        if (player.canShoot()) {
-            int xBulletPosition = player.getBulletXPos();
-            int yBulletPosition = player.getActualYPlayerPosition() - 20;
-            Bullet bullet = bulletCreator.create(xBulletPosition, yBulletPosition);
-            playerBulletController.addBullet(bullet);
-        }
     }
 
     private void manageEnemies(long time) {
@@ -194,6 +183,17 @@ public class World implements Info, ResizeObserver {
         if (player.intersects(ball)) {
             ball.bounceOff();
         }
+    }
+
+    private void initialEnemyResize(PangVector size) {
+        for (Enemy enemy : enemies) {
+            enemy.initialResize(size);
+        }
+    }
+
+    private void rescaleEnemy(PangVector size) {
+        for (Enemy enemy : enemies)
+            enemy.resize(size);
     }
 
 

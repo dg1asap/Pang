@@ -42,9 +42,26 @@ public class PangVector {
         return x;
     }
 
+    public int getY() {
+        return y;
+    }
+
+    public void invertX() {
+        x = -x;
+    }
+
+    public void invertY() {
+        y = -y;
+    }
+
     public double getScaledXof(double value) {
         double xRatio = (double) x / (double) oldX;
         return value * xRatio;
+    }
+
+    public double getScaledYof(double value) {
+        double yRatio = (double) y / (double) oldY;
+        return value * yRatio;
     }
 
     public double getScaledToInitialXof(double value) {
@@ -53,28 +70,11 @@ public class PangVector {
         return value * xRatio;
     }
 
-    public void invertX() {
-        x = -x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public double getScaledYof(double value) {
-        double yRatio = (double) y / (double) oldY;
-        return value * yRatio;
-    }
-
     public double getScaledToInitialYof(double value) {
         GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
         double yRatio = (double) y / pangConfig.getAttribute("defaultYFrameSize");
         return value * yRatio;
     }
 
-
-    public void invertY() {
-        y = -y;
-    }
 
 }
