@@ -7,8 +7,9 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class Server implements Runnable {
-    private ServerSocket serverSocket;
+
     private static int clients = 0;
+    private ServerSocket serverSocket;
 
     public static void removeClientNumber() {
         clients += -1;

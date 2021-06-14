@@ -1,7 +1,6 @@
 package server;
 
 import java.io.*;
-import java.net.Socket;
 
 public class MessageHandler {
     private String clientCommand;
