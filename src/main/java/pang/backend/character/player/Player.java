@@ -6,27 +6,24 @@ import pang.backend.character.CoolDown;
 import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
-import pang.gui.InfoInGame;
-import pang.gui.frame.PangFrame;
+import pang.backend.util.PangVector;
+import pang.backend.world.WorldBorder;
+import pang.gui.StatusBar;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
 public class Player extends Character implements Info {
-
     private boolean isShooting = false;
-    private boolean isJumping = false;
-    private final InfoInGame infoInGame;
-    private GameInfo playerInfo;
+    private final StatusBar statusBar;
 
     public Player(GameConfig config, CoolDown coolDown) {
         super(config, coolDown);
-        addStat(config, "ammunition", "gravityForce");
-        setPlayerStartPosition();
+        addStat(config, "motionVectorX", "motionVectorY", "motionVectorBlanking",
+                                    "ammunition", "gravityForce", "gravityLimit");
         turnOffShooting();
-        this.infoInGame = new InfoInGame(0,getStat("health").intValue(),getAmmoAmount());
-        this.playerInfo = new GameInfo("Player");
+        this.statusBar = new StatusBar(0,getStat("health").intValue(),getAmmoAmount());
     }
 
     @Override
@@ -41,11 +38,14 @@ public class Player extends Character implements Info {
     @Override
     public void draw(Graphics playerGraphic) {
         playerGraphic.setColor(Color.RED);
+
         int dx = getStat("posX").intValue();
         int dy = getStat("posY").intValue();
+        int width = getStat("width").intValue();
+        int height = getStat("height").intValue();
+        playerGraphic.fillRect(dx, dy, width, height);
 
-        playerGraphic.fillRect(dx, dy, getPlayerWidth(), getPlayerHeight());
-        infoInGame.draw(playerGraphic);
+        statusBar.draw(playerGraphic);
     }
 
     @Override
@@ -57,16 +57,42 @@ public class Player extends Character implements Info {
     public void steerKey(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String playerParameter = playerReaction.fromKeyName(keyChar);
-        jump(keyChar);
         shoot(keyChar);
         increaseStatByValue(playerParameter, value);
-
     }
 
-    public void setNewPlayerInfo(){
-        int score = this.getStat("score").intValue();
-        int health = this.getStat("health").intValue();
-        infoInGame.setNewPlayerInfo(score, health, getAmmoAmount());
+    public void steerTime() {
+        setNewPlayerInfo();
+        move();
+        affectByGravity();
+    }
+
+    public void limitMovement(WorldBorder border) {
+        int motionVectorX = getStat("motionVectorX").intValue();
+        int motionVectorY = getStat("motionVectorY").intValue();
+        bounceOffRightAndLeftBorder(motionVectorX, border);
+        blockGoAbroadX(motionVectorX, border);
+        blockGoAbroadY(motionVectorY, border);
+    }
+
+    @Override
+    public void initialResize(PangVector mapSize) {
+        int frameWidth = mapSize.getX();
+        int frameHeight = mapSize.getY();
+        int startPosX = frameWidth / 2 - getStat("width").intValue() / 2;
+        int startPosY = frameHeight - getStat("height").intValue();
+        increaseStatByValue("posX", startPosX);
+        increaseStatByValue("posY", startPosY);
+        increaseStatByValue("gravityLimit", mapSize.getY());
+        statusBar.initialResize(mapSize);
+    }
+
+    @Override
+    public void resize(PangVector mapSize) {
+        super.resize(mapSize);
+        statusBar.resize(mapSize);
+        double oldGravityLimit = getStat("gravityLimit");
+        increaseStatByValue("gravityLimit", mapSize.getY() - oldGravityLimit);
     }
 
     public int getActualYPlayerPosition(){
@@ -74,32 +100,84 @@ public class Player extends Character implements Info {
     }
 
     public int getBulletXPos(){
-        return getPlayerWidth()/2 + getStat("posX").intValue() - 5;
+        return getStat("width").intValue()/2 + getStat("posX").intValue() - 5;
     }
 
     public boolean canPlayerJump(){
-        //return true;
-        return !isJumping;
+        return !coolDown.isCoolDown("jumping");
     }
 
     public boolean canShoot() {
         return getAmmoAmount() > 0 && getShootingStatus();
     }
 
-    public void gravity(){
-        if(getActualYPlayerPosition()<PangFrame.getActualScreenHeight()-getPlayerHeight()){
-            increaseStatByValue("posY", getStat("gravityForce").intValue());
-        }
-        else if(getActualYPlayerPosition()>=PangFrame.getActualScreenHeight()-getPlayerHeight() - 50){
-            isJumping = false;
+    public void useGravity(){
+        if (isInGravityLimit())
+            increaseStatByValue("posY", getStat("gravityForce"));
+    }
+
+    private void bounceOffRightAndLeftBorder(int motionVectorX, WorldBorder border) {
+        if (!border.isInBorderOfWorld(this, "motionVectorX", motionVectorX))
+            increaseStatByValue("motionVectorX", -2*motionVectorX);
+    }
+
+    private void blockGoAbroadX(int motionVectorX, WorldBorder border) {
+        int posX = getStat("posX").intValue();
+        if (!border.isInBorderOfWorld(this, "posX", motionVectorX)) {
+            if (posX < 0) increaseStatByValue("posX", 1);
+            if (posX > 0) increaseStatByValue("posX", -1);
         }
     }
 
-    private void setPlayerStartPosition(){
-        int startPosX = PangFrame.getActualScreenWidth() / 2 - getPlayerWidth() / 2;
-        int startPosY = PangFrame.getActualScreenHeight() - getPlayerHeight() - 50; //TODO player jest za nisko na wejściu nie wiem skąd te 42 przesunięcia
-        increaseStatByValue("posX", startPosX);
-        increaseStatByValue("posY", startPosY);
+    private void blockGoAbroadY(int motionVectorY, WorldBorder border) {
+        int posY = getStat("posY").intValue();
+        if (!border.isInBorderOfWorld(this, "posY", motionVectorY)) {
+            if (posY < 1) increaseStatByValue("posY", 1);
+            if (posY > 1) increaseStatByValue("posY", -1);
+        }
+    }
+
+    private boolean isInGravityLimit() {
+        double posY = getStat("posY");
+        return posY < getStat("gravityLimit") - getStat("height");
+    }
+
+    private void move() {
+        if (canMove())
+            moveUsingMotionVectors();
+    }
+
+    private boolean canMove() {
+        return !coolDown.isCoolDown("movingVector");
+    }
+
+    private void moveUsingMotionVectors() {
+        double motionVectorX = getStat("motionVectorX");
+        double motionVectorY = getStat("motionVectorY");
+        double motionVectorBlanking = getStat("motionVectorBlanking");
+        increaseStatByValue("motionVectorX", -motionVectorX / motionVectorBlanking);
+        increaseStatByValue("motionVectorY", -motionVectorY / motionVectorBlanking);
+        increaseStatByValue("posX", motionVectorX);
+        increaseStatByValue("posY", motionVectorY);
+    }
+
+    private void affectByGravity() {
+        if(canUseGravity())
+            useGravity();
+    }
+
+    private boolean canUseGravity() {
+        return !isGravityCoolDown();
+    }
+
+    private boolean isGravityCoolDown() {
+        return coolDown.isCoolDown("gravity");
+    }
+
+    private void setNewPlayerInfo(){
+        int score = this.getStat("score").intValue();
+        int health = this.getStat("health").intValue();
+        statusBar.setNewPlayerInfo(score, health, getAmmoAmount());
     }
 
     private int getAmmoAmount(){
@@ -107,14 +185,6 @@ public class Player extends Character implements Info {
             return getStat("ammunition").intValue();
         }
         else return 0;
-    }
-
-    private int getPlayerHeight(){
-        return getStat("height").intValue();
-    }
-
-    private int getPlayerWidth(){
-        return getStat("width").intValue();
     }
 
     private void shoot(char keyChar){
@@ -134,13 +204,6 @@ public class Player extends Character implements Info {
 
     private boolean getShootingStatus(){
         return isShooting;
-    }
-
-
-    private void jump(char keyChar){
-        if(keyChar =='w'){
-            isJumping = true;
-        }
     }
 
 

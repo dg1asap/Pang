@@ -1,10 +1,15 @@
 package pang.backend.util;
 
+import pang.backend.properties.config.ConfigLoader;
+import pang.backend.properties.config.GameConfig;
+
 import java.util.Random;
 
 public class PangVector {
     private int x;
     private int y;
+    private int oldX = 1;
+    private int oldY = 1;
 
     public static PangVector randPangVector(int min, int max) {
         int x, y;
@@ -26,17 +31,47 @@ public class PangVector {
         this.y = y;
     }
 
+    public PangVector(int x, int y, int oldX, int oldY) {
+        this.x = x;
+        this.y = y;
+        this.oldX = oldX;
+        this.oldY = oldY;
+    }
+
     public int getX() {
         return x;
+    }
+
+    public double getScaledXof(double value) {
+        double xRatio = (double) x / (double) oldX;
+        return value * xRatio;
+    }
+
+    public double getScaledToInitialXof(double value) {
+        GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
+        double xRatio = (double) x / pangConfig.getAttribute("defaultXFrameSize");
+        return value * xRatio;
+    }
+
+    public void invertX() {
+        x = -x;
     }
 
     public int getY() {
         return y;
     }
 
-    public void invertX() {
-        x = -x;
+    public double getScaledYof(double value) {
+        double yRatio = (double) y / (double) oldY;
+        return value * yRatio;
     }
+
+    public double getScaledToInitialYof(double value) {
+        GameConfig pangConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");
+        double yRatio = (double) y / pangConfig.getAttribute("defaultYFrameSize");
+        return value * yRatio;
+    }
+
 
     public void invertY() {
         y = -y;

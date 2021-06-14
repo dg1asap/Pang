@@ -19,10 +19,13 @@ public class WorldBorder {
     }
 
     public boolean isInBorderOfWorld(Character character, String direction, int stepLength) {
-        if ( direction.equals("posX"))
+        if (direction.equals("motionVectorX") || direction.equals("posX"))
             return !isBehindRightBorder(character, stepLength) && !isBehindLeftBorder(character, stepLength);
-        else
+
+        if (direction.equals("motionVectorY") || direction.equals("posY"))
             return !isBehindTopBorder(character, stepLength) && !isBehindBottomBorder(character, stepLength);
+
+        return true;
     }
 
     private boolean isBehindLeftBorder(Character character, int stepLength) {

@@ -2,23 +2,26 @@ package pang.backend.world;
 
 import pang.backend.bullet.Bullet;
 import pang.backend.bullet.BulletController;
+import pang.backend.bullet.BulletCreator;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
+import pang.backend.util.ResizeObserver;
 import pang.backend.util.PangVector;
 import pang.backend.character.enemy.Ball;
 import pang.backend.character.enemy.Enemy;
 import pang.backend.character.player.Player;
 import pang.backend.character.player.PlayerReaction;
 import pang.backend.properties.config.GameConfig;
-import pang.gui.frame.PangFrame;
 
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class World implements Info {
+public class World implements Info, ResizeObserver {
     private final ArrayBlockingQueue <Enemy> enemies;
     private final Player player;
     private final BulletController playerBulletController;
+    private BulletCreator bulletCreator;
+    private WorldBorder worldBorder;
 
     public World(GameConfig worldConfig, Player player) {
         int worldCapacity = worldConfig.getAttribute("worldCapacity").intValue();
@@ -36,7 +39,7 @@ public class World implements Info {
     }
 
     public boolean isGameOver(){
-        return !player.isAlive();
+        return player.isDead();
     }
 
     public void draw(Graphics g) {
@@ -47,9 +50,9 @@ public class World implements Info {
 
     public void steerKey(char keyChar, double value){
         if(keyChar != 'w') {
-            if (canPlayerSteer(keyChar, value)){
+            if (canPlayerSteer(keyChar, value)) {
                 player.steerKey(keyChar, value);
-                addBulletToPlayer();
+                createBullet();
             }
         }
         else{
@@ -60,7 +63,7 @@ public class World implements Info {
     }
 
     public void steerTime(long time){
-        managePlayer(time);
+        managePlayer();
         manageEnemies(time);
     }
 
@@ -69,6 +72,34 @@ public class World implements Info {
         WorldInfoFactory infoFactory = new WorldInfoFactory();
         updateWorldInfoFactory(infoFactory);
         return infoFactory.create(this);
+    }
+
+    @Override
+    public void initialResize(PangVector size) {
+        worldBorder = new WorldBorder(size);
+        bulletCreator = new BulletCreator(size);
+        initialEnemyResize(size);
+        player.initialResize(size);
+    }
+
+    private void initialEnemyResize(PangVector size) {
+        for (Enemy enemy : enemies) {
+            enemy.initialResize(size);
+        }
+    }
+
+    @Override
+    public void resize(PangVector size) {
+        worldBorder = new WorldBorder(size);
+        player.resize(size);
+        bulletCreator.resize(size);
+        playerBulletController.rescaleBullets(size);
+        rescaleEnemy(size);
+    }
+
+    private void rescaleEnemy(PangVector size) {
+        for (Enemy enemy : enemies)
+            enemy.resize(size);
     }
 
     private void updateWorldInfoFactory(WorldInfoFactory infoFactory) {
@@ -82,16 +113,10 @@ public class World implements Info {
         return isGameOver() || isEmpty();
     }
 
-    private void managePlayer(long time) {
-        player.setNewPlayerInfo();
+    private void managePlayer() {
         playerBulletController.steer();
-        playerGravity(time);
-    }
-
-    private void playerGravity(long time) {
-        if (time % 10 == 0) {
-            player.gravity();
-        }
+        player.limitMovement(worldBorder);
+        player.steerTime();
     }
 
     private void drawEnemies(Graphics g) {
@@ -107,14 +132,15 @@ public class World implements Info {
     private boolean canPlayerSteer(char keyChar, double value) {
         PlayerReaction playerReaction = new PlayerReaction();
         String direction = playerReaction.fromKeyName(keyChar);
-        PangVector extremePointOfMap = PangFrame.getExtremePointOfFrame();
-        WorldBorder worldBorder = new WorldBorder(extremePointOfMap);
         return worldBorder.isInBorderOfWorld(player, direction, (int)value);
     }
 
-    private void addBulletToPlayer() {
+    private void createBullet() {
         if (player.canShoot()) {
-            playerBulletController.addBullet(new Bullet(player.getBulletXPos(), player.getActualYPlayerPosition() - 20));
+            int xBulletPosition = player.getBulletXPos();
+            int yBulletPosition = player.getActualYPlayerPosition() - 20;
+            Bullet bullet = bulletCreator.create(xBulletPosition, yBulletPosition);
+            playerBulletController.addBullet(bullet);
         }
     }
 
@@ -148,12 +174,12 @@ public class World implements Info {
     private void moveEnemy(Enemy enemy) {
         if (enemy.isSpawned()) {
             bounceOffBall(enemy);
-            enemy.move();
+            enemy.moveInsideBorder(worldBorder);
         }
     }
 
     private void killEnemy(Enemy enemy) {
-        if (!enemy.isAlive())
+        if (enemy.isDead())
             enemies.remove(enemy);
     }
 
