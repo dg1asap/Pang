@@ -78,17 +78,21 @@ public class World implements Info, ResizeObserver {
     public void initialResize(PangVector size) {
         worldBorder = new WorldBorder(size);
         bulletCreator = new BulletCreator(size);
+        initialEnemyResize(size);
+        player.initialResize(size);
+    }
+
+    private void initialEnemyResize(PangVector size) {
         for (Enemy enemy : enemies) {
             enemy.initialResize(size);
         }
-        player.initialResize(size);
-//        resize(size);
     }
 
     @Override
     public void resize(PangVector size) {
         worldBorder = new WorldBorder(size);
         player.resize(size);
+        bulletCreator.resize(size);
         playerBulletController.rescaleBullets(size);
         rescaleEnemy(size);
     }
@@ -111,6 +115,7 @@ public class World implements Info, ResizeObserver {
 
     private void managePlayer() {
         playerBulletController.steer();
+        player.limitMovement(worldBorder);
         player.steerTime();
     }
 
@@ -134,7 +139,6 @@ public class World implements Info, ResizeObserver {
         if (player.canShoot()) {
             int xBulletPosition = player.getBulletXPos();
             int yBulletPosition = player.getActualYPlayerPosition() - 20;
-//            Bullet bullet = new Bullet(xBulletPosition, yBulletPosition, size);
             Bullet bullet = bulletCreator.create(xBulletPosition, yBulletPosition);
             playerBulletController.addBullet(bullet);
         }

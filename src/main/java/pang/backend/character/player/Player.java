@@ -7,6 +7,7 @@ import pang.backend.properties.config.GameConfig;
 import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.Info;
 import pang.backend.util.PangVector;
+import pang.backend.world.WorldBorder;
 import pang.gui.StatusBar;
 
 import java.awt.*;
@@ -58,13 +59,20 @@ public class Player extends Character implements Info {
         String playerParameter = playerReaction.fromKeyName(keyChar);
         shoot(keyChar);
         increaseStatByValue(playerParameter, value);
-
     }
 
     public void steerTime() {
         setNewPlayerInfo();
         move();
         affectByGravity();
+    }
+
+    public void limitMovement(WorldBorder border) {
+        int motionVectorX = getStat("motionVectorX").intValue();
+        int motionVectorY = getStat("motionVectorY").intValue();
+        bounceOffRightAndLeftBorder(motionVectorX, border);
+        blockGoAbroadX(motionVectorX, border);
+        blockGoAbroadY(motionVectorY, border);
     }
 
     @Override
@@ -75,22 +83,16 @@ public class Player extends Character implements Info {
         int startPosY = frameHeight - getStat("height").intValue();
         increaseStatByValue("posX", startPosX);
         increaseStatByValue("posY", startPosY);
-
-        resizeGravityLimit(mapSize);
-
+        increaseStatByValue("gravityLimit", mapSize.getY());
         statusBar.initialResize(mapSize);
     }
 
     @Override
     public void resize(PangVector mapSize) {
         super.resize(mapSize);
-        resizeGravityLimit(mapSize);
         statusBar.resize(mapSize);
-    }
-
-    private void resizeGravityLimit(PangVector mapSize) {
-        double gravityLimit = getStat("gravityLimit");
-        increaseStatByValue("gravityLimit", mapSize.getY() - gravityLimit);
+        double oldGravityLimit = getStat("gravityLimit");
+        increaseStatByValue("gravityLimit", mapSize.getY() - oldGravityLimit);
     }
 
     public int getActualYPlayerPosition(){
@@ -110,7 +112,34 @@ public class Player extends Character implements Info {
     }
 
     public void useGravity(){
-        increaseStatByValue("posY", getStat("gravityForce").intValue());
+        if (isInGravityLimit())
+            increaseStatByValue("posY", getStat("gravityForce"));
+    }
+
+    private void bounceOffRightAndLeftBorder(int motionVectorX, WorldBorder border) {
+        if (!border.isInBorderOfWorld(this, "motionVectorX", motionVectorX))
+            increaseStatByValue("motionVectorX", -2*motionVectorX);
+    }
+
+    private void blockGoAbroadX(int motionVectorX, WorldBorder border) {
+        int posX = getStat("posX").intValue();
+        if (!border.isInBorderOfWorld(this, "posX", motionVectorX)) {
+            if (posX < 0) increaseStatByValue("posX", 1);
+            if (posX > 0) increaseStatByValue("posX", -1);
+        }
+    }
+
+    private void blockGoAbroadY(int motionVectorY, WorldBorder border) {
+        int posY = getStat("posY").intValue();
+        if (!border.isInBorderOfWorld(this, "posY", motionVectorY)) {
+            if (posY < 1) increaseStatByValue("posY", 1);
+            if (posY > 1) increaseStatByValue("posY", -1);
+        }
+    }
+
+    private boolean isInGravityLimit() {
+        double posY = getStat("posY");
+        return posY < getStat("gravityLimit") - getStat("height");
     }
 
     private void move() {
@@ -138,15 +167,11 @@ public class Player extends Character implements Info {
     }
 
     private boolean canUseGravity() {
-        return !isGravityCoolDown() && !isExceededGravityLimit();
+        return !isGravityCoolDown();
     }
 
     private boolean isGravityCoolDown() {
         return coolDown.isCoolDown("gravity");
-    }
-
-    private boolean isExceededGravityLimit() {
-        return getStat("posY") >= getStat("gravityLimit") - getStat("height");
     }
 
     private void setNewPlayerInfo(){

@@ -38,8 +38,10 @@ public class BulletController {
 
     public void interact(Character target) {
         for (Bullet bullet : bullets)
-            if (bullet.intersects(target))
+            if (bullet.intersects(target)) {
                 owner.attack(target);
+                bullets.remove(bullet);
+            }
     }
 
     public void rescaleBullets(PangVector size) {
