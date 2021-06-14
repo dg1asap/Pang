@@ -1,3 +1,5 @@
+package server;
+
 import java.io.*;
 import java.nio.file.Path;
 
@@ -6,7 +8,7 @@ public class DataSender {
 
     public static void sendData(DataOutputStream dataOutputStream, String dataName) {
         try {
-            File serverFiles = Path.of("server", "data", dataName).toFile();
+            File serverFiles = Path.of( "ServerData", dataName).toFile();
             int numberOfFilesToSend = serverFiles.listFiles().length;
 
             File[] files = serverFiles.listFiles();
