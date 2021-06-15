@@ -10,6 +10,12 @@ import java.awt.*;
  * Klasa reprezentująca piłę o dużej ilość hp i dmg w grze
  */
 public class MegaBall extends Ball {
+    /**
+     * Tworzy MegaBall
+     * @param config config
+     * @param coolDown cooldown
+     * @param spawnTime czas spawnu
+     */
     protected MegaBall(GameConfig config, CoolDown coolDown, int spawnTime){
         super(config, coolDown, spawnTime);
     }

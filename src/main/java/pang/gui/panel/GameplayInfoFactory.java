@@ -8,6 +8,9 @@ import pang.backend.properties.info.Info;
  * Fabryka raportów GameplayInfo
  */
 public class GameplayInfoFactory extends GameInfoFactory {
+    /**
+     * Tworzy nowy obiekt GameInfo
+     */
     public GameplayInfoFactory() {
         info = new GameInfo("Gameplay");
     }

@@ -10,6 +10,13 @@ import java.awt.*;
  * Klasa reprezentująća najsłabszy rodzaj piłki w grze
  */
 public class SmallBall extends Ball {
+
+    /**
+     * Tworzy SmallBall
+     * @param config config
+     * @param coolDown cooldown
+     * @param spawnTime czas spawnu
+     */
     protected SmallBall(GameConfig config, CoolDown coolDown, int spawnTime){
         super(config, coolDown, spawnTime);
     }

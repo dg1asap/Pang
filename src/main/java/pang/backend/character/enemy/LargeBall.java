@@ -10,6 +10,12 @@ import java.awt.*;
  * Klasa reprezentująca duży rozmiar przeciwnika typu piłka
  */
 public class LargeBall extends Ball {
+    /**
+     * Tworzy LargeBall
+     * @param config config
+     * @param coolDown cooldown
+     * @param spawnTime czas spawnu
+     */
     protected LargeBall(GameConfig config, CoolDown coolDown, int spawnTime){
         super(config, coolDown, spawnTime);
     }

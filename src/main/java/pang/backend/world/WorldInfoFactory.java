@@ -8,6 +8,9 @@ import pang.backend.properties.info.Info;
  * klasa generująca raport w postaci obiektu GameInfo dla świata
  */
 public class WorldInfoFactory extends GameInfoFactory {
+    /**
+     * Tworzy obiekt GameInfo
+     */
     public WorldInfoFactory() {
         info = new GameInfo("World");
     }
