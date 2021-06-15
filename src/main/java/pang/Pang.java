@@ -1,26 +1,33 @@
 package pang;
 
-import pang.backend.properties.config.ConfigLoader;
 import pang.gui.panel.PanelCreator;
 import pang.hardware.Audio;
 import pang.hardware.Screen;
 
-import java.nio.file.Path;
 
+/**
+ * Klasa reprezentująca grę
+ */
 public class Pang {
+    /**
+     * Ekran programu
+     */
     private final Screen screen = new Screen();
+    /**
+     * Muzyka, która gra w tle
+     */
     private final Audio music = new Audio();
 
-    Pang(){
-        loadConfigs();
+    /**
+     * Tworzy grę
+     */
+    public Pang() {
         loadScreen();
     }
 
-    private void loadConfigs() {
-//        Path path = Path.of("./data/main/configs.txt");
-//        ConfigLoader.CONFIG_LOADER.init(path);
-    }
-
+    /**
+     * Ładuje komponent w screenie, który posłuży do produkcji paneli
+     */
     private void loadScreen() {
         PanelCreator panelCreator = new PanelCreator(screen, music);
         screen.setPanelCreator(panelCreator);

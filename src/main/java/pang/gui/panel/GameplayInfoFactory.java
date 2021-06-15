@@ -4,11 +4,19 @@ import pang.backend.properties.info.GameInfo;
 import pang.backend.properties.info.GameInfoFactory;
 import pang.backend.properties.info.Info;
 
+/**
+ * Fabryka raportów GameplayInfo
+ */
 public class GameplayInfoFactory extends GameInfoFactory {
     public GameplayInfoFactory() {
         info = new GameInfo("Gameplay");
     }
 
+    /**
+     * Tworzy raport o stanie gry
+     * @param gameplayPanel obiekt implementujący interfejs info
+     * @return Obiekt info zawierający raport o stanie gry
+     */
     @Override
     public GameInfo create(Info gameplayPanel) {
         if (info.hasAttribute("ending"))
@@ -16,6 +24,9 @@ public class GameplayInfoFactory extends GameInfoFactory {
         return info;
     }
 
+    /**
+     * Dodaje kolejną informację, na podstawie już istniejących, obrabia dostępne informacje
+     */
     private void ifEndingSetNextPanel() {
         String ending = info.getAttribute("ending");
         if (ending.equals("win") || ending.equals("lose")) {

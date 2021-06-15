@@ -4,15 +4,31 @@ package server;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientHandler implements Runnable,Serializable{
+/**
+ * Klasa odpowiedzialna za obsługę poszczególnych klientów
+ */
+public class ClientHandler implements Runnable{
 
+    /**
+     * Socket
+     */
     private Socket socket;
+    /**
+     * Informuje, czy klient nadal ma być obsługiwany
+     */
     private boolean isRunning = true;
 
+    /**
+     * Ustawia socket
+     * @param socket socket
+     */
     public ClientHandler(Socket socket){
         this.socket = socket;
     }
 
+    /**
+     * Otwiera strumienie, obsługujące żądania klienta. Po zakończonej sesji wylogowuje klienta
+     */
     @Override
     public void run() {
             try {
@@ -42,13 +58,22 @@ public class ClientHandler implements Runnable,Serializable{
             }
     }
 
+    /**
+     * Przekazuje obsługę żądania MessageHandler
+     * @param clientCommand treść żądania klienta
+     * @param dataOutputStream strumień wyjściowy
+     */
     private void handleClientMessage(String clientCommand, DataOutputStream dataOutputStream){
         MessageHandler messageHandler = new MessageHandler(clientCommand);
         messageHandler.handleCommand(dataOutputStream);
     }
 
-    private void saveScore(String clientCommand){
-        String[] userData = clientCommand.split("\\s+");
+    /**
+     * Obsługuje zapisywanie wyników do plików serwera
+     * @param dataToSave żadanie klienta o zapis z nazwą mapy, gracza i jego wynikiem
+     */
+    private void saveScore(String dataToSave){
+        String[] userData = dataToSave.split("\\s+");
 
         String nick = userData[1];
         String levelName = userData[2];
@@ -56,6 +81,9 @@ public class ClientHandler implements Runnable,Serializable{
         new DataSaver(levelName,score,nick).save();
     }
 
+    /**
+     * Kończy połączenie z klientem. Zamyka socket.
+     */
     private void closeConnection(){
         try {
             socket.close();

@@ -6,15 +6,32 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
+/**
+ * Klasa reprezentująca serwer
+ */
 public class Server implements Runnable {
 
+    /**
+     * Informuje o liczbie klientów połączonych z serwerem
+     */
     private static int clients = 0;
+    /**
+     * Serwerowy socket
+     */
     private ServerSocket serverSocket;
 
+    /**
+     * Usuwa klienta z listy klientów, gdy klient się wyloguje
+     */
     public static void removeClientNumber() {
         clients += -1;
     }
 
+    /**
+     * Tworzy serwer, z przydzielonym numerem portu
+     * Ustawia timeout na 5000ms
+     * @param port numer portu
+     */
     public Server(int port) {
         try {
             serverSocket = new ServerSocket(port);
@@ -28,6 +45,10 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Oczekuje na logowanie się nowych klientów. Gdy klient się połączy tworzony jest nowy wątek, który ma za
+     * zadanie obsłużyć jego żądania
+     */
     @Override
     public void run() {
         System.out.println("Starting server");
@@ -40,10 +61,8 @@ public class Server implements Runnable {
                 Socket socket = serverSocket.accept();
 
                 clients++;
-                //System.out.println("\u001B[32m" + "Client connected" + "\u001B[0m");
                 Thread clientThread = new Thread(new ClientHandler(socket));
                 clientThread.start();
-
 
             } catch (SocketTimeoutException e) {
                 //System.err.println("timeout");
