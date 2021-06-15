@@ -8,7 +8,16 @@ import pang.backend.properties.info.GameInfoFactory;
 import pang.backend.properties.info.Info;
 import pang.backend.util.ClassNameConverter;
 
+/**
+ * Klasa tworząca raport w postaci obietku GameInfo o aktualnym stanie postaci
+ */
 public class CharacterInfoFactory extends GameInfoFactory {
+    /**
+     * tworzy raport w postaci obiektu GameInfo
+     * @param character postać o której tworzy się GameInfo
+     * @return raport w postaci obiektu GameInfo
+     * @throws IllegalArgumentException wyjątek o błednych argumentach, wypisywany na konsolę
+     */
     @Override
     public GameInfo create(Info character) throws IllegalArgumentException {
         String className = ClassNameConverter.getSimpleClassNameOf(character);
@@ -18,12 +27,21 @@ public class CharacterInfoFactory extends GameInfoFactory {
         };
     }
 
+    /**
+     * zwraca informacje o graczu
+     * @param player obiekt gracza, którego tworzona informacja dotyczy
+     * @return raport w postaci obiektu GameInfo dotyczący gracza
+     */
     private GameInfo getPlayerInfo(Player player) {
         info = new GameInfo("Player");
         addScore(player);
         return info;
     }
 
+    /**
+     * dodaj inforamcje o wyniku gracza do raportu
+     * @param player obiekt gracza, którego tworzona informacja dotyczy
+     */
     private void addScore(Player player) {
         Double score = player.getStat("score");
         GameConfig gameConfig = ConfigLoader.CONFIG_LOADER.getConfig("Pang");

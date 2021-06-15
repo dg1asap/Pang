@@ -1,9 +1,14 @@
 package pang.backend.character.player;
 
+/**
+ * Klasa przypisująca konkretnemu klawiszowi konkretną statystykę na którą wpływa
+ */
 public class PlayerReaction {
-    private char[] horizontalMovementKey = {'a', 'A', 'd', 'D'};
-    private char[] verticalMovementKey = {'w', 'W'};
-
+    /**
+     * tłumaczy wciśniety klawisz przez gracza na nazwę statysyki którą wciśnięcie go modyfikuje
+     * @param keyName wciśnięty klawisz
+     * @return modyfikowana statystyka
+     */
     public String fromKeyName(char keyName) {
         return switch (keyName) {
             case 'a', 'A', 'd', 'D' -> "motionVectorX";
@@ -12,13 +17,5 @@ public class PlayerReaction {
             default -> "none";
         };
     }
-/*
-    public boolean isMotionKey(char keyName) {
-        }
-        return keyName
-
-    }
-    /
- */
 
 }
