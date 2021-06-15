@@ -25,7 +25,6 @@ public class GameMessageDialog {
     private void showWorldMessageDialog(GameInfo gameInfo) {
         if (gameInfo.hasAttribute("ending")) {
             String ending = gameInfo.getAttribute("ending");
-            System.out.println(ending);
             if (ending.equals("win")) {
                 JOptionPane.showMessageDialog(null,"Press Ok to return to menu", "Congratulations! YOU WON", JOptionPane.PLAIN_MESSAGE);
             }

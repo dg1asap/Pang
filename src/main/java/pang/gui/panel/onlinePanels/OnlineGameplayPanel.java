@@ -148,7 +148,6 @@ public class OnlineGameplayPanel extends PangPanel implements KeyListener {
     private void getLevelNameAndPathFromUserChoice(Screen screen) {
         GameInfo screenInfo = screen.getGameInfo();
         levelPath = Path.of(screenInfo.getAttribute("levelPath"));
-        System.out.println("Loading level: path -> " + levelPath);
     }
 
     /**
