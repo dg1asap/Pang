@@ -6,18 +6,38 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+/**
+ * Klasa implementująca klienta
+ */
 public class Client {
+    /**
+     * socket
+     */
     private static Socket socket;
+    /**
+     * status połączenia z serweram
+     */
     private String connectionStatus;
 
+    /**
+     * Tworzy klienta
+     */
     public Client(){
         connectToServer();
     }
 
+    /**
+     * Sprawdza status połączenia
+     * @return status połączenia z serwerem
+     */
     public String getConnectionStatus(){
         return connectionStatus;
     }
 
+    /**
+     * Pobiera dane, które przychodzą z serwera
+     * @param dataTypePath nazwa folderu, w którym mają zostać zapisane dane
+     */
     public void getData(String dataTypePath){
         try {
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
@@ -50,6 +70,10 @@ public class Client {
 
     }
 
+    /**
+     * Tworzy nowy socket, ustawia status połączenia z serwerem. Informuje o błędach połączenia, gdy
+     * host jest nieznany, albo serwer jest niedostępny.
+     */
     public void connectToServer(){
         try{
             socket = new Socket("localhost",44444);
@@ -62,6 +86,10 @@ public class Client {
         }
     }
 
+    /**
+     * Wysyła żądanie do serwera
+     * @param commandName treść żądania
+     */
     public static void sendCommand(String commandName){
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream());

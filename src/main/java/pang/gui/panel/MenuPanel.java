@@ -5,8 +5,16 @@ import pang.hardware.Screen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
+/**
+ * Panel menu głównego
+ */
 public class MenuPanel extends PangPanel {
+    /**
+     * Tworzy panel menu głównego
+     * @param screen menadżer zmiany panelu
+     */
     MenuPanel(Screen screen) {
         super("Menu");
         this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
@@ -31,11 +39,19 @@ public class MenuPanel extends PangPanel {
 
     }
 
+    /**
+     * Metoda zwracająca false, ponieważ klasa nie posiada żadnego KeyListenera
+     * @return zwraca false
+     */
     @Override
     public boolean hasKeyListener() {
         return false;
     }
 
+    /**
+     * Zwraca informację z działaniem klasy MenuPanel
+     * @return zwraca obiekt typu GameInfo
+     */
     @Override
     public GameInfo getGameInfo() {
         return new GameInfo("Menu");

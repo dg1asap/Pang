@@ -10,8 +10,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Path;
 
+/**
+ * Panel online
+ */
 public class OnlinePanel extends PangPanel{
 
+    /**
+     * Tworzy panel online, umożliwiający wysyłanie żądań do serwera
+     * @param screen menadżer zmiany panelu
+     */
     public OnlinePanel(Screen screen) {
         super("Level");
         Client client = new Client();
@@ -64,11 +71,19 @@ public class OnlinePanel extends PangPanel{
         Runtime.getRuntime().addShutdownHook(new Thread(() -> client.sendCommand("logout")));
     }
 
+    /**
+     * Zwraca informację z działaniem klasy OnlinePanel
+     * @return zwraca obiekt typu GameInfo
+     */
     @Override
     public GameInfo getGameInfo() {
         return new GameInfo("Online");
     }
 
+    /**
+     * Metoda zwracająca false, ponieważ klasa nie posiada żadnego KeyListenera
+     * @return zwraca false
+     */
     @Override
     public boolean hasKeyListener() {
         return false;
