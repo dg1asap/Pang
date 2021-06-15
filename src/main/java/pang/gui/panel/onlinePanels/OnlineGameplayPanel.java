@@ -259,6 +259,7 @@ public class OnlineGameplayPanel extends PangPanel implements KeyListener {
      */
     private void turnOffRefresh() {
         gameTimer.stop();
+        gameTimer.removeActionListener(gameTimer.getActionListeners()[0]);
     }
 
     /**
