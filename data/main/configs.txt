@@ -8,21 +8,21 @@ Player
     speed=2
     height=40
     width=40
-    ammunition=100
+    ammunition=400
     gravityForce=2
     gravityLimit=0
     posX=0
     posY=0
     motionVectorX=0
     motionVectorY=0
-    motionVectorBlanking=50
+    motionVectorBlanking=10
     score=0
 PlayerCoolDown
-    attack=1000
-    move=5
+    attack=800
+    move=200
     gravity=10
-    movingVector=20
-    jumping=2000
+    movingVector=12
+    jumping=1300
 Bullet
     width=10
     height=20
@@ -69,11 +69,11 @@ MegaBallCoolDown
     move=30
     bounceOff=600
 Keyboard
-    a=-10
-    A=-10
-    d=10
-    D=10
-    w=-10
+    a=-9
+    A=-9
+    d=9
+    D=9
+    w=-20
     W=-10
     k=-1
     K=-1
