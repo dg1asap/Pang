@@ -5,6 +5,7 @@ import pang.backend.properties.info.GameInfo;
 import pang.hardware.Screen;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -63,6 +64,8 @@ public class HighScorePanel extends PangPanel {
      */
     private void addLevelBox() {
         loadHighScoreBox();
+        levelBox.setPreferredSize(new Dimension(200,30));
+        levelBox.setMaximumSize(new Dimension(200,30));
         loadHighScores(levelBox.getItemAt(levelBox.getSelectedIndex())  + ".txt");
         levelBox.addActionListener(e -> loadHighScores(levelBox.getItemAt(levelBox.getSelectedIndex())  + ".txt"));
     }

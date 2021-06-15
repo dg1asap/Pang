@@ -61,7 +61,10 @@ public class OnlineUserDataPanel extends PangPanel {
         JLabel chooseLevel = new JLabel("Choose level:");
         JButton cancelButton = createButtonToChangeWindowTo("Cancel","Online", screen);
         levelBox = new JComboBox<>();
+        levelBox.setPreferredSize(new Dimension(200,30));
+        levelBox.setMaximumSize(new Dimension(200,30));
         levelBox.addItem("Choose level: ");
+
 
         add(inputDataText);
         add(userNickname);

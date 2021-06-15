@@ -7,6 +7,7 @@ import pang.hardware.Screen;
 import pang.online.Client;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -55,6 +56,8 @@ public class OnlineHighScorePanel extends PangPanel {
         levelBox = new JComboBox<>();
         loadHighScoreBox();
         loadHighScores(levelBox.getItemAt(levelBox.getSelectedIndex())  + ".txt");
+        levelBox.setPreferredSize(new Dimension(200,30));
+        levelBox.setMaximumSize(new Dimension(200,30));
 
         levelBox.addActionListener(e -> loadHighScores(levelBox.getItemAt(levelBox.getSelectedIndex())  + ".txt"));
 
