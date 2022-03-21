@@ -69,7 +69,7 @@ Pang is a game created by two students of the Warsaw University of Technology as
 
 ### Built With
 
-* [OpenJDK](https://openjdk.java.net)
+* [Java](https://www.java.com/en/)
 * [Gradle](https://gradle.org)
 * [JUnit5](https://junit.org/junit5/) 
 
@@ -137,7 +137,7 @@ As an IDE, we use IntelliJ IDEA, which I highly recommend
 - [x] ConfigLoader, GameConfig class and Config.txt file
 - [x] Enemy and Player class
 - [x] GUI, the main panel of the game
-- [x] Composing your own music for the Pang by famous asdewq
+- [x] Composing your own music for the Pang
 - [x] Collision system
 - [x] Injury system
 - [x] Addition of map boundaries
