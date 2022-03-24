@@ -61,7 +61,7 @@
 
 <img src="images/game.png" alt="game" width="500" height="300">
 
-Pang is a game created by two students of the Warsaw University of Technology as part of the additional course PROZE (Event Programming). The main design assumption was to create a game resembling Pomping World, a game of Japanese origin from 1990 with a network option in the client-server service. Pang is a platformer arcade whose main goal is to avoid and destroy the balls moving on the screen. After passing the level, the score and player's name are displayed in the high score window, where we can compare ourselves with other players.
+Pang is a game created by two students of the Warsaw University of Technology as part of the additional course PROZE (Event Programming). The main design assumption was to create a game resembling Pomping World, a game of Japanese origin from 1990 with a network option in the client-server service. Pang is a platformer arcade in which main goal is to avoid and destroy the balls moving on the screen. After passing the level, the score and player's name are displayed in the high score window, where we can compare ourselves with other players.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
